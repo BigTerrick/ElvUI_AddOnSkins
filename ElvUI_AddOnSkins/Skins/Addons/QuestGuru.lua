@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("QuestGuru") then return end
+if not AS:IsAddonLODorEnabled("QuestGuru") then
+	return
+end
 
 local _G = _G
 local select = select
@@ -16,15 +18,17 @@ local hooksecurefunc = hooksecurefunc
 -- QuestGuru 1.4.1
 
 S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
-	if not E.private.addOnSkins.QuestGuru then return end
+	if not E.private.addOnSkins.QuestGuru then
+		return
+	end
 
 	local origCount = QUESTGURU_QUESTS_DISPLAYED
 	QUESTS_DISPLAYED = 21
 	QUESTGURU_QUESTS_DISPLAYED = 21
 
 	for i = QUESTS_DISPLAYED + 1, origCount do
-		_G["QuestGuru_QuestLogTitle"..i]:Hide()
-		_G["QuestGuru_QuestAbandonTitle"..i]:Hide()
+		_G["QuestGuru_QuestLogTitle" .. i]:Hide()
+		_G["QuestGuru_QuestAbandonTitle" .. i]:Hide()
 	end
 
 	QuestGuru_UpdateGossipFrame = E.noop
@@ -96,7 +100,13 @@ S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
 
 	S:HandleScrollBar(QuestGuru_QuestLogListScrollFrameScrollBar)
 	QuestGuru_QuestLogListScrollFrameScrollBar:Point("TOPLEFT", QuestGuru_QuestLogListScrollFrame, "TOPRIGHT", 3, -17)
-	QuestGuru_QuestLogListScrollFrameScrollBar:Point("BOTTOMLEFT", QuestGuru_QuestLogListScrollFrame, "BOTTOMRIGHT", 3, 17)
+	QuestGuru_QuestLogListScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		QuestGuru_QuestLogListScrollFrame,
+		"BOTTOMRIGHT",
+		3,
+		17
+	)
 
 	QuestGuru_QuestLogDetailScrollFrame:Size(304, 336)
 	QuestGuru_QuestLogDetailScrollFrame:ClearAllPoints()
@@ -107,8 +117,20 @@ S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
 	QuestGuru_QuestLogDetailScrollFrame.backdrop:Point("BOTTOMRIGHT", 0, -2)
 
 	S:HandleScrollBar(QuestGuru_QuestLogDetailScrollFrameScrollBar)
-	QuestGuru_QuestLogDetailScrollFrameScrollBar:Point("TOPLEFT", QuestGuru_QuestLogDetailScrollFrame, "TOPRIGHT", 3, -18)
-	QuestGuru_QuestLogDetailScrollFrameScrollBar:Point("BOTTOMLEFT", QuestGuru_QuestLogDetailScrollFrame, "BOTTOMRIGHT", 3, 17)
+	QuestGuru_QuestLogDetailScrollFrameScrollBar:Point(
+		"TOPLEFT",
+		QuestGuru_QuestLogDetailScrollFrame,
+		"TOPRIGHT",
+		3,
+		-18
+	)
+	QuestGuru_QuestLogDetailScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		QuestGuru_QuestLogDetailScrollFrame,
+		"BOTTOMRIGHT",
+		3,
+		17
+	)
 
 	S:HandleButton(QuestGuru_QuestLogFrameAbandonButton)
 	S:HandleButton(QuestGuru_QuestFramePushQuestButton)
@@ -140,8 +162,20 @@ S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
 	QuestGuru_QuestAbandonListScrollFrame.Hide = QuestGuru_QuestAbandonListScrollFrame.Show
 
 	S:HandleScrollBar(QuestGuru_QuestAbandonListScrollFrameScrollBar)
-	QuestGuru_QuestAbandonListScrollFrameScrollBar:Point("TOPLEFT", QuestGuru_QuestAbandonListScrollFrame, "TOPRIGHT", 3, -17)
-	QuestGuru_QuestAbandonListScrollFrameScrollBar:Point("BOTTOMLEFT", QuestGuru_QuestAbandonListScrollFrame, "BOTTOMRIGHT", 3, 17)
+	QuestGuru_QuestAbandonListScrollFrameScrollBar:Point(
+		"TOPLEFT",
+		QuestGuru_QuestAbandonListScrollFrame,
+		"TOPRIGHT",
+		3,
+		-17
+	)
+	QuestGuru_QuestAbandonListScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		QuestGuru_QuestAbandonListScrollFrame,
+		"BOTTOMRIGHT",
+		3,
+		17
+	)
 
 	QuestGuru_QuestAbandonDetailScrollFrame:Size(304, 336)
 	QuestGuru_QuestAbandonDetailScrollFrame:ClearAllPoints()
@@ -152,8 +186,20 @@ S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
 	QuestGuru_QuestAbandonDetailScrollFrame.backdrop:Point("BOTTOMRIGHT", 0, -2)
 
 	S:HandleScrollBar(QuestGuru_QuestAbandonDetailScrollFrameScrollBar)
-	QuestGuru_QuestAbandonDetailScrollFrameScrollBar:Point("TOPLEFT", QuestGuru_QuestAbandonDetailScrollFrame, "TOPRIGHT", 3, -18)
-	QuestGuru_QuestAbandonDetailScrollFrameScrollBar:Point("BOTTOMLEFT", QuestGuru_QuestAbandonDetailScrollFrame, "BOTTOMRIGHT", 3, 17)
+	QuestGuru_QuestAbandonDetailScrollFrameScrollBar:Point(
+		"TOPLEFT",
+		QuestGuru_QuestAbandonDetailScrollFrame,
+		"TOPRIGHT",
+		3,
+		-18
+	)
+	QuestGuru_QuestAbandonDetailScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		QuestGuru_QuestAbandonDetailScrollFrame,
+		"BOTTOMRIGHT",
+		3,
+		17
+	)
 
 	S:HandleEditBox(QuestGuru_QuestAbandonSearch)
 	QuestGuru_QuestAbandonSearch:Point("LEFT", QuestGuru_QuestAbandonSearchText, "RIGHT", 4, -1)
@@ -187,7 +233,7 @@ S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
 		questLogTitle:Width(300)
 
 		if index > 1 then
-			questLogTitle:SetPoint("TOPLEFT", _G["QuestGuru_QuestLogTitle"..(index-1)], "BOTTOMLEFT", 0, 0)
+			questLogTitle:SetPoint("TOPLEFT", _G["QuestGuru_QuestLogTitle" .. (index - 1)], "BOTTOMLEFT", 0, 0)
 		end
 
 		if questLogTitle.check then
@@ -202,8 +248,8 @@ S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
 	end
 
 	for i = 1, QUESTS_DISPLAYED do
-		skinLogEntry(_G["QuestGuru_QuestLogTitle"..i], i)
-		skinLogEntry(_G["QuestGuru_QuestAbandonTitle"..i], i)
+		skinLogEntry(_G["QuestGuru_QuestLogTitle" .. i], i)
+		skinLogEntry(_G["QuestGuru_QuestAbandonTitle" .. i], i)
 	end
 
 	-- QuestStart Tooltip
@@ -244,9 +290,9 @@ S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
 	}
 	for frame, numItems in pairs(items) do
 		for i = 1, numItems do
-			local item = _G[frame..i]
-			local icon = _G[frame..i.."IconTexture"]
-			local count = _G[frame..i.."Count"]
+			local item = _G[frame .. i]
+			local icon = _G[frame .. i .. "IconTexture"]
+			local count = _G[frame .. i .. "Count"]
 
 			item:StripTextures()
 			item:SetTemplate("Default")
@@ -259,7 +305,7 @@ S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
 			icon:Point("TOPLEFT", E.PixelMode and 1 or 4, -(E.PixelMode and 1 or 4))
 			S:HandleIcon(icon)
 
-			item.text = _G[frame..i.."Name"]
+			item.text = _G[frame .. i .. "Name"]
 			icon.parent = item
 			hooksecurefunc(icon, "SetTexture", updateItemQuality)
 
@@ -343,7 +389,9 @@ S:AddCallbackForAddon("QuestGuru", "QuestGuru", function()
 end)
 
 S:AddCallbackForAddon("QuestGuru_History", "QuestGuru_History", function()
-	if not E.private.addOnSkins.QuestGuru then return end
+	if not E.private.addOnSkins.QuestGuru then
+		return
+	end
 
 	QuestGuru_QuestLogFrameTab3:StripTextures()
 	QuestGuru_QuestLogFrameTab3:SetTemplate()
@@ -371,8 +419,20 @@ S:AddCallbackForAddon("QuestGuru_History", "QuestGuru_History", function()
 	QuestGuru_QuestHistoryListScrollFrame.Hide = QuestGuru_QuestHistoryListScrollFrame.Show
 
 	S:HandleScrollBar(QuestGuru_QuestHistoryListScrollFrameScrollBar)
-	QuestGuru_QuestHistoryListScrollFrameScrollBar:Point("TOPLEFT", QuestGuru_QuestHistoryListScrollFrame, "TOPRIGHT", 3, -17)
-	QuestGuru_QuestHistoryListScrollFrameScrollBar:Point("BOTTOMLEFT", QuestGuru_QuestHistoryListScrollFrame, "BOTTOMRIGHT", 3, 17)
+	QuestGuru_QuestHistoryListScrollFrameScrollBar:Point(
+		"TOPLEFT",
+		QuestGuru_QuestHistoryListScrollFrame,
+		"TOPRIGHT",
+		3,
+		-17
+	)
+	QuestGuru_QuestHistoryListScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		QuestGuru_QuestHistoryListScrollFrame,
+		"BOTTOMRIGHT",
+		3,
+		17
+	)
 
 	QuestGuru_QuestHistoryDetailScrollFrame:Size(304, 336)
 	QuestGuru_QuestHistoryDetailScrollFrame:ClearAllPoints()
@@ -383,8 +443,20 @@ S:AddCallbackForAddon("QuestGuru_History", "QuestGuru_History", function()
 	QuestGuru_QuestHistoryDetailScrollFrame.backdrop:Point("BOTTOMRIGHT", 0, -2)
 
 	S:HandleScrollBar(QuestGuru_QuestHistoryDetailScrollFrameScrollBar)
-	QuestGuru_QuestHistoryDetailScrollFrameScrollBar:Point("TOPLEFT", QuestGuru_QuestHistoryDetailScrollFrame, "TOPRIGHT", 3, -18)
-	QuestGuru_QuestHistoryDetailScrollFrameScrollBar:Point("BOTTOMLEFT", QuestGuru_QuestHistoryDetailScrollFrame, "BOTTOMRIGHT", 3, 17)
+	QuestGuru_QuestHistoryDetailScrollFrameScrollBar:Point(
+		"TOPLEFT",
+		QuestGuru_QuestHistoryDetailScrollFrame,
+		"TOPRIGHT",
+		3,
+		-18
+	)
+	QuestGuru_QuestHistoryDetailScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		QuestGuru_QuestHistoryDetailScrollFrame,
+		"BOTTOMRIGHT",
+		3,
+		17
+	)
 
 	S:HandleEditBox(QuestGuru_QuestHistorySearch)
 	QuestGuru_QuestHistorySearch:Width(143)
@@ -397,7 +469,7 @@ S:AddCallbackForAddon("QuestGuru_History", "QuestGuru_History", function()
 		questLogTitle:Width(300)
 
 		if index > 1 then
-			questLogTitle:SetPoint("TOPLEFT", _G["QuestGuru_QuestLogTitle"..(index-1)], "BOTTOMLEFT", 0, 0)
+			questLogTitle:SetPoint("TOPLEFT", _G["QuestGuru_QuestLogTitle" .. (index - 1)], "BOTTOMLEFT", 0, 0)
 		end
 
 		if questLogTitle.check then
@@ -412,7 +484,7 @@ S:AddCallbackForAddon("QuestGuru_History", "QuestGuru_History", function()
 	end
 
 	for i = 1, QUESTS_DISPLAYED do
-		skinLogEntry(_G["QuestGuru_QuestHistoryTitle"..i], i)
+		skinLogEntry(_G["QuestGuru_QuestHistoryTitle" .. i], i)
 	end
 
 	-- Quest items
@@ -447,9 +519,9 @@ S:AddCallbackForAddon("QuestGuru_History", "QuestGuru_History", function()
 	}
 	for frame, numItems in pairs(items) do
 		for i = 1, numItems do
-			local item = _G[frame..i]
-			local icon = _G[frame..i.."IconTexture"]
-			local count = _G[frame..i.."Count"]
+			local item = _G[frame .. i]
+			local icon = _G[frame .. i .. "IconTexture"]
+			local count = _G[frame .. i .. "Count"]
 
 			item:StripTextures()
 			item:SetTemplate("Default")
@@ -462,7 +534,7 @@ S:AddCallbackForAddon("QuestGuru_History", "QuestGuru_History", function()
 			icon:Point("TOPLEFT", E.PixelMode and 1 or 4, -(E.PixelMode and 1 or 4))
 			S:HandleIcon(icon)
 
-			item.text = _G[frame..i.."Name"]
+			item.text = _G[frame .. i .. "Name"]
 			icon.parent = item
 			hooksecurefunc(icon, "SetTexture", updateItemQuality)
 

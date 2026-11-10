@@ -12,10 +12,14 @@ local hooksecurefunc = hooksecurefunc
 -- https://gitlab.com/Artur91425/LootWonAlert
 
 S:AddCallbackForAddon("LootWonAlert", "LootWonAlert", function()
-	if not E.private.addOnSkins.LootWonAlert then return end
+	if not E.private.addOnSkins.LootWonAlert then
+		return
+	end
 
 	local function skinFrame(frame)
-		if frame.isSkinned then return end
+		if frame.isSkinned then
+			return
+		end
 
 		frame:Size(300, 88)
 		frame.Background:Hide()
@@ -64,11 +68,11 @@ S:AddCallbackForAddon("LootWonAlert", "LootWonAlert", function()
 
 	do
 		local i = 1
-		local frame = _G["LootWonAlertFrame"..i]
+		local frame = _G["LootWonAlertFrame" .. i]
 		while frame do
 			skinFrame(frame)
 			i = i + 1
-			frame = _G["LootWonAlertFrame"..i]
+			frame = _G["LootWonAlertFrame" .. i]
 		end
 	end
 end)

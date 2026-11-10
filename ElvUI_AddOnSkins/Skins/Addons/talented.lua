@@ -2,14 +2,125 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Talented") then return end
+if not AS:IsAddonLODorEnabled("Talented") then
+	return
+end
 
 local unpack = unpack
 
--- Talented r660
+-- Talented r660 (modular, Talented_GlyphFrame/Talented_SpecTabs LoD addons)
+-- and Talented All-In-One for 3.3.5 (Kader edition, everything in the main addon)
+
+local function SkinSpecTabs()
+	local tabs = Talented.tabs
+	if not tabs or tabs.isSkinned then
+		return
+	end
+
+	tabs:Point("TOPLEFT", TalentedFrame, "TOPRIGHT", -1, -40)
+
+	for _, name in ipairs({ "spec1", "spec2", "petspec1" }) do
+		local tab = tabs[name]
+		if tab then
+			tab:SetTemplate("Default")
+			tab:StyleButton()
+			tab:DisableDrawLayer("BACKGROUND")
+			tab:GetNormalTexture():SetInside(tab.backdrop)
+			tab:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
+		end
+	end
+
+	tabs.isSkinned = true
+end
+
+local function SkinGlyphFrame()
+	if not TalentedGlyphs or TalentedGlyphs.isSkinned then
+		return
+	end
+
+	TalentedGlyphs:CreateBackdrop("Transparent")
+	TalentedGlyphs.backdrop:Point("TOPLEFT", 11, -12)
+	TalentedGlyphs.backdrop:Point("BOTTOMRIGHT", -32, 76)
+	TalentedGlyphs:SetHitRectInsets(0, 0, 0, 0)
+
+	S:SetBackdropHitRect(TalentedGlyphs, TalentedGlyphs.backdrop, true)
+
+	S:HandleCloseButton(TalentedGlyphs.close)
+
+	TalentedGlyphs.title:Point("TOP", 0, -15)
+
+	TalentedGlyphs.portrait:Hide()
+
+	TalentedGlyphs.background:SetDrawLayer("ARTWORK")
+	TalentedGlyphs.background:Size(323, 349)
+	TalentedGlyphs.background:Point("TOPLEFT", 20, -59)
+	TalentedGlyphs.background:CreateBackdrop()
+
+	TalentedGlyphs.glow:SetDrawLayer("OVERLAY")
+	TalentedGlyphs.glow:SetAllPoints(TalentedGlyphs.background)
+
+	-- texWidth, texHeight, cropWidth, cropHeight, offsetX, offsetY = 512, 512, 315, 340, 21, 72
+	TalentedGlyphs.background:SetTexCoord(0.041015625, 0.65625, 0.140625, 0.8046875)
+
+	-- texWidth, texHeight, cropWidth, cropHeight, offsetX, offsetY = 512, 512, 315, 340, 30, 34
+	TalentedGlyphs.glow:SetTexCoord(0.05859375, 0.673828125, 0.06640625, 0.73046875)
+
+	local glyphBGScale = 1.0253968
+	local glyphPositions = {
+		{ "CENTER", -1, 126 },
+		{ "CENTER", -1, -119 },
+		{ "TOPLEFT", 8, -62 },
+		{ "BOTTOMRIGHT", -10, 70 },
+		{ "TOPRIGHT", -8, -62 },
+		{ "BOTTOMLEFT", 7, 70 },
+	}
+
+	local slotAnimations = {}
+	local TOPLEFT, TOP, TOPRIGHT, BOTTOMRIGHT, BOTTOM, BOTTOMLEFT = 3, 1, 5, 4, 2, 6
+	slotAnimations[TOPLEFT] =
+		{ ["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = -85, ["yStart"] = 17, ["yStop"] = 60 }
+	slotAnimations[TOP] = { ["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = -13, ["yStart"] = 17, ["yStop"] = 100 }
+	slotAnimations[TOPRIGHT] =
+		{ ["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = 59, ["yStart"] = 17, ["yStop"] = 60 }
+	slotAnimations[BOTTOM] =
+		{ ["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = -13, ["yStart"] = 17, ["yStop"] = -64 }
+	slotAnimations[BOTTOMLEFT] =
+		{ ["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = -87, ["yStart"] = 18, ["yStop"] = -27 }
+	slotAnimations[BOTTOMRIGHT] =
+		{ ["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = 61, ["yStart"] = 18, ["yStop"] = -27 }
+
+	for _, animData in ipairs(slotAnimations) do
+		animData.xStart = animData.xStart + 3
+		animData.yStart = animData.yStart + 8
+		animData.xStop = (animData.xStop + 3) * glyphBGScale
+		animData.yStop = (animData.yStop + 8) * glyphBGScale
+	end
+
+	local glyphFrameLevel = TalentedGlyphs:GetFrameLevel() + 1
+
+	for glyphID, glyph in ipairs(TalentedGlyphs.glyphs) do
+		glyph:SetFrameLevel(glyphFrameLevel)
+		glyph:Size(90)
+		glyph:SetScale(glyphBGScale)
+		local point, x, y = unpack(glyphPositions[glyphID])
+		glyph:Point(point, TalentedGlyphs.background.backdrop, x, y)
+
+		local animation = slotAnimations[glyphID]
+		glyph.sparkle:SetDrawLayer("OVERLAY")
+		glyph.sparkle:Point(animation.point, animation.xStart, animation.yStart)
+		glyph.sparkle.anim.translation:SetOffset(animation.xStop - animation.xStart, animation.yStop - animation.yStart)
+	end
+
+	S:HandleCheckBox(TalentedGlyphs.checkbox)
+	TalentedGlyphs.checkbox:Point("BOTTOMLEFT", 15, 80)
+
+	TalentedGlyphs.isSkinned = true
+end
 
 S:AddCallbackForAddon("Talented", "Talented", function()
-	if not E.private.addOnSkins.Talented then return end
+	if not E.private.addOnSkins.Talented then
+		return
+	end
 
 	local function SkinButton(button)
 		S:HandleButton(button, true)
@@ -36,6 +147,9 @@ S:AddCallbackForAddon("Talented", "Talented", function()
 		S:HandleEditBox(TalentedFrame.editname)
 
 		S:HandleCheckBox(TalentedFrame.checkbox)
+
+		-- the All-In-One edition builds the spec tabs inside CreateBaseFrame
+		SkinSpecTabs()
 
 		S:Unhook(Talented, "CreateBaseFrame")
 	end)
@@ -93,104 +207,42 @@ S:AddCallbackForAddon("Talented", "Talented", function()
 		return tree
 	end)
 
-	AS:SkinLibrary("Dewdrop-2.0")
-end)
-
-S:AddCallbackForAddon("Talented_GlyphFrame", "Talented_GlyphFrame", function()
-	if not E.private.addOnSkins.Talented then return end
-
-	TalentedGlyphs:CreateBackdrop("Transparent")
-	TalentedGlyphs.backdrop:Point("TOPLEFT", 11, -12)
-	TalentedGlyphs.backdrop:Point("BOTTOMRIGHT", -32, 76)
-	TalentedGlyphs:SetHitRectInsets(0, 0, 0, 0)
-
-	S:SetBackdropHitRect(TalentedGlyphs, TalentedGlyphs.backdrop, true)
-
-	S:HandleCloseButton(TalentedGlyphs.close)
-
-	TalentedGlyphs.title:Point("TOP", 0, -15)
-
-	TalentedGlyphs.portrait:Hide()
-
-	TalentedGlyphs.background:SetDrawLayer("ARTWORK")
-	TalentedGlyphs.background:Size(323, 349)
-	TalentedGlyphs.background:Point("TOPLEFT", 20, -59)
-	TalentedGlyphs.background:CreateBackdrop()
-
-
-	TalentedGlyphs.glow:SetDrawLayer("OVERLAY")
-	TalentedGlyphs.glow:SetAllPoints(TalentedGlyphs.background)
-
-	-- texWidth, texHeight, cropWidth, cropHeight, offsetX, offsetY = 512, 512, 315, 340, 21, 72
-	TalentedGlyphs.background:SetTexCoord(0.041015625, 0.65625, 0.140625, 0.8046875)
-
-	-- texWidth, texHeight, cropWidth, cropHeight, offsetX, offsetY = 512, 512, 315, 340, 30, 34
-	TalentedGlyphs.glow:SetTexCoord(0.05859375, 0.673828125, 0.06640625, 0.73046875)
-
-	local glyphBGScale = 1.0253968
-	local glyphPositions = {
-		{"CENTER", -1, 126},
-		{"CENTER", -1, -119},
-		{"TOPLEFT", 8, -62},
-		{"BOTTOMRIGHT", -10, 70},
-		{"TOPRIGHT", -8, -62},
-		{"BOTTOMLEFT", 7, 70}
-	}
-
-	local slotAnimations = {}
-	local TOPLEFT, TOP, TOPRIGHT, BOTTOMRIGHT, BOTTOM, BOTTOMLEFT = 3, 1, 5, 4, 2, 6
-	slotAnimations[TOPLEFT] = {["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = -85, ["yStart"] = 17, ["yStop"] = 60}
-	slotAnimations[TOP] = {["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = -13, ["yStart"] = 17, ["yStop"] = 100}
-	slotAnimations[TOPRIGHT] = {["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = 59, ["yStart"] = 17, ["yStop"] = 60}
-	slotAnimations[BOTTOM] = {["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = -13, ["yStart"] = 17, ["yStop"] = -64}
-	slotAnimations[BOTTOMLEFT] = {["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = -87, ["yStart"] = 18, ["yStop"] = -27}
-	slotAnimations[BOTTOMRIGHT] = {["point"] = "CENTER", ["xStart"] = -13, ["xStop"] = 61, ["yStart"] = 18, ["yStop"] = -27}
-
-	for _, animData in ipairs(slotAnimations) do
-		animData.xStart = animData.xStart + 3
-		animData.yStart = animData.yStart + 8
-		animData.xStop = (animData.xStop + 3) * glyphBGScale
-		animData.yStop = (animData.yStop + 8) * glyphBGScale
-	end
-
-	local glyphFrameLevel = TalentedGlyphs:GetFrameLevel() + 1
-
-	for glyphID, glyph in ipairs(TalentedGlyphs.glyphs) do
-		glyph:SetFrameLevel(glyphFrameLevel)
-		glyph:Size(90)
-		glyph:SetScale(glyphBGScale)
-		local point, x, y = unpack(glyphPositions[glyphID])
-		glyph:Point(point, TalentedGlyphs.background.backdrop, x, y)
-
-		local animation = slotAnimations[glyphID]
-		glyph.sparkle:SetDrawLayer("OVERLAY")
-		glyph.sparkle:Point(animation.point, animation.xStart, animation.yStart)
-		glyph.sparkle.anim.translation:SetOffset(animation.xStop - animation.xStart, animation.yStop - animation.yStart)
-	end
-
-	S:HandleCheckBox(TalentedGlyphs.checkbox)
-	TalentedGlyphs.checkbox:Point("BOTTOMLEFT", 15, 80)
-end)
-
-S:AddCallbackForAddon("Talented_SpecTabs", "Talented_SpecTabs", function()
-	if not E.private.addOnSkins.Talented then return end
-
-	local function skinTabs()
-		Talented.tabs:Point("TOPLEFT", TalentedFrame, "TOPRIGHT", -1, -40)
-
-		for _, tab in ipairs({"spec1", "spec2", "petspec1"}) do
-			tab = Talented.tabs[tab]
-			tab:SetTemplate("Default")
-			tab:StyleButton()
-			tab:DisableDrawLayer("BACKGROUND")
-			tab:GetNormalTexture():SetInside(tab.backdrop)
-			tab:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
+	-- the All-In-One edition creates the glyph frame from the main addon
+	-- (no Talented_GlyphFrame addon exists, so the callback below never fires)
+	if Talented.CreateGlyphFrame then
+		if TalentedGlyphs then
+			SkinGlyphFrame()
+		else
+			S:SecureHook(Talented, "CreateGlyphFrame", function()
+				SkinGlyphFrame()
+				S:Unhook(Talented, "CreateGlyphFrame")
+			end)
 		end
 	end
 
 	if Talented.base then
-		skinTabs()
+		SkinSpecTabs()
+	end
+
+	AS:SkinLibrary("Dewdrop-2.0")
+end)
+
+S:AddCallbackForAddon("Talented_GlyphFrame", "Talented_GlyphFrame", function()
+	if not E.private.addOnSkins.Talented then
+		return
+	end
+
+	SkinGlyphFrame()
+end)
+
+S:AddCallbackForAddon("Talented_SpecTabs", "Talented_SpecTabs", function()
+	if not E.private.addOnSkins.Talented then
+		return
+	end
+
+	if Talented.base then
+		SkinSpecTabs()
 	else
-		hooksecurefunc(Talented, "CreateBaseFrame", skinTabs)
+		hooksecurefunc(Talented, "CreateBaseFrame", SkinSpecTabs)
 	end
 end)

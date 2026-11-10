@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("ZOMGBuffs") then return end
+if not AS:IsAddonLODorEnabled("ZOMGBuffs") then
+	return
+end
 
 local pairs = pairs
 local unpack = unpack
@@ -11,7 +13,9 @@ local unpack = unpack
 -- https://www.wowace.com/projects/zomgbuffs/files/424938
 
 S:AddCallbackForAddon("ZOMGBuffs", "ZOMGBuffs", function()
-	if not E.private.addOnSkins.ZOMGBuffs then return end
+	if not E.private.addOnSkins.ZOMGBuffs then
+		return
+	end
 
 	if ZOMGBuffsButton then
 		ZOMGBuffsButton:SetNormalTexture(nil)
@@ -49,10 +53,14 @@ S:AddCallbackForAddon("ZOMGBuffs", "ZOMGBuffs", function()
 end)
 
 S:AddCallbackForAddon("ZOMGBuffs_BlessingsManager", "ZOMGBuffs_BlessingsManager", function()
-	if not E.private.addOnSkins.ZOMGBuffs then return end
+	if not E.private.addOnSkins.ZOMGBuffs then
+		return
+	end
 
 	local ZBM = ZOMGBuffs:GetModule("ZOMGBlessingsManager", true)
-	if not ZBM then return end
+	if not ZBM then
+		return
+	end
 
 	S:SecureHook(ZBM, "SplitInitialize", function(self)
 		local frame = self.splitframe
@@ -90,7 +98,9 @@ S:AddCallbackForAddon("ZOMGBuffs_BlessingsManager", "ZOMGBuffs_BlessingsManager"
 	end)
 
 	local function SkinActionButton(button)
-		if button.isSkinned then return end
+		if button.isSkinned then
+			return
+		end
 
 		button:StyleButton()
 		button:SetTemplate("Default")
@@ -105,7 +115,9 @@ S:AddCallbackForAddon("ZOMGBuffs_BlessingsManager", "ZOMGBuffs_BlessingsManager"
 	end
 
 	S:SecureHook(ZBM, "SplitPanelColumnPopulate", function(self, col)
-		if not self.expandpanel.class then return end
+		if not self.expandpanel.class then
+			return
+		end
 
 		for i in pairs(col.cell) do
 			SkinActionButton(col.cell[i])
@@ -113,7 +125,9 @@ S:AddCallbackForAddon("ZOMGBuffs_BlessingsManager", "ZOMGBuffs_BlessingsManager"
 	end)
 
 	S:SecureHook(ZBM, "DrawAll", function(self)
-		if not self.configuring then return end
+		if not self.configuring then
+			return
+		end
 
 		local f = self.frame
 
@@ -128,10 +142,14 @@ S:AddCallbackForAddon("ZOMGBuffs_BlessingsManager", "ZOMGBuffs_BlessingsManager"
 end)
 
 S:AddCallbackForAddon("ZOMGBuffs_Log", "ZOMGBuffs_Log", function()
-	if not E.private.addOnSkins.ZOMGBuffs then return end
+	if not E.private.addOnSkins.ZOMGBuffs then
+		return
+	end
 
 	local ZL = ZOMGBuffs:GetModule("ZOMGLog", true)
-	if not ZL then return end
+	if not ZL then
+		return
+	end
 
 	S:RawHook(ZL, "CreateLogFrame", function(self)
 		local frame = S.hooks[self].CreateLogFrame(self)

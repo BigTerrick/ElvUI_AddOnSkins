@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Enchantrix") then return end
+if not AS:IsAddonLODorEnabled("Enchantrix") then
+	return
+end
 
 -- Enchantrix 5.8.4723
 -- https://www.curseforge.com/wow/addons/auctioneer/files/427823
 
 S:AddCallbackForAddon("Enchantrix", "Enchantrix", function()
-	if not E.private.addOnSkins.Enchantrix then return end
+	if not E.private.addOnSkins.Enchantrix then
+		return
+	end
 
 	AS:SkinLibrary("Configator")
 	AS:SkinLibrary("LibExtraTip-1")

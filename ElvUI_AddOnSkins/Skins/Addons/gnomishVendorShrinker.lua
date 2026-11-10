@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("GnomishVendorShrinker") then return end
+if not AS:IsAddonLODorEnabled("GnomishVendorShrinker") then
+	return
+end
 
 local unpack = unpack
 
@@ -12,7 +14,9 @@ local hooksecurefunc = hooksecurefunc
 -- https://www.curseforge.com/wow/addons/gnomishvendorshrinker/files/426171
 
 S:AddCallbackForAddon("GnomishVendorShrinker", "GnomishVendorShrinker", function()
-	if not E.private.addOnSkins.GnomishVendorShrinker then return end
+	if not E.private.addOnSkins.GnomishVendorShrinker then
+		return
+	end
 
 	if GVSEditBox then
 		GVSEditBox:StripTextures()
@@ -30,7 +34,9 @@ S:AddCallbackForAddon("GnomishVendorShrinker", "GnomishVendorShrinker", function
 	end
 
 	local GVS = AS:FindChildFrameByPoint(MerchantFrame, "Frame", "TOPLEFT", MerchantFrame, "TOPLEFT", 21, -77)
-	if not GVS then return end
+	if not GVS then
+		return
+	end
 
 	GVS:Size(304, 294)
 	GVS:Point("TOPLEFT", 19, -54)
@@ -39,8 +45,12 @@ S:AddCallbackForAddon("GnomishVendorShrinker", "GnomishVendorShrinker", function
 	MerchantBuyBackItem:ClearAllPoints()
 	MerchantBuyBackItem:Point("BOTTOMLEFT", 187, 118)
 
-	local popoutButtonOnEnter = function(self) self.icon:SetVertexColor(unpack(E.media.rgbvaluecolor)) end
-	local popoutButtonOnLeave = function(self) self.icon:SetVertexColor(1, 1, 1) end
+	local popoutButtonOnEnter = function(self)
+		self.icon:SetVertexColor(unpack(E.media.rgbvaluecolor))
+	end
+	local popoutButtonOnLeave = function(self)
+		self.icon:SetVertexColor(1, 1, 1)
+	end
 	local skinCurrencyIcons = function(self)
 		if self.altframesSkinned < #self.altframes then
 			for _, frame in ipairs(self.altframes) do
@@ -50,7 +60,7 @@ S:AddCallbackForAddon("GnomishVendorShrinker", "GnomishVendorShrinker", function
 		end
 	end
 
-	for _, child in ipairs({GVS:GetChildren()}) do
+	for _, child in ipairs({ GVS:GetChildren() }) do
 		local objType = child:GetObjectType()
 
 		if objType == "Button" then
@@ -77,7 +87,7 @@ S:AddCallbackForAddon("GnomishVendorShrinker", "GnomishVendorShrinker", function
 			child.altframesSkinned = 0
 			hooksecurefunc(child, "AddAltCurrency", skinCurrencyIcons)
 		elseif objType == "EditBox" then
-			for _, region in ipairs({child:GetRegions()}) do
+			for _, region in ipairs({ child:GetRegions() }) do
 				if region:GetDrawLayer() == "BACKGROUND" then
 					region:SetTexture(nil)
 				end
@@ -87,7 +97,7 @@ S:AddCallbackForAddon("GnomishVendorShrinker", "GnomishVendorShrinker", function
 			child:Point("TOPLEFT", GVS, "BOTTOMLEFT", 1, -61)
 			S:HandleEditBox(child)
 		elseif objType == "Slider" then
-			for _, child2 in ipairs({child:GetChildren()}) do
+			for _, child2 in ipairs({ child:GetChildren() }) do
 				local objType2 = child2:GetObjectType()
 
 				if objType2 == "Button" then

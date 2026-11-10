@@ -2,8 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Recount") then return end
-
+if not AS:IsAddonLODorEnabled("Recount") then
+	return
+end
 
 local _G = _G
 
@@ -11,7 +12,9 @@ local _G = _G
 -- https://www.wowace.com/projects/recount/files/458517
 
 S:AddCallbackForAddon("Recount", "Recount", function()
-	if not E.private.addOnSkins.Recount then return end
+	if not E.private.addOnSkins.Recount then
+		return
+	end
 
 	local function skinFrame(frame)
 		frame:SetTemplate("Transparent")
@@ -33,14 +36,20 @@ S:AddCallbackForAddon("Recount", "Recount", function()
 		backdrop:SetFrameLevel(frame:GetFrameLevel() - 1)
 		backdrop:Point("BOTTOMLEFT", frame, E.PixelMode and 1 or 0, E.PixelMode and 1 or 0)
 		backdrop:Point("TOPRIGHT", frame, E.PixelMode and -1 or 0, -(E.PixelMode and 31 or 30))
-		backdrop:SetTemplate(E.db.addOnSkins.recountTemplate, E.db.addOnSkins.recountTemplate == "Default" and E.db.addOnSkins.recountTemplateGloss or false)
+		backdrop:SetTemplate(
+			E.db.addOnSkins.recountTemplate,
+			E.db.addOnSkins.recountTemplate == "Default" and E.db.addOnSkins.recountTemplateGloss or false
+		)
 		frame.backdrop = backdrop
 
 		local header = CreateFrame("Frame", nil, backdrop)
 		header:Height(22)
 		header:Point("TOPLEFT", frame, E.PixelMode and 1 or 0, -(E.PixelMode and 8 or 7))
 		header:Point("TOPRIGHT", frame, E.PixelMode and -1 or 0, 0)
-		header:SetTemplate(E.db.addOnSkins.recountTitleTemplate, E.db.addOnSkins.recountTitleTemplate == "Default" and E.db.addOnSkins.recountTitleTemplateGloss or false)
+		header:SetTemplate(
+			E.db.addOnSkins.recountTitleTemplate,
+			E.db.addOnSkins.recountTitleTemplate == "Default" and E.db.addOnSkins.recountTitleTemplateGloss or false
+		)
 		frame.header = header
 
 		frame.Title:ClearAllPoints()
@@ -64,7 +73,9 @@ S:AddCallbackForAddon("Recount", "Recount", function()
 
 	hooksecurefunc(Recount, "AddWindow", function(self, window)
 		if window:GetName() == "Recount_ReportWindow" then
-			if Recount_ReportWindow.isSkinned then return end
+			if Recount_ReportWindow.isSkinned then
+				return
+			end
 
 			skinFrame(Recount_ReportWindow)
 
@@ -84,7 +95,9 @@ S:AddCallbackForAddon("Recount", "Recount", function()
 
 			Recount_ReportWindow.isSkinned = true
 		elseif window:GetName() == "Recount_ConfigWindow" then
-			if Recount_ConfigWindow.isSkinned then return end
+			if Recount_ConfigWindow.isSkinned then
+				return
+			end
 
 			skinFrame(Recount_ConfigWindow)
 
@@ -103,12 +116,12 @@ S:AddCallbackForAddon("Recount", "Recount", function()
 	S:HandleScrollBar(Recount_MainWindow_ScrollBarScrollBar)
 
 	hooksecurefunc(Recount, "HideScrollbarElements", function(self, name)
-		_G[name.."ScrollBar"].backdrop:Hide()
-		_G[name.."ScrollBar"]:GetThumbTexture().backdrop:Hide()
+		_G[name .. "ScrollBar"].backdrop:Hide()
+		_G[name .. "ScrollBar"]:GetThumbTexture().backdrop:Hide()
 	end)
 	hooksecurefunc(Recount, "ShowScrollbarElements", function(self, name)
-		_G[name.."ScrollBar"].backdrop:Show()
-		_G[name.."ScrollBar"]:GetThumbTexture().backdrop:Show()
+		_G[name .. "ScrollBar"].backdrop:Show()
+		_G[name .. "ScrollBar"]:GetThumbTexture().backdrop:Show()
 	end)
 
 	if Recount.db.profile.MainWindow.ShowScrollbar then
@@ -128,7 +141,7 @@ S:AddCallbackForAddon("Recount", "Recount", function()
 		Recount_DetailWindow.LeftButton,
 		Recount_DetailWindow.RightButton,
 		Recount_DetailWindow.ReportButton,
-		Recount_DetailWindow.SummaryButton
+		Recount_DetailWindow.SummaryButton,
 	}
 
 	for _, button in ipairs(buttons) do
@@ -144,7 +157,10 @@ S:AddCallbackForAddon("Recount", "Recount", function()
 	end
 
 	local RecountLocale = LibStub("AceLocale-3.0"):GetLocale("Recount")
-	local function resetData(self) Recount:ResetData() self:GetParent():Hide() end
+	local function resetData(self)
+		Recount:ResetData()
+		self:GetParent():Hide()
+	end
 
 	function Recount:ShowReset()
 		AS:AcceptFrame(RecountLocale["Reset Recount?"], resetData)

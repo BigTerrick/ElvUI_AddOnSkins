@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Auctionator") then return end
+if not AS:IsAddonLODorEnabled("Auctionator") then
+	return
+end
 
 local _G = _G
 local type = type
@@ -16,7 +18,9 @@ local GetItemQualityColor = GetItemQualityColor
 -- https://www.curseforge.com/wow/addons/auctionator/files/426882
 
 S:AddCallbackForAddon("Auctionator", "Auctionator", function()
-	if not E.private.addOnSkins.Auctionator then return end
+	if not E.private.addOnSkins.Auctionator then
+		return
+	end
 
 	-- Error Frame
 	Atr_Error_Frame:SetTemplate("Transparent")
@@ -103,7 +107,7 @@ S:AddCallbackForAddon("Auctionator", "Auctionator", function()
 
 	hooksecurefunc("Atr_SetTextureButton", function(elementName, count, itemlink)
 		local button = _G[elementName]
-		local buttonName = _G[elementName.."Name"]
+		local buttonName = _G[elementName .. "Name"]
 
 		if GetItemIcon(itemlink) then
 			local _, _, quality = GetItemInfo(itemlink)
@@ -160,9 +164,9 @@ S:AddCallbackForAddon("Auctionator", "Auctionator", function()
 
 		if not E.private.skins.blizzard.enable or not E.private.skins.blizzard.auctionhouse then
 			for i = AuctionFrame.numTabs - 2, AuctionFrame.numTabs do
-				local tab = _G["AuctionFrameTab"..i]
+				local tab = _G["AuctionFrameTab" .. i]
 				S:HandleTab(tab)
-				tab:Point("LEFT", _G["AuctionFrameTab"..(i - 1)], "RIGHT", -15, 0)
+				tab:Point("LEFT", _G["AuctionFrameTab" .. (i - 1)], "RIGHT", -15, 0)
 			end
 		end
 
@@ -205,12 +209,12 @@ S:AddCallbackForAddon("Auctionator", "Auctionator", function()
 		Atr_Hlist_ScrollFrameScrollBar:Point("BOTTOMLEFT", Atr_Hlist_ScrollFrame, "BOTTOMRIGHT", 3, 19)
 
 		for i = 1, 20 do -- ITEM_HIST_NUM_LINES
-			local button = _G["AuctionatorHEntry"..i]
+			local button = _G["AuctionatorHEntry" .. i]
 
 			button:Width(170)
 			skinButtonHighlight(button)
 
-			_G["AuctionatorHEntry"..i.."_EntryText"]:Width(168)
+			_G["AuctionatorHEntry" .. i .. "_EntryText"]:Width(168)
 
 			if i == 1 then
 				button:Point("TOPLEFT", 1, -1)
@@ -232,13 +236,13 @@ S:AddCallbackForAddon("Auctionator", "Auctionator", function()
 		AuctionatorMessage2Frame:Point("TOP", 100, -55)
 
 		for i = 1, 3 do
-			local tab = _G["Atr_ListTabsTab"..i]
+			local tab = _G["Atr_ListTabsTab" .. i]
 			tab:StripTextures()
 			S:HandleButton(tab)
 			tab:Height(22)
 
 			if i ~= 3 then
-				tab:Point("RIGHT", _G["Atr_ListTabsTab"..(i + 1)], "LEFT", -3, 0)
+				tab:Point("RIGHT", _G["Atr_ListTabsTab" .. (i + 1)], "LEFT", -3, 0)
 			end
 		end
 
@@ -257,7 +261,7 @@ S:AddCallbackForAddon("Auctionator", "Auctionator", function()
 		AuctionatorScrollFrameScrollBar:Point("TOPLEFT", AuctionatorScrollFrame, "TOPRIGHT", 3, -19)
 		AuctionatorScrollFrameScrollBar:Point("BOTTOMLEFT", AuctionatorScrollFrame, "BOTTOMRIGHT", 3, 19)
 
-		for _, tab in ipairs({Atr_Col1_Heading_Button, Atr_Col3_Heading_Button}) do
+		for _, tab in ipairs({ Atr_Col1_Heading_Button, Atr_Col3_Heading_Button }) do
 			tab:StripTextures()
 			tab:SetNormalTexture([[Interface\Buttons\UI-SortArrow]])
 			tab:StyleButton()
@@ -266,7 +270,7 @@ S:AddCallbackForAddon("Auctionator", "Auctionator", function()
 		AuctionatorEntry1:Point("TOPLEFT", AuctionatorScrollFrame, "TOPLEFT", 1, -1)
 
 		for i = 1, 12 do
-			local button = _G["AuctionatorEntry"..i]
+			local button = _G["AuctionatorEntry" .. i]
 			button:Width(586)
 			skinButtonHighlight(button)
 		end
@@ -404,9 +408,9 @@ S:AddCallbackForAddon("Auctionator", "Auctionator", function()
 		"UC_500_MoneyInput",
 	}
 	for _, name in ipairs(moneyEditBoxes) do
-		S:HandleEditBox(_G[name.."Gold"])
-		S:HandleEditBox(_G[name.."Silver"])
-		S:HandleEditBox(_G[name.."Copper"])
+		S:HandleEditBox(_G[name .. "Gold"])
+		S:HandleEditBox(_G[name .. "Silver"])
+		S:HandleEditBox(_G[name .. "Copper"])
 	end
 	S:HandleEditBox(Atr_Starting_Discount)
 

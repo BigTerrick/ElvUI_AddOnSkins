@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Altoholic") then return end
+if not AS:IsAddonLODorEnabled("Altoholic") then
+	return
+end
 
 local _G = _G
 local pairs = pairs
@@ -13,7 +15,9 @@ local hooksecurefunc = hooksecurefunc
 -- Altoholic 3.3.002b
 
 S:AddCallbackForAddon("Altoholic", "Altoholic", function()
-	if not E.private.addOnSkins.Altoholic then return end
+	if not E.private.addOnSkins.Altoholic then
+		return
+	end
 
 	local function AltoItem(item)
 		local name = item:GetName()
@@ -21,10 +25,10 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 		item:StyleButton()
 
 		item:SetNormalTexture("")
-		_G[name.."IconTexture"]:SetInside()
-		_G[name.."IconTexture"]:SetTexCoord(unpack(E.TexCoords))
+		_G[name .. "IconTexture"]:SetInside()
+		_G[name .. "IconTexture"]:SetTexCoord(unpack(E.TexCoords))
 
-		local cooldown = _G[name.."Cooldown"]
+		local cooldown = _G[name .. "Cooldown"]
 		if cooldown then
 			E:RegisterCooldown(cooldown)
 		end
@@ -47,12 +51,12 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleCloseButton(AltoholicFrameCloseButton, AltoholicFrame.backdrop)
 
 	for i = 1, 5 do
-		local tab = _G["AltoholicFrameTab"..i]
+		local tab = _G["AltoholicFrameTab" .. i]
 
 		if i == 1 then
 			tab:Point("TOPLEFT", AltoholicFrame, "BOTTOMLEFT", 11, 13)
 		else
-			tab:Point("TOPLEFT", _G["AltoholicFrameTab"..(i - 1)], "TOPRIGHT", -15, 0)
+			tab:Point("TOPLEFT", _G["AltoholicFrameTab" .. (i - 1)], "TOPRIGHT", -15, 0)
 		end
 
 		S:HandleTab(tab)
@@ -64,7 +68,9 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleButton(AltoholicFrame_SearchButton)
 
 	local function ClassesItemItemTexure_SetTexCoord(self, left, right, top, bottom)
-		if self.customTexCoord then return end
+		if self.customTexCoord then
+			return
+		end
 		self.customTexCoord = true
 		self:SetTexCoord(left + 0.02, right - 0.02, top + 0.02, bottom - 0.02)
 		self.customTexCoord = nil
@@ -77,16 +83,16 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 			self:SetBackdropBorderColor(unpack(E.media.bordercolor))
 		end
 
-		_G[self:GetName().."IconTexture"]:SetInside()
+		_G[self:GetName() .. "IconTexture"]:SetInside()
 
 		self.border:SetTexture("")
 	end
 
 	for i = 1, 10 do
-		local item = _G["AltoholicFrameClassesItem"..i]
+		local item = _G["AltoholicFrameClassesItem" .. i]
 		AltoItem(item)
 
-		hooksecurefunc(_G[item:GetName().."IconTexture"], "SetTexCoord", ClassesItemItemTexure_SetTexCoord)
+		hooksecurefunc(_G[item:GetName() .. "IconTexture"], "SetTexCoord", ClassesItemItemTexure_SetTexCoord)
 
 		item:HookScript("OnShow", ClassesItem_OnShow)
 	end
@@ -112,7 +118,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameSummaryScrollFrameScrollBar)
 
 	for i = 1, 14 do
-		S:HandleCollapseExpandButton(_G["AltoholicFrameSummaryEntry"..i.."Collapse"], "-")
+		S:HandleCollapseExpandButton(_G["AltoholicFrameSummaryEntry" .. i .. "Collapse"], "-")
 	end
 
 	-- Activity
@@ -120,7 +126,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameActivityScrollFrameScrollBar)
 
 	for i = 1, 14 do
-		S:HandleCollapseExpandButton(_G["AltoholicFrameActivityEntry"..i.."Collapse"], "-")
+		S:HandleCollapseExpandButton(_G["AltoholicFrameActivityEntry" .. i .. "Collapse"], "-")
 	end
 
 	-- AuctionHouse
@@ -128,7 +134,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameAuctionsScrollFrameScrollBar)
 
 	for i = 1, 7 do
-		AltoItem(_G["AltoholicFrameAuctionsEntry"..i.."Item"])
+		AltoItem(_G["AltoholicFrameAuctionsEntry" .. i .. "Item"])
 	end
 
 	-- BagUsage
@@ -136,7 +142,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameBagUsageScrollFrameScrollBar)
 
 	for i = 1, 14 do
-		S:HandleCollapseExpandButton(_G["AltoholicFrameBagUsageEntry"..i.."Collapse"], "-")
+		S:HandleCollapseExpandButton(_G["AltoholicFrameBagUsageEntry" .. i .. "Collapse"], "-")
 	end
 
 	-- Calendar
@@ -155,7 +161,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 
 	for i = 1, 7 do
 		for j = 1, 14 do
-			AltoItem(_G["AltoholicFrameContainersEntry"..i.."Item"..j])
+			AltoItem(_G["AltoholicFrameContainersEntry" .. i .. "Item" .. j])
 		end
 	end
 
@@ -165,7 +171,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	AltoholicFrameCurrenciesScrollFrame:StripTextures()
 	S:HandleScrollBar(AltoholicFrameCurrenciesScrollFrameScrollBar)
 
---[[
+	--[[
 	for i = 1, 8 do
 		for j = 1, 10 do
 			_G["AltoholicFrameCurrenciesEntry"..i.."Item"..j]
@@ -179,14 +185,14 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 
 	for i = 1, 7 do
 		for j = 1, 10 do
-			AltoItem(_G["AltoholicFrameEquipmentEntry"..i.."Item"..j])
+			AltoItem(_G["AltoholicFrameEquipmentEntry" .. i .. "Item" .. j])
 		end
 	end
 
 	-- GuildBank
 	for i = 1, 7 do
 		for j = 1, 14 do
-			AltoItem(_G["AltoGuildBankEntry"..i.."Item"..j])
+			AltoItem(_G["AltoGuildBankEntry" .. i .. "Item" .. j])
 		end
 	end
 
@@ -195,8 +201,8 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameGuildBankTabsScrollFrameScrollBar)
 
 	for i = 1, 14 do
-		S:HandleCollapseExpandButton(_G["AltoholicFrameGuildBankTabsEntry"..i.."Collapse"], "-")
-		S:HandleButton(_G["AltoholicFrameGuildBankTabsEntry"..i.."UpdateTab"])
+		S:HandleCollapseExpandButton(_G["AltoholicFrameGuildBankTabsEntry" .. i .. "Collapse"], "-")
+		S:HandleButton(_G["AltoholicFrameGuildBankTabsEntry" .. i .. "UpdateTab"])
 	end
 
 	-- GuildMembers
@@ -204,11 +210,11 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameGuildMembersScrollFrameScrollBar)
 
 	for i = 1, 14 do
-		S:HandleCollapseExpandButton(_G["AltoholicFrameGuildMembersEntry"..i.."Collapse"], "-")
+		S:HandleCollapseExpandButton(_G["AltoholicFrameGuildMembersEntry" .. i .. "Collapse"], "-")
 	end
 
 	for i = 1, 19 do
-		AltoItem(_G["AltoholicFrameGuildMembersItem"..i])
+		AltoItem(_G["AltoholicFrameGuildMembersItem" .. i])
 	end
 
 	-- GuildProfessions
@@ -216,7 +222,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameGuildProfessionsScrollFrameScrollBar)
 
 	for i = 1, 14 do
-		S:HandleCollapseExpandButton(_G["AltoholicFrameGuildProfessionsEntry"..i.."Collapse"], "-")
+		S:HandleCollapseExpandButton(_G["AltoholicFrameGuildProfessionsEntry" .. i .. "Collapse"], "-")
 	end
 
 	-- Mails
@@ -224,7 +230,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameMailScrollFrameScrollBar)
 
 	for i = 1, 7 do
-		AltoItem(_G["AltoholicFrameMailEntry"..i.."Item"])
+		AltoItem(_G["AltoholicFrameMailEntry" .. i .. "Item"])
 	end
 
 	-- Pets
@@ -233,7 +239,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleRotateButton(AltoholicFramePetsNormal_ModelFrameRotateRightButton)
 
 	for i = 1, 12 do
-		local button = _G["AltoholicFramePetsNormal_Button"..i]
+		local button = _G["AltoholicFramePetsNormal_Button" .. i]
 		button:SetTemplate()
 		button:StyleButton(nil, true)
 		button:GetDisabledTexture():SetInside()
@@ -256,7 +262,7 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameQuestsScrollFrameScrollBar)
 
 	for i = 1, 14 do
-		S:HandleCollapseExpandButton(_G["AltoholicFrameQuestsEntry"..i.."Collapse"], "-")
+		S:HandleCollapseExpandButton(_G["AltoholicFrameQuestsEntry" .. i .. "Collapse"], "-")
 	end
 
 	-- Recipes
@@ -269,11 +275,11 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameRecipesScrollFrameScrollBar)
 
 	for i = 1, 14 do
-		S:HandleCollapseExpandButton(_G["AltoholicFrameRecipesEntry"..i.."Collapse"], "-")
-		AltoItem(_G["AltoholicFrameRecipesEntry"..i.."Craft"])
+		S:HandleCollapseExpandButton(_G["AltoholicFrameRecipesEntry" .. i .. "Collapse"], "-")
+		AltoItem(_G["AltoholicFrameRecipesEntry" .. i .. "Craft"])
 
 		for j = 1, 8 do
-			AltoItem(_G["AltoholicFrameRecipesEntry"..i.."Item"..j])
+			AltoItem(_G["AltoholicFrameRecipesEntry" .. i .. "Item" .. j])
 		end
 	end
 
@@ -284,8 +290,8 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 
 	for i = 1, 8 do
 		for j = 1, 10 do
-			local item = _G["AltoholicFrameReputationsEntry"..i.."Item"..j]
-			local bg = _G["AltoholicFrameReputationsEntry"..i.."Item"..j.."_Background"]
+			local item = _G["AltoholicFrameReputationsEntry" .. i .. "Item" .. j]
+			local bg = _G["AltoholicFrameReputationsEntry" .. i .. "Item" .. j .. "_Background"]
 
 			item:SetTemplate()
 			item:StyleButton()
@@ -301,8 +307,8 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameSearchScrollFrameScrollBar)
 
 	for i = 1, 7 do
-		E:RegisterCooldown(_G["AltoholicFrameSearchEntry"..i.."Cooldown"])
-		AltoItem(_G["AltoholicFrameSearchEntry"..i.."Item"])
+		E:RegisterCooldown(_G["AltoholicFrameSearchEntry" .. i .. "Cooldown"])
+		AltoItem(_G["AltoholicFrameSearchEntry" .. i .. "Item"])
 	end
 
 	-- Skills
@@ -310,20 +316,36 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleScrollBar(AltoholicFrameSkillsScrollFrameScrollBar)
 
 	for i = 1, 14 do
-		S:HandleCollapseExpandButton(_G["AltoholicFrameSkillsEntry"..i.."Collapse"], "-")
+		S:HandleCollapseExpandButton(_G["AltoholicFrameSkillsEntry" .. i .. "Collapse"], "-")
 	end
 
 	-- TabCharacters
 	S:HandleDropDownBox(AltoholicTabCharacters_SelectRealm)
 	S:HandleDropDownBox(AltoholicTabCharacters_SelectChar)
 
-	local tabCharacters = {"_Bags", "_Equipment", "_Quests", "_Talents", "_Auctions", "_Bids", "_Mails", "_Pets", "_Mounts", "_Factions", "_Tokens", "_Cooking", "_FirstAid", "_Prof1", "_Prof2"}
+	local tabCharacters = {
+		"_Bags",
+		"_Equipment",
+		"_Quests",
+		"_Talents",
+		"_Auctions",
+		"_Bids",
+		"_Mails",
+		"_Pets",
+		"_Mounts",
+		"_Factions",
+		"_Tokens",
+		"_Cooking",
+		"_FirstAid",
+		"_Prof1",
+		"_Prof2",
+	}
 	for _, tab in pairs(tabCharacters) do
-		AltoItem(_G["AltoholicTabCharacters"..tab])
+		AltoItem(_G["AltoholicTabCharacters" .. tab])
 	end
 
 	for i = 1, 4 do
-		_G["AltoholicTabCharacters_Sort"..i]:StripTextures()
+		_G["AltoholicTabCharacters_Sort" .. i]:StripTextures()
 	end
 
 	-- TabGuildBank
@@ -332,12 +354,12 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleCheckBox(AltoholicTabGuildBank_HideInTooltip)
 
 	for i = 1, 6 do
-		_G["AltoholicTabGuildBankMenuItem"..i]:StripTextures()
+		_G["AltoholicTabGuildBankMenuItem" .. i]:StripTextures()
 	end
 
 	-- TabSearch
 	for i = 1, 15 do
-		_G["AltoholicTabSearchMenuItem"..i]:StripTextures()
+		_G["AltoholicTabSearchMenuItem" .. i]:StripTextures()
 	end
 
 	AltoholicSearchMenuScrollFrame:StripTextures()
@@ -349,13 +371,13 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 	S:HandleDropDownBox(AltoholicTabSearch_SelectLocation, 200)
 
 	for i = 1, 8 do
-		_G["AltoholicTabSearch_Sort"..i]:StripTextures()
+		_G["AltoholicTabSearch_Sort" .. i]:StripTextures()
 	end
 
 	-- TabSummary
 	for i = 1, 8 do
-		_G["AltoholicTabSummaryMenuItem"..i]:StripTextures()
-		_G["AltoholicTabSummary_Sort"..i]:StripTextures()
+		_G["AltoholicTabSummaryMenuItem" .. i]:StripTextures()
+		_G["AltoholicTabSummary_Sort" .. i]:StripTextures()
 	end
 
 	S:HandleCollapseExpandButton(AltoholicTabSummaryToggleView, "-")
@@ -367,34 +389,36 @@ S:AddCallbackForAddon("Altoholic", "Altoholic", function()
 
 	-- Telents
 	for i = 1, 3 do
-		AltoItem(_G["AltoholicFrameTalents_SpecIcon"..i])
+		AltoItem(_G["AltoholicFrameTalents_SpecIcon" .. i])
 	end
 
 	S:HandleScrollBar(AltoholicFrameTalents_ScrollFrameScrollBar)
 
 	for i = 1, 40 do
-		AltoItem(_G["AltoholicFrameTalents_ScrollFrameTalent"..i])
+		AltoItem(_G["AltoholicFrameTalents_ScrollFrameTalent" .. i])
 	end
 end)
 
 S:AddCallbackForAddon("Altoholic_Achievements", "Altoholic_Achievements", function()
-	if not E.private.addOnSkins.Altoholic then return end
+	if not E.private.addOnSkins.Altoholic then
+		return
+	end
 
 	AltoholicFrameAchievementsScrollFrame:StripTextures()
 	S:HandleScrollBar(AltoholicFrameAchievementsScrollFrameScrollBar)
 
 	for i = 1, 8 do
 		for j = 1, 10 do
-			_G["AltoholicFrameAchievementsEntry"..i.."Item"..j]:SetTemplate()
-			_G["AltoholicFrameAchievementsEntry"..i.."Item"..j]:StyleButton()
-			_G["AltoholicFrameAchievementsEntry"..i.."Item"..j.."_Background"]:SetDrawLayer("BORDER")
-			_G["AltoholicFrameAchievementsEntry"..i.."Item"..j.."_Background"]:SetInside()
-			_G["AltoholicFrameAchievementsEntry"..i.."Item"..j.."_Background"]:SetTexCoord(unpack(E.TexCoords))
+			_G["AltoholicFrameAchievementsEntry" .. i .. "Item" .. j]:SetTemplate()
+			_G["AltoholicFrameAchievementsEntry" .. i .. "Item" .. j]:StyleButton()
+			_G["AltoholicFrameAchievementsEntry" .. i .. "Item" .. j .. "_Background"]:SetDrawLayer("BORDER")
+			_G["AltoholicFrameAchievementsEntry" .. i .. "Item" .. j .. "_Background"]:SetInside()
+			_G["AltoholicFrameAchievementsEntry" .. i .. "Item" .. j .. "_Background"]:SetTexCoord(unpack(E.TexCoords))
 		end
 	end
 
 	for i = 1, 15 do
-		_G["AltoholicTabAchievementsMenuItem"..i]:StripTextures()
+		_G["AltoholicTabAchievementsMenuItem" .. i]:StripTextures()
 	end
 
 	AltoholicAchievementsMenuScrollFrame:StripTextures()

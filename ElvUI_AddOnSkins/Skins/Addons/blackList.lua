@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("BlackList") then return end
+if not AS:IsAddonLODorEnabled("BlackList") then
+	return
+end
 
 -- Black List 3.3.01
 -- https://www.curseforge.com/wow/addons/black-list-siv0968/files/439842
 
 S:AddCallbackForAddon("BlackList", "BlackList", function()
-	if not E.private.addOnSkins.BlackList then return end
+	if not E.private.addOnSkins.BlackList then
+		return
+	end
 
 	FriendsTabHeaderTab4:StripTextures()
 	FriendsTabHeaderTab4:Size(63, 26)
@@ -39,7 +43,13 @@ S:AddCallbackForAddon("BlackList", "BlackList", function()
 	FriendsFrameBlackListScrollFrame:StripTextures()
 	S:HandleScrollBar(FriendsFrameBlackListScrollFrameScrollBar)
 	FriendsFrameBlackListScrollFrameScrollBar:Point("TOPLEFT", FriendsFrameBlackListScrollFrame, "TOPRIGHT", 3, -19)
-	FriendsFrameBlackListScrollFrameScrollBar:Point("BOTTOMLEFT", FriendsFrameBlackListScrollFrame, "BOTTOMRIGHT", 3, 19)
+	FriendsFrameBlackListScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		FriendsFrameBlackListScrollFrame,
+		"BOTTOMRIGHT",
+		3,
+		19
+	)
 
 	-- Details
 	BlackListDetailsFrame:StripTextures()
@@ -55,7 +65,13 @@ S:AddCallbackForAddon("BlackList", "BlackList", function()
 	BlackListDetailsFrameReasonTextBackground:SetTemplate()
 	S:HandleScrollBar(BlackListDetailsFrameScrollFrameScrollBar)
 
-	BlackListDetailsFrameScrollFrameScrollBar:Point("BOTTOMLEFT", BlackListDetailsFrameScrollFrame, "BOTTOMRIGHT", 6, 18)
+	BlackListDetailsFrameScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		BlackListDetailsFrameScrollFrame,
+		"BOTTOMRIGHT",
+		6,
+		18
+	)
 
 	-- Details Edit
 	BlackListEditDetailsFrame:StripTextures()
@@ -72,7 +88,13 @@ S:AddCallbackForAddon("BlackList", "BlackList", function()
 	S:HandleDropDownBox(BlackListEditDetailsFrameClassDropDown, 143)
 	S:HandleDropDownBox(BlackListEditDetailsFrameRaceDropDown, 143)
 
-	BlackListEditDetailsFrameClassDropDown:Point("TOPLEFT", BlackListEditDetailsFrameLevelBackground, "TOPRIGHT", -18, 0)
+	BlackListEditDetailsFrameClassDropDown:Point(
+		"TOPLEFT",
+		BlackListEditDetailsFrameLevelBackground,
+		"TOPRIGHT",
+		-18,
+		0
+	)
 	BlackListEditDetailsFrameClassDropDown.SetWidth = E.noop
 	BlackListEditDetailsFrameClassDropDownButton.SetWidth = E.noop
 

@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("KarniCrap") then return end
+if not AS:IsAddonLODorEnabled("KarniCrap") then
+	return
+end
 
 local _G = _G
 
@@ -10,7 +12,9 @@ local _G = _G
 -- https://www.curseforge.com/wow/addons/karnicrap/files/416407
 
 S:AddCallbackForAddon("KarniCrap", "KarniCrap", function()
-	if not E.private.addOnSkins.KarniCrap then return end
+	if not E.private.addOnSkins.KarniCrap then
+		return
+	end
 
 	KarniCrap:StripTextures()
 	KarniCrap:SetTemplate("Transparent")
@@ -47,7 +51,7 @@ S:AddCallbackForAddon("KarniCrap", "KarniCrap", function()
 		-- Lists
 		"KarniCrapScrollBarScrollBar",
 		"KarniNotCrapScrollBarScrollBar",
-		"KarniCrap_Inventory_ScrollBarScrollBar"
+		"KarniCrap_Inventory_ScrollBarScrollBar",
 	}
 
 	local buttons = {
@@ -57,7 +61,7 @@ S:AddCallbackForAddon("KarniCrap", "KarniCrap", function()
 		"KarniCrap_BtnWhitelistRemove",
 		-- Inventory
 		"KarniCrap_BtnDestroyItem",
-		"KarniCrap_BtnDestroyAllItems"
+		"KarniCrap_BtnDestroyAllItems",
 	}
 
 	local checkBoxes = {
@@ -119,7 +123,7 @@ S:AddCallbackForAddon("KarniCrap", "KarniCrap", function()
 		"KarniCrap_Tradeskills_CBProspecting",
 		"KarniCrap_Tradeskills_CBSkinning",
 		-- Inventory
-		"KarniCrap_Inventory_CBHideQuestItems"
+		"KarniCrap_Inventory_CBHideQuestItems",
 	}
 
 	local editBoxes = {
@@ -130,13 +134,13 @@ S:AddCallbackForAddon("KarniCrap", "KarniCrap", function()
 		"KarniCrap_Tab1_CBCommonDesc_GoldInputBox",
 		"KarniCrap_Tab1_CBCommonDesc_SilverInputBox",
 		"KarniCrap_Tab1_CBCommonDesc_CopperInputBox",
-		"KarniCrap_EBDestroySlotsNum"
+		"KarniCrap_EBDestroySlotsNum",
 	}
 
 	local tabs = {
 		"KarniCrapTab1",
 		"KarniCrapTab2",
-		"KarniCrapTab3"
+		"KarniCrapTab3",
 	}
 
 	for _, frame in ipairs(frames) do
@@ -159,8 +163,8 @@ S:AddCallbackForAddon("KarniCrap", "KarniCrap", function()
 	end
 
 	for _, editBox in ipairs(editBoxes) do
-		if _G[editBox.."Disabled"] then
-			_G[editBox.."Disabled"]:StripTextures()
+		if _G[editBox .. "Disabled"] then
+			_G[editBox .. "Disabled"]:StripTextures()
 		end
 
 		_G[editBox]:Size(32, 16)
@@ -172,7 +176,7 @@ S:AddCallbackForAddon("KarniCrap", "KarniCrap", function()
 	end
 
 	for i = 1, 15 do
-		_G["KarniInvEntry"..i.."_BtnCrap"]:Size(30)
-		S:HandleCloseButton(_G["KarniInvEntry"..i.."_BtnCrap"])
+		_G["KarniInvEntry" .. i .. "_BtnCrap"]:Size(30)
+		S:HandleCloseButton(_G["KarniInvEntry" .. i .. "_BtnCrap"])
 	end
 end)

@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("EventAlert") then return end
+if not AS:IsAddonLODorEnabled("EventAlert") then
+	return
+end
 
 local _G = _G
 
@@ -10,7 +12,9 @@ local _G = _G
 -- https://www.curseforge.com/wow/addons/event-alert/files/456081
 
 S:AddCallbackForAddon("EventAlert", "EventAlert", function()
-	if not E.private.addOnSkins.EventAlert then return end
+	if not E.private.addOnSkins.EventAlert then
+		return
+	end
 
 	local function Alart_OnShow(self)
 		self.icon:SetTexture(self:GetBackdrop().bgFile)
@@ -18,7 +22,9 @@ S:AddCallbackForAddon("EventAlert", "EventAlert", function()
 	end
 
 	local function SkinAlartFrame(frame, hook)
-		if not frame or frame.icon then return end
+		if not frame or frame.icon then
+			return
+		end
 
 		frame.icon = frame:CreateTexture(nil, "ARTWORK")
 		frame.icon:SetInside()
@@ -34,17 +40,17 @@ S:AddCallbackForAddon("EventAlert", "EventAlert", function()
 
 	local function SkinFrames()
 		for index in pairsByKeys(EA_Items[EA_playerClass]) do
-			SkinAlartFrame(_G["EAFrame_"..index], true)
+			SkinAlartFrame(_G["EAFrame_" .. index], true)
 		end
 		for index in pairsByKeys(EA_AltItems[EA_playerClass]) do
-			SkinAlartFrame(_G["EAFrame_"..index], true)
+			SkinAlartFrame(_G["EAFrame_" .. index], true)
 		end
 		for index in pairsByKeys(EA_Items[EA_CLASS_OTHER]) do
-			SkinAlartFrame(_G["EAFrame_"..index], true)
+			SkinAlartFrame(_G["EAFrame_" .. index], true)
 		end
 
 		-- Anchor Test Frames
-		for _, frame in pairs({EA_Anchor_Frame, EA_Anchor_Frame2, EA_Anchor_Frame3}) do
+		for _, frame in pairs({ EA_Anchor_Frame, EA_Anchor_Frame2, EA_Anchor_Frame3 }) do
 			SkinAlartFrame(frame)
 		end
 
@@ -67,7 +73,7 @@ S:AddCallbackForAddon("EventAlert", "EventAlert", function()
 
 	local function SkinCustomFrames()
 		for index in pairsByKeys(EA_CustomItems[EA_playerClass]) do
-			SkinAlartFrame(_G["EAFrame_"..index], true)
+			SkinAlartFrame(_G["EAFrame_" .. index], true)
 		end
 	end
 

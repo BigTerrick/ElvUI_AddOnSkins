@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("BeanCounter") then return end
+if not AS:IsAddonLODorEnabled("BeanCounter") then
+	return
+end
 
 -- BeanCounter 5.8.4723
 -- https://www.curseforge.com/wow/addons/auctioneer/files/427823
 
 S:AddCallbackForAddon("BeanCounter", "BeanCounter", function()
-	if not E.private.addOnSkins.BeanCounter then return end
+	if not E.private.addOnSkins.BeanCounter then
+		return
+	end
 
 	AS:SkinLibrary("Configator")
 	AS:SkinLibrary("LibExtraTip-1")
@@ -70,16 +74,16 @@ S:AddCallbackForAddon("BeanCounter", "BeanCounter", function()
 		frame.selectbox.box:CreateBackdrop("Default")
 		frame.selectbox.box.backdrop:Point("TOPLEFT", 19, -2)
 		frame.selectbox.box.backdrop:Point("BOTTOMRIGHT", -14, -11)
-		_G[frame.selectbox.box:GetName().."Text"]:SetParent(frame.selectbox.box.backdrop)
+		_G[frame.selectbox.box:GetName() .. "Text"]:SetParent(frame.selectbox.box.backdrop)
 
 		frame.selectbox.box.button:Size(16)
 		frame.selectbox.box.button:Point("TOPRIGHT", -16, -4)
-		S:HandleNextPrevButton(frame.selectbox.box.button, "down", {1, 0.8, 0})
+		S:HandleNextPrevButton(frame.selectbox.box.button, "down", { 1, 0.8, 0 })
 
 		local searchBoxName = frame.searchBox:GetName()
-		_G[searchBoxName.."Left"]:Hide()
-		_G[searchBoxName.."Middle"]:Hide()
-		_G[searchBoxName.."Right"]:Hide()
+		_G[searchBoxName .. "Left"]:Hide()
+		_G[searchBoxName .. "Middle"]:Hide()
+		_G[searchBoxName .. "Right"]:Hide()
 		frame.searchBox:SetTemplate("Default")
 		frame.searchBox:Point("TOPLEFT", 23, -165)
 		frame.searchBox:Size(157, 20)
@@ -108,7 +112,9 @@ S:AddCallbackForAddon("BeanCounter", "BeanCounter", function()
 		frame.auctionFailedCheck:Point("TOPLEFT", 19, -357)
 
 		hooksecurefunc(private, "searchByItemID", function(id, settings, queryReturn, count, itemTexture, classic)
-			if not itemTexture then return end
+			if not itemTexture then
+				return
+			end
 
 			private.frame.icon:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
 			private.frame.icon:GetNormalTexture():SetInside()

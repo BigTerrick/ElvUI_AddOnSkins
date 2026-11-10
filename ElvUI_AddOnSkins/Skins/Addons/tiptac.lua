@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("TipTac") then return end
+if not AS:IsAddonLODorEnabled("TipTac") then
+	return
+end
 
 -- TipTac 10.05.01
 -- https://www.curseforge.com/wow/addons/tip-tac/files/427096
 
 S:AddCallbackForAddon("TipTac", "TipTac", function()
-	if not E.private.addOnSkins.TipTac then return end
+	if not E.private.addOnSkins.TipTac then
+		return
+	end
 
 	if not TipTac_Config then
 		TipTac_Config = {}
@@ -70,7 +74,7 @@ S:AddCallbackForAddon("TipTac", "TipTac", function()
 			WorldMapTooltip,
 			WorldMapCompareTooltip1,
 			WorldMapCompareTooltip2,
-			WorldMapCompareTooltip3
+			WorldMapCompareTooltip3,
 		}
 
 		for _, tt in ipairs(elvTooltips) do
@@ -84,7 +88,7 @@ S:AddCallbackForAddon("TipTac", "TipTac", function()
 		end
 
 		local function GameTooltip_ShowStatusBar_Skinned(tt, ...)
-			local statusBar = _G[tt:GetName().."StatusBar"..tt.shownStatusBars]
+			local statusBar = _G[tt:GetName() .. "StatusBar" .. tt.shownStatusBars]
 			if statusBar and not statusBar.skinned then
 				statusBar:StripTextures()
 				statusBar:CreateBackdrop("Default")
@@ -99,7 +103,9 @@ S:AddCallbackForAddon("TipTac", "TipTac", function()
 end)
 
 S:AddCallbackForAddon("TipTacOptions", "TipTacOptions", function()
-	if not E.private.addOnSkins.TipTac then return end
+	if not E.private.addOnSkins.TipTac then
+		return
+	end
 
 	TipTacOptions:StripTextures()
 	TipTacOptions:SetTemplate("Transparent")

@@ -2,14 +2,18 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("TinyPad") then return end
+if not AS:IsAddonLODorEnabled("TinyPad") then
+	return
+end
 
 local unpack = unpack
 
 -- TinyPad 1.6.2
 
 S:AddCallbackForAddon("TinyPad", "TinyPad", function()
-	if not E.private.addOnSkins.TinyPad then return end
+	if not E.private.addOnSkins.TinyPad then
+		return
+	end
 
 	TinyPadFrame:StripTextures()
 	TinyPadFrame:SetTemplate("Transparent")

@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("RaidRoll") then return end
+if not AS:IsAddonLODorEnabled("RaidRoll") then
+	return
+end
 
 -- RaidRoll 4.4.15
 -- https://www.curseforge.com/wow/addons/raid-roll/files/450070
 
 S:AddCallbackForAddon("RaidRoll", "RaidRoll", function()
-	if not E.private.addOnSkins.RaidRoll then return end
+	if not E.private.addOnSkins.RaidRoll then
+		return
+	end
 
 	RR_RollFrame:SetTemplate("Transparent")
 	RR_NAME_FRAME:SetTemplate("Default")
@@ -53,10 +57,10 @@ S:AddCallbackForAddon("RaidRoll", "RaidRoll", function()
 	S:HandleButton(RaidRoll_ExtraOptionButton)
 
 	for i = 1, 5 do
-		local f = _G["Raid_Roll_SetSymbol"..i]
+		local f = _G["Raid_Roll_SetSymbol" .. i]
 		f:ClearAllPoints()
-		f:Point("TOPLEFT", _G["RR_RollerPos"..i], "TOPRIGHT", -15, -1)
-		f:Point("BOTTOMRIGHT", _G["RR_Rolled"..i], "BOTTOMLEFT", 45, -1)
+		f:Point("TOPLEFT", _G["RR_RollerPos" .. i], "TOPRIGHT", -15, -1)
+		f:Point("BOTTOMRIGHT", _G["RR_Rolled" .. i], "BOTTOMLEFT", 45, -1)
 
 		local highlight = f:GetHighlightTexture()
 		highlight:SetTexture(E.Media.Textures.Highlight)
@@ -72,13 +76,15 @@ S:AddCallbackForAddon("RaidRoll", "RaidRoll", function()
 		end
 
 		for i = 1, 5 do
-			_G["RR_Roller"..i].SetFont = updateFont
+			_G["RR_Roller" .. i].SetFont = updateFont
 		end
 	end
 end)
 
 S:AddCallbackForAddon("RaidRoll_LootTracker", "RaidRoll_LootTracker", function()
-	if not E.private.addOnSkins.RaidRoll then return end
+	if not E.private.addOnSkins.RaidRoll then
+		return
+	end
 
 	RR_LOOT_FRAME:SetTemplate("Transparent")
 
@@ -92,15 +98,15 @@ S:AddCallbackForAddon("RaidRoll_LootTracker", "RaidRoll_LootTracker", function()
 	S:HandleButton(RR_Loot_ButtonLast)
 
 	for i = 1, 4 do
-		_G["RR_Loot_Announce_1_Button_"..i]:Show()
-		_G["RR_Loot_Announce_2_Button_"..i]:Show()
-		_G["RR_Loot_Announce_3_Button_"..i]:Show()
-		_G["RR_Loot_RaidRollButton_"..i]:Show()
+		_G["RR_Loot_Announce_1_Button_" .. i]:Show()
+		_G["RR_Loot_Announce_2_Button_" .. i]:Show()
+		_G["RR_Loot_Announce_3_Button_" .. i]:Show()
+		_G["RR_Loot_RaidRollButton_" .. i]:Show()
 
-		S:HandleButton(_G["RR_Loot_Announce_1_Button_"..i])
-		S:HandleButton(_G["RR_Loot_Announce_2_Button_"..i])
-		S:HandleButton(_G["RR_Loot_Announce_3_Button_"..i])
-		S:HandleButton(_G["RR_Loot_RaidRollButton_"..i])
+		S:HandleButton(_G["RR_Loot_Announce_1_Button_" .. i])
+		S:HandleButton(_G["RR_Loot_Announce_2_Button_" .. i])
+		S:HandleButton(_G["RR_Loot_Announce_3_Button_" .. i])
+		S:HandleButton(_G["RR_Loot_RaidRollButton_" .. i])
 	end
 
 	for i = 1, RR_LOOT_FRAME:GetNumChildren() do

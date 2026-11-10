@@ -2,16 +2,22 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("oRA3") then return end
+if not AS:IsAddonLODorEnabled("oRA3") then
+	return
+end
 
 -- oRA3 r452
 -- https://www.curseforge.com/wow/addons/ora3/files/464284
 
 S:AddCallbackForAddon("oRA3", "oRA3", function()
-	if not E.private.addOnSkins.oRA3 then return end
+	if not E.private.addOnSkins.oRA3 then
+		return
+	end
 
 	local addon = LibStub("AceAddon-3.0"):GetAddon("oRA3", true)
-	if not addon then return end
+	if not addon then
+		return
+	end
 
 	AS:SkinLibrary("LibCandyBar-3.0")
 
@@ -64,7 +70,9 @@ S:AddCallbackForAddon("oRA3", "oRA3", function()
 	end)
 
 	hooksecurefunc(addon, "CreateScrollEntry", function(self, header)
-		if header.inSkinned then return end
+		if header.inSkinned then
+			return
+		end
 
 		header:DisableDrawLayer("BACKGROUND")
 		header:StyleButton()
@@ -105,7 +113,7 @@ S:AddCallbackForAddon("oRA3", "oRA3", function()
 			oRA3TankBottomScrollFrameScrollBar:Point("BOTTOMLEFT", oRA3TankBottomScrollFrame, "BOTTOMRIGHT", 10, 18)
 
 			for i = 1, 10 do
-				local checkBox = _G["oRA3TankHideButton"..i]
+				local checkBox = _G["oRA3TankHideButton" .. i]
 				S:HandleCheckBox(checkBox)
 				checkBox.backdrop:SetInside(nil, 1, 1)
 			end
@@ -115,7 +123,9 @@ S:AddCallbackForAddon("oRA3", "oRA3", function()
 	local readycheck = addon:GetModule("ReadyCheck", true)
 	if readycheck then
 		S:SecureHook(readycheck, "READY_CHECK", function(self)
-			if not (addon:IsPromoted() and self.db.profile.gui) then return end
+			if not (addon:IsPromoted() and self.db.profile.gui) then
+				return
+			end
 
 			S:Unhook(self, "READY_CHECK")
 

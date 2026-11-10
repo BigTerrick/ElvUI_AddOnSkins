@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("WowLua") then return end
+if not AS:IsAddonLODorEnabled("WowLua") then
+	return
+end
 
 -- WowLua r40
 -- https://www.curseforge.com/wow/addons/wowlua/files/448825
 
 S:AddCallbackForAddon("WowLua", "WowLua", function()
-	if not E.private.addOnSkins.WowLua then return end
+	if not E.private.addOnSkins.WowLua then
+		return
+	end
 
 	WowLuaFrame:StripTextures()
 	WowLuaFrame:SetTemplate("Transparent")

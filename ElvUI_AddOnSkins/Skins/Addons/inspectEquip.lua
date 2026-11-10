@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("InspectEquip") then return end
+if not AS:IsAddonLODorEnabled("InspectEquip") then
+	return
+end
 
 -- InspectEquip 1.7.7
 -- https://www.wowace.com/projects/inspect-equip/files/436507
 
 S:AddCallbackForAddon("InspectEquip", "InspectEquip", function()
-	if not E.private.addOnSkins.InspectEquip then return end
+	if not E.private.addOnSkins.InspectEquip then
+		return
+	end
 
 	InspectEquip_InfoWindow:SetTemplate("Transparent")
 	S:HandleCloseButton(InspectEquip_InfoWindow_CloseButton, InspectEquip_InfoWindow)

@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("LoseControl") then return end
+if not AS:IsAddonLODorEnabled("LoseControl") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -13,7 +15,9 @@ local hooksecurefunc = hooksecurefunc
 -- https://www.curseforge.com/wow/addons/losecontrol/files/417954
 
 S:AddCallbackForAddon("LoseControl", "LoseControl", function()
-	if not E.private.addOnSkins.LoseControl then return end
+	if not E.private.addOnSkins.LoseControl then
+		return
+	end
 
 	local framePrefix = "LoseControl"
 
@@ -39,7 +43,9 @@ S:AddCallbackForAddon("LoseControl", "LoseControl", function()
 	end
 
 	local function skinIcon(frame)
-		if not frame or frame.inSkinned then return end
+		if not frame or frame.inSkinned then
+			return
+		end
 
 		frame:CreateBackdrop()
 
@@ -55,10 +61,10 @@ S:AddCallbackForAddon("LoseControl", "LoseControl", function()
 	end
 
 	for _, frameUnit in ipairs(frameUnits) do
-		skinIcon(_G[framePrefix..frameUnit])
+		skinIcon(_G[framePrefix .. frameUnit])
 	end
 
 	hooksecurefunc(_G["LoseControlplayer"].__index, "new", function(_, unitID)
-		skinIcon(_G[framePrefix..unitID])
+		skinIcon(_G[framePrefix .. unitID])
 	end)
 end)

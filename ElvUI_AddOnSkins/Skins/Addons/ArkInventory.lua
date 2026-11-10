@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("ArkInventory") then return end
+if not AS:IsAddonLODorEnabled("ArkInventory") then
+	return
+end
 
 local _G = _G
 local ipairs = ipairs
@@ -13,10 +15,14 @@ local format = string.format
 -- https://www.wowace.com/projects/ark-inventory/files/458795
 
 S:AddCallbackForAddon("ArkInventory", "ArkInventory", function()
-	if not E.private.addOnSkins.ArkInventory then return end
+	if not E.private.addOnSkins.ArkInventory then
+		return
+	end
 
 	local function skinIcon(frame)
-		if frame.isSkinned then return end
+		if frame.isSkinned then
+			return
+		end
 
 		local icon = frame:GetNormalTexture()
 
@@ -88,9 +94,11 @@ S:AddCallbackForAddon("ArkInventory", "ArkInventory", function()
 	end)
 
 	ArkInventory.Frame_Main_Paint = function(frame)
-		if not ArkInventory.ValidFrame(frame, true) then return end
+		if not ArkInventory.ValidFrame(frame, true) then
+			return
+		end
 
-		for _, child in ipairs({frame:GetChildren()}) do
+		for _, child in ipairs({ frame:GetChildren() }) do
 			if not child.isSkinned then
 				child:SetTemplate("Transparent")
 
@@ -115,7 +123,9 @@ S:AddCallbackForAddon("ArkInventory", "ArkInventory", function()
 	local defaultColors = ArkInventory.Const.Slot.DefaultColour
 
 	ArkInventory.Frame_Border_Paint = function(border, slot, file, size, offset, scale, r, g, b, a)
-		if not border.parent then return end
+		if not border.parent then
+			return
+		end
 
 		if r == defaultColors.r and g == defaultColors.g and b == defaultColors.b then
 			r, g, b = unpack(E.media.bordercolor)
@@ -127,8 +137,16 @@ S:AddCallbackForAddon("ArkInventory", "ArkInventory", function()
 
 	local TEXTURE_ITEM_QUEST_BORDER = TEXTURE_ITEM_QUEST_BORDER
 	local questColors = {
-		["questStarter"] = {E.db.bags.colors.items.questStarter.r, E.db.bags.colors.items.questStarter.g, E.db.bags.colors.items.questStarter.b},
-		["questItem"] =	{E.db.bags.colors.items.questItem.r, E.db.bags.colors.items.questItem.g, E.db.bags.colors.items.questItem.b}
+		["questStarter"] = {
+			E.db.bags.colors.items.questStarter.r,
+			E.db.bags.colors.items.questStarter.g,
+			E.db.bags.colors.items.questStarter.b,
+		},
+		["questItem"] = {
+			E.db.bags.colors.items.questItem.r,
+			E.db.bags.colors.items.questItem.g,
+			E.db.bags.colors.items.questItem.b,
+		},
 	}
 
 	local function updateQuestIcon(self, texture)
@@ -142,7 +160,9 @@ S:AddCallbackForAddon("ArkInventory", "ArkInventory", function()
 	end
 
 	local function skinItemButton(frame)
-		if frame.isSkinned then return end
+		if frame.isSkinned then
+			return
+		end
 
 		local frameName = frame:GetName()
 		local icon = _G[format("%s%s", frameName, "IconTexture")]
@@ -177,7 +197,9 @@ S:AddCallbackForAddon("ArkInventory", "ArkInventory", function()
 	end
 
 	hooksecurefunc(ArkInventory, "Frame_Item_Update_Border", function(frame)
-		if not ArkInventory.ValidFrame(frame, true) then return end
+		if not ArkInventory.ValidFrame(frame, true) then
+			return
+		end
 		skinItemButton(frame)
 	end)
 
@@ -210,7 +232,9 @@ S:AddCallbackForAddon("ArkInventory", "ArkInventory", function()
 end)
 
 S:AddCallbackForAddon("ArkInventoryRules", "ArkInventoryRules", function()
-	if not E.private.addOnSkins.ArkInventory then return end
+	if not E.private.addOnSkins.ArkInventory then
+		return
+	end
 
 	ArkInventoryRules.Frame_Rules_Paint_Border = E.noop
 
@@ -251,7 +275,13 @@ S:AddCallbackForAddon("ArkInventoryRules", "ArkInventoryRules", function()
 	S:HandleScrollBar(ARKINV_RulesFrameModifyDataScrollScrollBar)
 
 	ARKINV_RulesFrameModifyDataScrollScrollBar:Point("TOPLEFT", ARKINV_RulesFrameModifyDataScroll, "TOPRIGHT", 8, -13)
-	ARKINV_RulesFrameModifyDataScrollScrollBar:Point("BOTTOMLEFT", ARKINV_RulesFrameModifyDataScroll, "BOTTOMRIGHT", 8, 13)
+	ARKINV_RulesFrameModifyDataScrollScrollBar:Point(
+		"BOTTOMLEFT",
+		ARKINV_RulesFrameModifyDataScroll,
+		"BOTTOMRIGHT",
+		8,
+		13
+	)
 
 	S:HandleButton(ARKINV_RulesFrameModifyMenuOk)
 	S:HandleButton(ARKINV_RulesFrameModifyMenuCancel)

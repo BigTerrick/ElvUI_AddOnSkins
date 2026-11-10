@@ -2,19 +2,23 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("BugSack") then return end
+if not AS:IsAddonLODorEnabled("BugSack") then
+	return
+end
 
 -- BugSack r229
 -- https://www.curseforge.com/wow/addons/bugsack/files/448833
 
 S:AddCallbackForAddon("BugSack", "BugSack", function()
-	if not E.private.addOnSkins.BugSack then return end
+	if not E.private.addOnSkins.BugSack then
+		return
+	end
 
 	S:SecureHook(BugSack, "OpenSack", function()
 		BugSackFrame:StripTextures()
 		BugSackFrame:SetTemplate("Transparent")
 
-		for _, child in ipairs({BugSackFrame:GetChildren()}) do
+		for _, child in ipairs({ BugSackFrame:GetChildren() }) do
 			if child:IsObjectType("Button") and child:GetScript("OnClick") == BugSack.CloseSack then
 				S:HandleCloseButton(child)
 			end

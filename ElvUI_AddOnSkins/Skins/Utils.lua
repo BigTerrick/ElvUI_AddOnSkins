@@ -12,7 +12,9 @@ local function round(x)
 end
 
 function AS:GetObjectChildren(obj, childID, list)
-	if not obj then return end
+	if not obj then
+		return
+	end
 
 	if not childID then
 		childID = obj:GetNumChildren()
@@ -28,24 +30,27 @@ function AS:GetObjectChildren(obj, childID, list)
 end
 
 function AS:FindChildFrameByPoint(parent, objType, point1, relativeTo, point2, x, y)
-	if not parent then return end
+	if not parent then
+		return
+	end
 
 	local childPoint1, childParent, childPoint2, childX, childY
 
 	x = round(x)
 	y = round(y)
 
-	for id, child in ipairs({parent:GetChildren()}) do
+	for id, child in ipairs({ parent:GetChildren() }) do
 		if not child:GetName() and (not objType or (objType and child:IsObjectType(objType))) then
 			childPoint1, childParent, childPoint2, childX, childY = child:GetPoint()
 			childX = childX and round(childX) or 0
 			childY = childY and round(childY) or 0
 
-			if childPoint1 == point1
-			and childParent == relativeTo
-			and (not point2 or (childPoint2 == point2))
-			and x == childX
-			and y == childY
+			if
+				childPoint1 == point1
+				and childParent == relativeTo
+				and (not point2 or (childPoint2 == point2))
+				and x == childX
+				and y == childY
 			then
 				return child, id
 			end
@@ -54,15 +59,21 @@ function AS:FindChildFrameByPoint(parent, objType, point1, relativeTo, point2, x
 end
 
 function AS:FindChildFrameBySize(parent, objType, width, height)
-	if not parent then return end
+	if not parent then
+		return
+	end
 
 	width = round(width)
 	height = round(height)
 
-	for id, child in ipairs({parent:GetChildren()}) do
+	for id, child in ipairs({ parent:GetChildren() }) do
 		if not child:GetName() then
 			if not objType or (objType and child:IsObjectType(objType)) then
-				if round(child:GetWidth()) == width and round(child:GetHeight()) == width and round(child:GetHeight()) == height then
+				if
+					round(child:GetWidth()) == width
+					and round(child:GetHeight()) == width
+					and round(child:GetHeight()) == height
+				then
 					return child, id
 				end
 			end
@@ -71,7 +82,9 @@ function AS:FindChildFrameBySize(parent, objType, width, height)
 end
 
 function AS:FindFrameBySizeChild(childTypes, width, height)
-	if not childTypes then return end
+	if not childTypes then
+		return
+	end
 
 	local singleChild = type(childTypes) == "string"
 	local obj = EnumerateFrames()
@@ -80,11 +93,11 @@ function AS:FindFrameBySizeChild(childTypes, width, height)
 	height = round(height)
 
 	while obj do
-		if obj.IsObjectType and obj:IsObjectType("Frame") and (not (obj:GetName() and obj:GetParent())) then
+		if obj.IsObjectType and obj:IsObjectType("Frame") and not (obj:GetName() and obj:GetParent()) then
 			if round(obj:GetWidth()) == width and round(obj:GetHeight()) == height then
 				local childs = {}
 
-				for _, child in pairs({obj:GetChildren()}) do
+				for _, child in pairs({ obj:GetChildren() }) do
 					childs[#childs + 1] = child:GetObjectType()
 				end
 
@@ -112,7 +125,9 @@ function AS:FindFrameBySizeChild(childTypes, width, height)
 end
 
 function AS:FindFrameByPoint(point1, relativeTo, point2, x, y, multipleFrames)
-	if not relativeTo then return end
+	if not relativeTo then
+		return
+	end
 
 	local frame
 	if multipleFrames then
@@ -126,16 +141,17 @@ function AS:FindFrameByPoint(point1, relativeTo, point2, x, y, multipleFrames)
 	y = round(y)
 
 	while obj do
-		if obj.IsObjectType and obj:IsObjectType("Frame") and (not (obj:GetName() and obj:GetParent())) then
+		if obj.IsObjectType and obj:IsObjectType("Frame") and not (obj:GetName() and obj:GetParent()) then
 			childPoint1, childParent, childPoint2, childX, childY = obj:GetPoint()
 			childX = childX and round(childX) or 0
 			childY = childY and round(childY) or 0
 
-			if childPoint1 == point1
-			and childParent == relativeTo
-			and (not point2 or (childPoint2 == point2))
-			and x == childX
-			and y == childY
+			if
+				childPoint1 == point1
+				and childParent == relativeTo
+				and (not point2 or (childPoint2 == point2))
+				and x == childX
+				and y == childY
 			then
 				if multipleFrames then
 					frame[#frame + 1] = obj

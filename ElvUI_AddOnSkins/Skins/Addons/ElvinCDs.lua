@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("!ElvinCDs") then return end
+if not AS:IsAddonLODorEnabled("!ElvinCDs") then
+	return
+end
 
 local format = string.format
 
@@ -10,7 +12,9 @@ local format = string.format
 -- https://github.com/bkader/ElvinCDs
 
 S:AddCallbackForAddon("!ElvinCDs", "!ElvinCDs", function()
-	if not E.private.addOnSkins.ElvinCDs then return end
+	if not E.private.addOnSkins.ElvinCDs then
+		return
+	end
 
 	hooksecurefunc(ElvinCDs.utils, "showHide", function(obj)
 		if not obj.isSkinned then
@@ -111,12 +115,24 @@ S:AddCallbackForAddon("!ElvinCDs", "!ElvinCDs", function()
 	ElvinCDs_ConfigTab1:Point("CENTER", ElvinCDs_Config, "BOTTOMLEFT", 60, -14)
 	ElvinCDs_ConfigClose:Point("TOPRIGHT", -6, -6)
 
-	ElvinCDs_Config_SpellsListScrollFrameScrollBar:Point("TOPLEFT", ElvinCDs_Config_SpellsListScrollFrame, "TOPRIGHT", 5, -15)
-	ElvinCDs_Config_SpellsListScrollFrameScrollBar:Point("BOTTOMLEFT", ElvinCDs_Config_SpellsListScrollFrame, "BOTTOMRIGHT", 5, 14)
+	ElvinCDs_Config_SpellsListScrollFrameScrollBar:Point(
+		"TOPLEFT",
+		ElvinCDs_Config_SpellsListScrollFrame,
+		"TOPRIGHT",
+		5,
+		-15
+	)
+	ElvinCDs_Config_SpellsListScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		ElvinCDs_Config_SpellsListScrollFrame,
+		"BOTTOMRIGHT",
+		5,
+		14
+	)
 
 	ElvinCDs_Config_SpellsSpellId:Point("TOPLEFT", ElvinCDs_Config_SpellsList, "BOTTOMLEFT", 8, -10)
 
---[[
+	--[[
 	local options = {
 		"Display",
 		"Track",

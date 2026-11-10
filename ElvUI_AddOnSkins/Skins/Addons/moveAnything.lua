@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("MoveAnything") then return end
+if not AS:IsAddonLODorEnabled("MoveAnything") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -11,7 +13,9 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/move-anything/files/434496
 
 S:AddCallbackForAddon("MoveAnything", "MoveAnything", function()
-	if not E.private.addOnSkins.MoveAnything then return end
+	if not E.private.addOnSkins.MoveAnything then
+		return
+	end
 
 	local SPACING = 1 + (E.Spacing * 2)
 

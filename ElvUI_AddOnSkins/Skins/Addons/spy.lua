@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Spy") then return end
+if not AS:IsAddonLODorEnabled("Spy") then
+	return
+end
 
 local _G = _G
 
@@ -10,7 +12,9 @@ local _G = _G
 -- https://www.curseforge.com/wow/addons/spy/files/442604
 
 S:AddCallbackForAddon("Spy", "Spy", function()
-	if not E.private.addOnSkins.Spy then return end
+	if not E.private.addOnSkins.Spy then
+		return
+	end
 	local isInverted = Spy.db.profile.InvertSpy
 
 	Spy_AlertWindow:StripTextures()
@@ -45,8 +49,12 @@ S:AddCallbackForAddon("Spy", "Spy", function()
 	Spy_MainWindow.ClearButton:SetNormalTexture(E.Media.Textures.Minus)
 	Spy_MainWindow.ClearButton:SetPushedTexture(nil)
 	Spy_MainWindow.ClearButton:SetHighlightTexture(nil)
-	Spy_MainWindow.ClearButton:HookScript("OnEnter", function(self) self:GetNormalTexture():SetVertexColor(unpack(E.media.rgbvaluecolor)) end)
-	Spy_MainWindow.ClearButton:HookScript("OnLeave", function(self) self:GetNormalTexture():SetVertexColor(1, 1, 1) end)
+	Spy_MainWindow.ClearButton:HookScript("OnEnter", function(self)
+		self:GetNormalTexture():SetVertexColor(unpack(E.media.rgbvaluecolor))
+	end)
+	Spy_MainWindow.ClearButton:HookScript("OnLeave", function(self)
+		self:GetNormalTexture():SetVertexColor(1, 1, 1)
+	end)
 
 	if not Spy.db.profile.InvertSpy then
 		Spy_MainWindow.DragBottomLeft:SetNormalTexture(nil)
@@ -57,20 +65,28 @@ S:AddCallbackForAddon("Spy", "Spy", function()
 	end
 
 	local function SkinBar(bar, i)
-		if bar.isSkinned then return end
+		if bar.isSkinned then
+			return
+		end
 
 		bar:GetHighlightTexture():SetTexture(1, 1, 1, 0.3)
 		bar.LeftText:FontTemplate()
 		bar.RightText:FontTemplate()
 
-		bar:SetPoint("TOPLEFT", Spy.MainWindow, "TOPLEFT", 1, -33 - (Spy.db.profile.MainWindow.RowHeight + Spy.db.profile.MainWindow.RowSpacing) * (i - 1))
+		bar:SetPoint(
+			"TOPLEFT",
+			Spy.MainWindow,
+			"TOPLEFT",
+			1,
+			-33 - (Spy.db.profile.MainWindow.RowHeight + Spy.db.profile.MainWindow.RowSpacing) * (i - 1)
+		)
 		bar:SetWidth(Spy.MainWindow:GetWidth() - 2)
 
 		bar.isSkinned = true
 	end
 
 	for i = 1, Spy.ButtonLimit do
-		SkinBar(_G["Spy_MainWindow_Bar"..i], i)
+		SkinBar(_G["Spy_MainWindow_Bar" .. i], i)
 	end
 
 	hooksecurefunc(Spy, "CreateRow", function(self, num)
@@ -108,16 +124,24 @@ S:AddCallbackForAddon("Spy", "Spy", function()
 		Spy_MainWindow.StatsButton:SetNormalTexture(E.Media.Textures.Copy)
 		Spy_MainWindow.StatsButton:SetPushedTexture(nil)
 		Spy_MainWindow.StatsButton:SetHighlightTexture(nil)
-		Spy_MainWindow.StatsButton:HookScript("OnEnter", function(self) self:GetNormalTexture():SetVertexColor(unpack(E.media.rgbvaluecolor)) end)
-		Spy_MainWindow.StatsButton:HookScript("OnLeave", function(self) self:GetNormalTexture():SetVertexColor(1, 1, 1) end)
+		Spy_MainWindow.StatsButton:HookScript("OnEnter", function(self)
+			self:GetNormalTexture():SetVertexColor(unpack(E.media.rgbvaluecolor))
+		end)
+		Spy_MainWindow.StatsButton:HookScript("OnLeave", function(self)
+			self:GetNormalTexture():SetVertexColor(1, 1, 1)
+		end)
 
 		Spy_MainWindow.CountFrame:Size(20)
 		Spy_MainWindow.CountFrame:Point("RIGHT", Spy_MainWindow.StatsButton, "LEFT", 1, 0)
 		Spy_MainWindow.CountButton:Size(20)
 		Spy_MainWindow.CountButton:Point("RIGHT", Spy_MainWindow.StatsButton, "LEFT", 1, 0)
 		Spy.MainWindow.CountFrame.Text:FontTemplate()
-		Spy_MainWindow.CountButton:HookScript("OnEnter", function() Spy_MainWindow.CountFrame.Text:SetTextColor(unpack(E.media.rgbvaluecolor)) end)
-		Spy_MainWindow.CountButton:HookScript("OnLeave", function() Spy_MainWindow.CountFrame.Text:SetTextColor(1, 1, 1) end)
+		Spy_MainWindow.CountButton:HookScript("OnEnter", function()
+			Spy_MainWindow.CountFrame.Text:SetTextColor(unpack(E.media.rgbvaluecolor))
+		end)
+		Spy_MainWindow.CountButton:HookScript("OnLeave", function()
+			Spy_MainWindow.CountFrame.Text:SetTextColor(1, 1, 1)
+		end)
 
 		SpyStatsFrame:SetTemplate("Transparent")
 		SpyStatsFrame_Header:Hide()
@@ -135,7 +159,13 @@ S:AddCallbackForAddon("Spy", "Spy", function()
 		function Spy:BarsChanged()
 			for k, v in pairs(Spy.MainWindow.Rows) do
 				v:SetHeight(Spy.db.profile.MainWindow.RowHeight)
-				v:SetPoint("TOPLEFT", Spy.MainWindow, "TOPLEFT", 1, -33 - (Spy.db.profile.MainWindow.RowHeight + Spy.db.profile.MainWindow.RowSpacing) * (k - 1))
+				v:SetPoint(
+					"TOPLEFT",
+					Spy.MainWindow,
+					"TOPLEFT",
+					1,
+					-33 - (Spy.db.profile.MainWindow.RowHeight + Spy.db.profile.MainWindow.RowSpacing) * (k - 1)
+				)
 			end
 			Spy:ResizeMainWindow()
 		end

@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("AckisRecipeList") then return end
+if not AS:IsAddonLODorEnabled("AckisRecipeList") then
+	return
+end
 
 local ipairs, select, unpack = ipairs, select, unpack
 
@@ -12,10 +14,14 @@ local hooksecurefunc = hooksecurefunc
 -- https://www.curseforge.com/wow/addons/arl/files/458020
 
 S:AddCallbackForAddon("AckisRecipeList", "AckisRecipeList", function()
-	if not E.private.addOnSkins.AckisRecipeList then return end
+	if not E.private.addOnSkins.AckisRecipeList then
+		return
+	end
 
 	local addon = LibStub("AceAddon-3.0"):GetAddon("Ackis Recipe List", true)
-	if not addon then return end
+	if not addon then
+		return
+	end
 
 	local function HandleScrollBar(frame)
 		local UpButton, DownButton = frame:GetChildren()
@@ -221,7 +227,7 @@ S:AddCallbackForAddon("AckisRecipeList", "AckisRecipeList", function()
 			if i == 1 then
 				tab:Point("TOPLEFT", ARL_MainPanel, "BOTTOMLEFT", 11, 78)
 			else
-				tab:Point("LEFT", ARL_MainPanel.tabs[i-1], "RIGHT", -15, 0)
+				tab:Point("LEFT", ARL_MainPanel.tabs[i - 1], "RIGHT", -15, 0)
 			end
 		end
 
@@ -253,7 +259,9 @@ S:AddCallbackForAddon("AckisRecipeList", "AckisRecipeList", function()
 		end
 
 		ARL_MainPanel.filter_toggle:HookScript("OnClick", function(self)
-			if self.isFrameSkinned then return end
+			if self.isFrameSkinned then
+				return
+			end
 			self.isFrameSkinned = true
 
 			ARL_MainPanel.filter_menu:SetTemplate("Transparent")
@@ -271,7 +279,7 @@ S:AddCallbackForAddon("AckisRecipeList", "AckisRecipeList", function()
 				"menu_toggle_quality",
 				"menu_toggle_player",
 				"menu_toggle_rep",
-				"menu_toggle_misc"
+				"menu_toggle_misc",
 			}
 
 			for i, menuIcon in ipairs(menuIcons) do
@@ -298,7 +306,7 @@ S:AddCallbackForAddon("AckisRecipeList", "AckisRecipeList", function()
 				"quality",
 				"player",
 				"rep",
-				"misc"
+				"misc",
 			}
 
 			for _, menu in ipairs(filterMenus) do
@@ -315,10 +323,17 @@ S:AddCallbackForAddon("AckisRecipeList", "AckisRecipeList", function()
 					end
 				elseif menu == "rep" then
 					for expNum = 0, 2 do
-						for i = 1, menuEntry["expansion"..expNum]:GetNumChildren() do
-							local child = select(i, menuEntry["expansion"..expNum]:GetChildren())
+						for i = 1, menuEntry["expansion" .. expNum]:GetNumChildren() do
+							local child = select(i, menuEntry["expansion" .. expNum]:GetChildren())
 
-							if child and (child:IsObjectType("Button") and child.text and not child:IsObjectType("CheckButton")) then
+							if
+								child
+								and (
+									child:IsObjectType("Button")
+									and child.text
+									and not child:IsObjectType("CheckButton")
+								)
+							then
 								child:StripTextures()
 								child.text:SetTextColor(1, 0.8, 0.1)
 							elseif child and child:IsObjectType("CheckButton") and child.text then
@@ -331,7 +346,10 @@ S:AddCallbackForAddon("AckisRecipeList", "AckisRecipeList", function()
 					for i = 1, menuEntry:GetNumChildren() do
 						local child = select(i, menuEntry:GetChildren())
 
-						if child and (child:IsObjectType("Button") and child.text and not child:IsObjectType("CheckButton")) then
+						if
+							child
+							and (child:IsObjectType("Button") and child.text and not child:IsObjectType("CheckButton"))
+						then
 							child:StripTextures()
 							child.text:SetTextColor(1, 0.8, 0.1)
 						elseif child and child:IsObjectType("CheckButton") and child.text then

@@ -2,16 +2,22 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("RCLootCouncil") then return end
+if not AS:IsAddonLODorEnabled("RCLootCouncil") then
+	return
+end
 
 -- RCLootCouncil 2.0.4
 -- https://github.com/ajseward/RcLootCouncil-Wotlk
 
 S:AddCallbackForAddon("RCLootCouncil", "RCLootCouncil", function()
-	if not E.private.addOnSkins.RCLootCouncil then return end
+	if not E.private.addOnSkins.RCLootCouncil then
+		return
+	end
 
 	local addon = LibStub("AceAddon-3.0"):GetAddon("RCLootCouncil", true)
-	if not addon then return end
+	if not addon then
+		return
+	end
 
 	AS:SkinLibrary("DropDownMenu")
 	AS:SkinLibrary("LibDialog-1.0")

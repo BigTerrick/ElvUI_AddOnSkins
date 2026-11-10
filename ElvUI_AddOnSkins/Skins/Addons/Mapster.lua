@@ -2,16 +2,22 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Mapster") then return end
+if not AS:IsAddonLODorEnabled("Mapster") then
+	return
+end
 
 -- Mapster 1.3.9
 -- https://www.wowace.com/projects/mapster/files/436697
 
 S:AddCallbackForAddon("Mapster", "Mapster", function()
-	if not E.private.addOnSkins.Mapster then return end
+	if not E.private.addOnSkins.Mapster then
+		return
+	end
 
 	local Mapster = LibStub("AceAddon-3.0"):GetAddon("Mapster", true)
-	if not Mapster then return end
+	if not Mapster then
+		return
+	end
 
 	if not E.private.skins.blizzard.enable or not E.private.skins.blizzard.worldmap then
 		WorldMapFrame:CreateBackdrop()
@@ -128,7 +134,9 @@ S:AddCallbackForAddon("Mapster", "Mapster", function()
 		end
 	end)
 
-	E:Delay(0.5, function()
+	-- Mapster creates these in OnEnable, which can run either side of this callback
+	-- depending on which addon's login handler fires first
+	local function skinMapButtons()
 		MapsterOptionsButton:Point("TOPRIGHT", WorldMapPositioningGuide, "TOPRIGHT", -50, -3)
 		MapsterOptionsButton.SetPoint = E.noop
 
@@ -136,7 +144,16 @@ S:AddCallbackForAddon("Mapster", "Mapster", function()
 
 		S:HandleButton(MapsterOptionsButton)
 		S:HandleDropDownBox(MapsterQuestObjectivesDropDown)
-	end)
+	end
+
+	if MapsterOptionsButton then
+		skinMapButtons()
+	else
+		S:SecureHook(Mapster, "OnEnable", function(self)
+			skinMapButtons()
+			S:Unhook(self, "OnEnable")
+		end)
+	end
 
 	do -- Scaler
 		local Scale = Mapster:GetModule("Scale", true)
@@ -167,7 +184,9 @@ S:AddCallbackForAddon("Mapster", "Mapster", function()
 
 		if Scale then
 			function Scale:UpdateMapsize(mini)
-				if not scaler then return end
+				if not scaler then
+					return
+				end
 				updateScalerPoint(mini)
 			end
 		end

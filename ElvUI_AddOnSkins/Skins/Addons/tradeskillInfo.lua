@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("TradeskillInfoUI") then return end
+if not AS:IsAddonLODorEnabled("TradeskillInfoUI") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -11,7 +13,9 @@ local unpack = unpack
 -- https://www.wowace.com/projects/tradeskill-info/files/449625
 
 S:AddCallbackForAddon("TradeskillInfoUI", "TradeskillInfoUI", function()
-	if not E.private.addOnSkins.TradeskillInfo then return end
+	if not E.private.addOnSkins.TradeskillInfo then
+		return
+	end
 
 	TradeskillInfoFrame:Width(670)
 	TradeskillInfoFrame:SetMinResize(670, TradeskillInfoFrame:GetHeight())
@@ -101,11 +105,11 @@ S:AddCallbackForAddon("TradeskillInfoUI", "TradeskillInfoUI", function()
 	end)
 
 	for i = 1, TradeskillInfoUI.cons.maxSkillReagents or 8 do
-		local reagent = _G["TradeskillInfoReagent"..i]
-		local icon = _G["TradeskillInfoReagent"..i.."IconTexture"]
-		local count = _G["TradeskillInfoReagent"..i.."Count"]
-		local name = _G["TradeskillInfoReagent"..i.."Name"]
-		local nameFrame = _G["TradeskillInfoReagent"..i.."NameFrame"]
+		local reagent = _G["TradeskillInfoReagent" .. i]
+		local icon = _G["TradeskillInfoReagent" .. i .. "IconTexture"]
+		local count = _G["TradeskillInfoReagent" .. i .. "Count"]
+		local name = _G["TradeskillInfoReagent" .. i .. "Name"]
+		local nameFrame = _G["TradeskillInfoReagent" .. i .. "NameFrame"]
 
 		reagent:SetTemplate("Default")
 		reagent:StyleButton(nil, true)
@@ -132,15 +136,17 @@ S:AddCallbackForAddon("TradeskillInfoUI", "TradeskillInfoUI", function()
 		if i == 1 then
 			reagent:Point("TOPLEFT", TradeskillInfoReagentLabel, "BOTTOMLEFT", 1, -3)
 		elseif i % 2 == 0 then
-			reagent:Point("LEFT", _G["TradeskillInfoReagent"..(i-1)], "RIGHT", 3, 0)
+			reagent:Point("LEFT", _G["TradeskillInfoReagent" .. (i - 1)], "RIGHT", 3, 0)
 		else
-			reagent:Point("TOPLEFT", _G["TradeskillInfoReagent"..(i-2)], "BOTTOMLEFT", 0, -3)
+			reagent:Point("TOPLEFT", _G["TradeskillInfoReagent" .. (i - 2)], "BOTTOMLEFT", 0, -3)
 		end
 	end
 
 	local collapseButtons = -1
 	hooksecurefunc(TradeskillInfoUI, "DoFrameUpdate", function(self)
-		if collapseButtons >= self.vars.numSkillButtons then return end
+		if collapseButtons >= self.vars.numSkillButtons then
+			return
+		end
 
 		if collapseButtons == -1 then
 			S:HandleCollapseExpandButton(TradeskillInfoCollapseAllButton)
@@ -148,7 +154,7 @@ S:AddCallbackForAddon("TradeskillInfoUI", "TradeskillInfoUI", function()
 		end
 
 		for i = collapseButtons + 1, self.vars.numSkillButtons do
-			local button = _G["TradeskillInfoSkill"..i]
+			local button = _G["TradeskillInfoSkill" .. i]
 			if button then
 				S:HandleCollapseExpandButton(button)
 			end

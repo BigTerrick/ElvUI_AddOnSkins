@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("ACP") then return end
+if not AS:IsAddonLODorEnabled("ACP") then
+	return
+end
 
 local _G = _G
 
@@ -10,7 +12,9 @@ local _G = _G
 -- https://www.curseforge.com/wow/addons/acp/files/453071
 
 S:AddCallbackForAddon("ACP", "ACP", function()
-	if not E.private.addOnSkins.ACP then return end
+	if not E.private.addOnSkins.ACP then
+		return
+	end
 
 	S:HandleButton(GameMenuButtonAddOns)
 
@@ -79,11 +83,11 @@ S:AddCallbackForAddon("ACP", "ACP", function()
 	skinCollapseIcon(ACP_AddonListCollapseAllIcon)
 
 	for i = 1, 20 do
-		local checkbox = _G["ACP_AddonListEntry" .. i.. "Enabled"]
+		local checkbox = _G["ACP_AddonListEntry" .. i .. "Enabled"]
 		S:HandleCheckBox(checkbox)
 		checkbox.SetHeight = updateCheckboxSize
 
-		skinCollapseIcon(_G["ACP_AddonListEntry" .. i.. "CollapseIcon"])
+		skinCollapseIcon(_G["ACP_AddonListEntry" .. i .. "CollapseIcon"])
 
 		S:HandleButton(_G["ACP_AddonListEntry" .. i .. "LoadNow"])
 	end

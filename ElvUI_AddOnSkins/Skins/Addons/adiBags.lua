@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("AdiBags") then return end
+if not AS:IsAddonLODorEnabled("AdiBags") then
+	return
+end
 
 local _G = _G
 local ipairs = ipairs
@@ -21,10 +23,14 @@ local TEXTURE_ITEM_QUEST_BORDER = TEXTURE_ITEM_QUEST_BORDER
 -- https://www.curseforge.com/wow/addons/adibags/files/452440
 
 S:AddCallbackForAddon("AdiBags", "AdiBags", function()
-	if not E.private.addOnSkins.AdiBags then return end
+	if not E.private.addOnSkins.AdiBags then
+		return
+	end
 
 	local AdiBags = LibStub("AceAddon-3.0"):GetAddon("AdiBags", true)
-	if not AdiBags then return end
+	if not AdiBags then
+		return
+	end
 
 	hooksecurefunc(AdiBags, "ResetBagPositions", function(self)
 		self.db.profile.scale = 1
@@ -50,7 +56,7 @@ S:AddCallbackForAddon("AdiBags", "AdiBags", function()
 			bag:SetTemplate()
 			bag:StyleButton()
 
-			local icon = _G[bag:GetName().."IconTexture"]
+			local icon = _G[bag:GetName() .. "IconTexture"]
 			icon:SetInside()
 			icon:SetTexCoord(unpack(E.TexCoords))
 		end
@@ -65,11 +71,19 @@ S:AddCallbackForAddon("AdiBags", "AdiBags", function()
 	end)
 
 	local qualityColors = {
-		["questStarter"] = {E.db.bags.colors.items.questStarter.r, E.db.bags.colors.items.questStarter.g, E.db.bags.colors.items.questStarter.b},
-		["questItem"] =	{E.db.bags.colors.items.questItem.r, E.db.bags.colors.items.questItem.g, E.db.bags.colors.items.questItem.b}
+		["questStarter"] = {
+			E.db.bags.colors.items.questStarter.r,
+			E.db.bags.colors.items.questStarter.g,
+			E.db.bags.colors.items.questStarter.b,
+		},
+		["questItem"] = {
+			E.db.bags.colors.items.questItem.r,
+			E.db.bags.colors.items.questItem.g,
+			E.db.bags.colors.items.questItem.b,
+		},
 	}
 	for i = 0, 7 do
-		qualityColors[i] = {GetItemQualityColor(i)}
+		qualityColors[i] = { GetItemQualityColor(i) }
 	end
 
 	local LayeredRegionClass = AdiBags:GetClass("LayeredRegion")
@@ -121,7 +135,9 @@ S:AddCallbackForAddon("AdiBags", "AdiBags", function()
 	end
 
 	local function updateBorderVertexColor(self, r, g, b)
-		if not self.awaitColor then return end
+		if not self.awaitColor then
+			return
+		end
 
 		self.parent:SetBackdropBorderColor(r, g, b)
 		self.awaitColor = nil
@@ -185,7 +201,9 @@ S:AddCallbackForAddon("AdiBags", "AdiBags", function()
 	end)
 
 	hooksecurefunc(ItemButtonClass.prototype, "Update", function(self)
-		if not self:CanUpdate() then return end
+		if not self:CanUpdate() then
+			return
+		end
 
 		if not self.texture then
 			self.IconTexture:SetTexture(nil)

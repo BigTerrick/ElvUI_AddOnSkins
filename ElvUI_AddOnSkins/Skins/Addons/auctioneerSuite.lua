@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Auc-Advanced") then return end
+if not AS:IsAddonLODorEnabled("Auc-Advanced") then
+	return
+end
 
 local unpack = unpack
 
@@ -12,7 +14,9 @@ local hooksecurefunc = hooksecurefunc
 -- https://www.curseforge.com/wow/addons/auctioneer/files/427823
 
 S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
-	if not E.private.addOnSkins.AuctioneerSuite then return end
+	if not E.private.addOnSkins.AuctioneerSuite then
+		return
+	end
 
 	AS:SkinLibrary("Configator")
 	AS:SkinLibrary("LibExtraTip-1")
@@ -50,17 +54,23 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 	end
 
 	local function skinEditBox(obj)
-		if not obj then return end
+		if not obj then
+			return
+		end
 
 		local objName = obj:GetName()
 		if objName then
-			_G[objName.."Left"]:Hide()
-			_G[objName.."Middle"]:Hide()
-			_G[objName.."Right"]:Hide()
+			_G[objName .. "Left"]:Hide()
+			_G[objName .. "Middle"]:Hide()
+			_G[objName .. "Right"]:Hide()
 		else
 			for i = 1, obj:GetNumRegions() do
 				local region = select(i, obj:GetRegions())
-				if region.IsObjectType and region:IsObjectType("Texture") and region:GetTexture() == "Interface\\Common\\Common-Input-Border" then
+				if
+					region.IsObjectType
+					and region:IsObjectType("Texture")
+					and region:GetTexture() == "Interface\\Common\\Common-Input-Border"
+				then
 					region:Hide()
 				end
 			end
@@ -77,7 +87,7 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 	local Appraiser = AucAdvanced.Modules.Util.Appraiser
 	if Appraiser then
 		S:SecureHook(Appraiser.Private, "CreateFrames", function()
-			AucAdvanced.Settings.SetDefault("util.mover.anchors", {"TOPLEFT", UIParent, "TOPLEFT", 0, -116})
+			AucAdvanced.Settings.SetDefault("util.mover.anchors", { "TOPLEFT", UIParent, "TOPLEFT", 0, -116 })
 
 			local frame = Appraiser.Private.frame
 
@@ -110,7 +120,13 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 			frame.itembox:Size(230, 339)
 			frame.itembox:Point("TOPLEFT", 19, -48)
 
-			frame.itembox.showAuctions:Point("BOTTOMRIGHT", frame.itembox, "TOPRIGHT", -30 -Auc_Util_Appraiser_ShowAuctionsText:GetWidth(), 0)
+			frame.itembox.showAuctions:Point(
+				"BOTTOMRIGHT",
+				frame.itembox,
+				"TOPRIGHT",
+				-30 - Auc_Util_Appraiser_ShowAuctionsText:GetWidth(),
+				0
+			)
 			frame.itembox.showText:Point("BOTTOMRIGHT", frame.itembox.showHidden, "BOTTOMLEFT", 0, 1)
 
 			S:HandleSliderFrame(frame.scroller)
@@ -121,7 +137,7 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 				if i == 1 then
 					item:Point("TOPLEFT", 4, -8)
 				end
-				item:Point("RIGHT", frame.itembox, "RIGHT", -15,0)
+				item:Point("RIGHT", frame.itembox, "RIGHT", -15, 0)
 
 				S:HandleButtonHighlight(item)
 
@@ -168,7 +184,9 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 			frame.salebox.icon:GetHighlightTexture():SetTexture(1, 1, 1, 0.3)
 
 			hooksecurefunc(Appraiser.Private.frame, "SelectItem", function(link)
-				if not Appraiser.Private.frame.salebox.sig then return end
+				if not Appraiser.Private.frame.salebox.sig then
+					return
+				end
 
 				Appraiser.Private.frame.salebox.icon:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
 			end)
@@ -207,7 +225,7 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 			frame.sellerIgnore.no:Height(21)
 			S:HandleButton(frame.sellerIgnore.no)
 
-			S:Unhook(Appraiser.Private,"CreateFrames")
+			S:Unhook(Appraiser.Private, "CreateFrames")
 		end)
 	end
 
@@ -270,7 +288,9 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 		local private = SearchUI.Private
 
 		function SearchUI.AttachToAH()
-			if private.isAttached then return end
+			if private.isAttached then
+				return
+			end
 			local gui = private.gui
 			gui.buttonTop = -43
 			local height, width = 410, 830
@@ -308,7 +328,7 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 			S:HandleEditBox(gui.saves.name)
 
 			gui.saves.select.button:Point("TOPRIGHT", -18, -3)
-			S:HandleNextPrevButton(gui.saves.select.button, "down", {1, 0.8, 0})
+			S:HandleNextPrevButton(gui.saves.select.button, "down", { 1, 0.8, 0 })
 
 			S:HandleButton(gui.saves.load)
 			S:HandleButton(gui.saves.save)
@@ -408,7 +428,9 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 			end)
 
 			hooksecurefunc(Snatch, "SetWorkingItem", function(link)
-				if not Snatch.Private.workingItemLink then return end
+				if not Snatch.Private.workingItemLink then
+					return
+				end
 
 				Snatch.Private.frame.icon:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
 				Snatch.Private.frame.icon:GetNormalTexture():SetInside()
@@ -453,14 +475,14 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 			BrowseButton1:Point("TOPLEFT", 188, -87)
 
 			local i = 1
-			local button = _G["BrowseButton"..i]
+			local button = _G["BrowseButton" .. i]
 			while button do
 				button.Icon:SetTexCoord(unpack(E.TexCoords))
 
 				i = i + 1
-				button = _G["BrowseButton"..i]
+				button = _G["BrowseButton" .. i]
 			end
-			_G["BrowseButton"..(i - 1)]:Show()
+			_G["BrowseButton" .. (i - 1)]:Show()
 
 			local _, tex = BrowsePrevPageButton:GetPoint()
 			tex:Size(614, 32)
@@ -584,7 +606,9 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 		end)
 
 		hooksecurefunc(SimpleAuction.Private, "LoadItemLink", function(link)
-			if not SimpleAuction.Private.frame.icon.itemLink then return end
+			if not SimpleAuction.Private.frame.icon.itemLink then
+				return
+			end
 
 			SimpleAuction.Private.frame.icon:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
 			SimpleAuction.Private.frame.icon:GetNormalTexture():SetInside()
@@ -593,8 +617,10 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 
 	local Scan = AucAdvanced.Scan
 	if Scan then
-		hooksecurefunc(Scan , "ProgressBars", function(self)
-			if self.isSkinned then return end
+		hooksecurefunc(Scan, "ProgressBars", function(self)
+			if self.isSkinned then
+				return
+			end
 
 			self:SetTemplate("Transparent")
 			self:SetStatusBarTexture(E.media.normTex)
@@ -613,7 +639,9 @@ S:AddCallbackForAddon("Auc-Advanced", "Auc-Advanced", function()
 end)
 
 S:AddCallbackForAddon("Auc-Filter-Basic", "Auc-Filter-Basic", function()
-	if not E.private.addOnSkins.AuctioneerSuite then return end
+	if not E.private.addOnSkins.AuctioneerSuite then
+		return
+	end
 
 	S:HandleButton(BasicFilter_IgnoreList_IgnorePlayerButton)
 	S:HandleButton(BasicFilter_IgnoreList_StopIgnoreButton)
@@ -623,7 +651,9 @@ S:AddCallbackForAddon("Auc-Filter-Basic", "Auc-Filter-Basic", function()
 end)
 
 S:AddCallbackForAddon("Auc-Stat-Histogram", "Auc-Stat-Histogram", function()
-	if not E.private.addOnSkins.AuctioneerSuite then return end
+	if not E.private.addOnSkins.AuctioneerSuite then
+		return
+	end
 
 	local StatHistogram = AucAdvanced.GetModule("Stat", "Histogram")
 	if StatHistogram then
@@ -642,7 +672,9 @@ S:AddCallbackForAddon("Auc-Stat-Histogram", "Auc-Stat-Histogram", function()
 		end)
 
 		hooksecurefunc(StatHistogram, "SetWorkingItem", function(link)
-			if not StatHistogram.Private.frame.link then return end
+			if not StatHistogram.Private.frame.link then
+				return
+			end
 
 			StatHistogram.Private.frame.icon:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
 			StatHistogram.Private.frame.icon:GetNormalTexture():SetInside()

@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("FloAspectBar") then return end
+if not AS:IsAddonLODorEnabled("FloAspectBar") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -11,9 +13,13 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/flo-aspect-bar/files/399320
 
 S:AddCallbackForAddon("FloAspectBar", "FloAspectBar", function()
-	if not E.private.addOnSkins.FloAspectBar then return end
+	if not E.private.addOnSkins.FloAspectBar then
+		return
+	end
 
-	if E.myclass ~= "HUNTER" then return end
+	if E.myclass ~= "HUNTER" then
+		return
+	end
 
 	local AB = E:GetModule("ActionBars")
 
@@ -40,8 +46,8 @@ S:AddCallbackForAddon("FloAspectBar", "FloAspectBar", function()
 
 	for i = 1, 10 do
 		AB:StyleButton(_G["FloAspectBarButton" .. i])
-		if  i > 1 then
-			_G["FloAspectBarButton" .. i]:Point("LEFT", _G["FloAspectBarButton" .. i-1],"RIGHT", 2, 0)
+		if i > 1 then
+			_G["FloAspectBarButton" .. i]:Point("LEFT", _G["FloAspectBarButton" .. i - 1], "RIGHT", 2, 0)
 		else
 			_G["FloAspectBarButton" .. i]:Point("LEFT", 5, 0)
 		end

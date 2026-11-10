@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("PAB") then return end
+if not AS:IsAddonLODorEnabled("PAB") then
+	return
+end
 
 local _G = _G
 local ipairs = ipairs
@@ -12,9 +14,13 @@ local unpack = unpack
 -- https://www.wowace.com/projects/pab/files/353353
 
 S:AddCallbackForAddon("PAB", "PAB", function()
-	if not E.private.addOnSkins.PAB then return end
+	if not E.private.addOnSkins.PAB then
+		return
+	end
 
-	if not PAB then return end
+	if not PAB then
+		return
+	end
 
 	S:HandleSliderFrame(PAB_Panel_Slider1)
 
@@ -36,7 +42,9 @@ S:AddCallbackForAddon("PAB", "PAB", function()
 	S:HandleButton(PAB_Panel_Button2)
 
 	local function SkinIcon(frame)
-		if frame.backdrop then return end
+		if frame.backdrop then
+			return
+		end
 
 		frame:CreateBackdrop("Transparent")
 		frame.texture:SetTexCoord(unpack(E.TexCoords))
@@ -50,13 +58,15 @@ S:AddCallbackForAddon("PAB", "PAB", function()
 	local SCALE = 1
 
 	hooksecurefunc(PAB, "ApplyAnchorSettings", function()
-		if not PABIcons then return end
+		if not PABIcons then
+			return
+		end
 
 		SCALE = PABIcons:GetScale()
 		PABIcons:SetScale(1)
 
 		for i = 1, 4 do
-			for _, iconFrame in ipairs(_G["PABAnchor"..i].icons) do
+			for _, iconFrame in ipairs(_G["PABAnchor" .. i].icons) do
 				iconFrame:Size(ICON_SIZE * SCALE)
 			end
 		end
@@ -78,7 +88,7 @@ S:AddCallbackForAddon("PAB", "PAB", function()
 	end)
 
 	for i = 1, 4 do
-		local frame = _G["PABAnchor"..i]
+		local frame = _G["PABAnchor" .. i]
 		frame:SetBackdrop(nil)
 		frame:CreateBackdrop("Transparent")
 

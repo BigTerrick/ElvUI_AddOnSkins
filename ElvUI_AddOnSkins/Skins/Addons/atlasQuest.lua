@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("AtlasQuest") then return end
+if not AS:IsAddonLODorEnabled("AtlasQuest") then
+	return
+end
 
 -- AtlasQuest 4.4.3
 -- https://www.curseforge.com/wow/addons/atlas-quest-fan-update/files/442800
 
 S:AddCallbackForAddon("AtlasQuest", "AtlasQuest", function()
-	if not E.private.addOnSkins.AtlasQuest then return end
+	if not E.private.addOnSkins.AtlasQuest then
+		return
+	end
 
 	local buttons = {
 		STORYbutton,
@@ -61,17 +65,21 @@ S:AddCallbackForAddon("AtlasQuest", "AtlasQuest", function()
 	E:GetModule("Tooltip"):HookScript(AtlasQuestTooltip, "OnShow", "SetStyle")
 
 	for i = 1, 6 do
-		_G["AtlasQuestItemframe"..i.."_Icon"]:SetTexCoord(unpack(E.TexCoords))
+		_G["AtlasQuestItemframe" .. i .. "_Icon"]:SetTexCoord(unpack(E.TexCoords))
 	end
 
 	hooksecurefunc("AQLEFTOption_OnClick", function()
-		if not AtlasFrame then return end
+		if not AtlasFrame then
+			return
+		end
 		AtlasQuestFrame:ClearAllPoints()
 		AtlasQuestFrame:Point("BOTTOMRIGHT", AtlasFrame, "BOTTOMLEFT", 1, 0)
 	end)
 
 	hooksecurefunc("AQRIGHTOption_OnClick", function()
-		if not AtlasFrame then return end
+		if not AtlasFrame then
+			return
+		end
 		AtlasQuestFrame:ClearAllPoints()
 		AtlasQuestFrame:Point("BOTTOMLEFT", AtlasFrame, "BOTTOMRIGHT", -1, 0)
 	end)

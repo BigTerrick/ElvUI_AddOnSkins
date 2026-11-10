@@ -160,7 +160,9 @@ function AS:IsAddonLODorEnabled(addon)
 end
 
 function AS:RegisterAddonOption(addonName, options)
-	if not self:IsAddonLODorEnabled(addonName) then return end
+	if not self:IsAddonLODorEnabled(addonName) then
+		return
+	end
 
 	options[addonName] = {
 		type = "toggle",
@@ -179,13 +181,13 @@ local function getOptions()
 		BOTTOMRIGHT = "BOTTOMRIGHT",
 		CENTER = "CENTER",
 		TOP = "TOP",
-		BOTTOM = "BOTTOM"
+		BOTTOM = "BOTTOM",
 	}
 
 	local backdropValues = {
 		["Default"] = L["Default"],
 		["Transparent"] = L["Transparent"],
-		["NoBackdrop"] = NONE
+		["NoBackdrop"] = NONE,
 	}
 
 	local options = {
@@ -199,7 +201,9 @@ local function getOptions()
 				type = "group",
 				childGroups = "tab",
 				name = L["Skins"],
-				get = function(info) return E.private.addOnSkins[info[#info]] end,
+				get = function(info)
+					return E.private.addOnSkins[info[#info]]
+				end,
 				set = function(info, value)
 					E.private.addOnSkins[info[#info]] = value
 					E:StaticPopup_Show("PRIVATE_RL")
@@ -208,9 +212,9 @@ local function getOptions()
 					header = {
 						order = 1,
 						type = "header",
-						name = L["Skins"]
-					}
-				}
+						name = L["Skins"],
+					},
+				},
 			},
 			misc = {
 				order = 2,
@@ -227,137 +231,181 @@ local function getOptions()
 						order = 2,
 						type = "group",
 						name = "Skada",
-						get = function(info) return E.db.addOnSkins[info[#info]] end,
+						get = function(info)
+							return E.db.addOnSkins[info[#info]]
+						end,
 						set = function(info, value)
 							E.db.addOnSkins[info[#info]] = value
 							Skada:ApplySettings()
 						end,
-						disabled = function() return not AS:IsAddonLODorEnabled("Skada") end,
+						disabled = function()
+							return not AS:IsAddonLODorEnabled("Skada")
+						end,
 						args = {
 							skadaTemplate = {
 								order = 1,
 								type = "select",
 								name = L["Template"],
-								values = backdropValues
+								values = backdropValues,
 							},
 							skadaTemplateGloss = {
 								order = 2,
 								type = "toggle",
 								name = L["Template Gloss"],
-								disabled = function() return E.db.addOnSkins.skadaTemplate ~= "Default" or not AS:IsAddonLODorEnabled("Skada") end
+								disabled = function()
+									return E.db.addOnSkins.skadaTemplate ~= "Default"
+										or not AS:IsAddonLODorEnabled("Skada")
+								end,
 							},
 							spacer = {
 								order = 3,
 								type = "description",
-								name = ""
+								name = "",
 							},
 							skadaTitleTemplate = {
 								order = 4,
 								type = "select",
 								name = L["Title Template"],
-								values = backdropValues
+								values = backdropValues,
 							},
 							skadaTitleTemplateGloss = {
 								order = 5,
 								type = "toggle",
 								name = L["Title Template Gloss"],
-								disabled = function() return E.db.addOnSkins.skadaTitleTemplate ~= "Default" or not AS:IsAddonLODorEnabled("Skada") end
-							}
-						}
+								disabled = function()
+									return E.db.addOnSkins.skadaTitleTemplate ~= "Default"
+										or not AS:IsAddonLODorEnabled("Skada")
+								end,
+							},
+						},
 					},
 					recountGroup = {
 						order = 3,
 						type = "group",
 						name = "Recount",
-						get = function(info) return E.db.addOnSkins[info[#info]] end,
+						get = function(info)
+							return E.db.addOnSkins[info[#info]]
+						end,
 						set = function(info, value)
 							local db = E.db.addOnSkins
 							db[info[#info]] = value
-							Recount.MainWindow.header:SetTemplate(db.recountTitleTemplate, db.recountTitleTemplate == "Default" and db.recountTitleTemplateGloss or false)
-							Recount.MainWindow.backdrop:SetTemplate(db.recountTemplate, db.recountTemplate == "Default" and db.recountTemplateGloss or false)
+							Recount.MainWindow.header:SetTemplate(
+								db.recountTitleTemplate,
+								db.recountTitleTemplate == "Default" and db.recountTitleTemplateGloss or false
+							)
+							Recount.MainWindow.backdrop:SetTemplate(
+								db.recountTemplate,
+								db.recountTemplate == "Default" and db.recountTemplateGloss or false
+							)
 						end,
-						disabled = function() return not AS:IsAddonLODorEnabled("Recount") end,
+						disabled = function()
+							return not AS:IsAddonLODorEnabled("Recount")
+						end,
 						args = {
 							recountTemplate = {
 								order = 1,
 								type = "select",
 								name = L["Template"],
-								values = backdropValues
+								values = backdropValues,
 							},
 							recountTemplateGloss = {
 								order = 2,
 								type = "toggle",
 								name = L["Template Gloss"],
-								disabled = function() return E.db.addOnSkins.recountTemplate ~= "Default" or not AS:IsAddonLODorEnabled("Recount") end
+								disabled = function()
+									return E.db.addOnSkins.recountTemplate ~= "Default"
+										or not AS:IsAddonLODorEnabled("Recount")
+								end,
 							},
 							spacer = {
 								order = 3,
 								type = "description",
-								name = ""
+								name = "",
 							},
 							recountTitleTemplate = {
 								order = 4,
 								type = "select",
 								name = L["Title Template"],
-								values = backdropValues
+								values = backdropValues,
 							},
 							recountTitleTemplateGloss = {
 								order = 5,
 								type = "toggle",
 								name = L["Title Template Gloss"],
-								disabled = function() return E.db.addOnSkins.recountTitleTemplate ~= "Default" or not AS:IsAddonLODorEnabled("Recount") end
-							}
-						}
+								disabled = function()
+									return E.db.addOnSkins.recountTitleTemplate ~= "Default"
+										or not AS:IsAddonLODorEnabled("Recount")
+								end,
+							},
+						},
 					},
 					omenGroup = {
 						order = 4,
 						type = "group",
 						name = "Omen",
-						get = function(info) return E.db.addOnSkins[info[#info]] end,
+						get = function(info)
+							return E.db.addOnSkins[info[#info]]
+						end,
 						set = function(info, value)
 							local db = E.db.addOnSkins
 							db[info[#info]] = value
-							Omen.Title:SetTemplate(db.omenTitleTemplate, db.omenTitleTemplate == "Default" and db.omenTitleTemplateGloss or false)
-							Omen.BarList:SetTemplate(db.omenTemplate, db.omenTemplate == "Default" and db.omenTemplateGloss or false)
+							Omen.Title:SetTemplate(
+								db.omenTitleTemplate,
+								db.omenTitleTemplate == "Default" and db.omenTitleTemplateGloss or false
+							)
+							Omen.BarList:SetTemplate(
+								db.omenTemplate,
+								db.omenTemplate == "Default" and db.omenTemplateGloss or false
+							)
 						end,
-						disabled = function() return not AS:IsAddonLODorEnabled("Omen") end,
+						disabled = function()
+							return not AS:IsAddonLODorEnabled("Omen")
+						end,
 						args = {
 							omenTemplate = {
 								order = 1,
 								type = "select",
 								name = L["Template"],
-								values = backdropValues
+								values = backdropValues,
 							},
 							omenTemplateGloss = {
 								order = 2,
 								type = "toggle",
 								name = L["Template Gloss"],
-								disabled = function() return E.db.addOnSkins.omenTemplate ~= "Default" or not AS:IsAddonLODorEnabled("Omen") end
+								disabled = function()
+									return E.db.addOnSkins.omenTemplate ~= "Default"
+										or not AS:IsAddonLODorEnabled("Omen")
+								end,
 							},
 							spacer = {
 								order = 3,
 								type = "description",
-								name = ""
+								name = "",
 							},
 							omenTitleTemplate = {
 								order = 4,
 								type = "select",
 								name = L["Title Template"],
-								values = backdropValues
+								values = backdropValues,
 							},
 							omenTitleTemplateGloss = {
 								order = 5,
 								type = "toggle",
 								name = L["Title Template Gloss"],
-								disabled = function() return E.db.addOnSkins.omenTitleTemplate ~= "Default" or not AS:IsAddonLODorEnabled("Omen") end
-							}
-						}
+								disabled = function()
+									return E.db.addOnSkins.omenTitleTemplate ~= "Default"
+										or not AS:IsAddonLODorEnabled("Omen")
+								end,
+							},
+						},
 					},
 					dbmGroup = {
 						order = 5,
 						type = "group",
 						name = "DBM",
-						get = function(info) return E.db.addOnSkins[info[#info]] end,
+						get = function(info)
+							return E.db.addOnSkins[info[#info]]
+						end,
 						set = function(info, value)
 							E.db.addOnSkins[info[#info]] = value
 							if DBM.ReleaseRevision >= 20220412000000 then -- 9.2.14
@@ -367,21 +415,31 @@ local function getOptions()
 							end
 							DBM.BossHealth:UpdateSettings()
 						end,
-						disabled = function() return not AS:IsAddonLODorEnabled("DBM-Core") end,
+						disabled = function()
+							return not AS:IsAddonLODorEnabled("DBM-Core")
+						end,
 						args = {
 							dbmBarHeight = {
 								order = 1,
 								type = "range",
-								min = 6, max = 60, step = 1,
+								min = 6,
+								max = 60,
+								step = 1,
 								name = "Bar Height",
-								hidden = function() return DBM.ReleaseRevision > 7000 end
+								hidden = function()
+									return DBM.ReleaseRevision > 7000
+								end,
 							},
 							dbmBarTextYOffset = {
 								order = 2,
 								type = "range",
-								min = -5, max = 10, step = 1,
+								min = -5,
+								max = 10,
+								step = 1,
 								name = L["Bar Text Y-Offset"],
-								disabled = function() return not E.db.addOnSkins.DBMSkinHalf end
+								disabled = function()
+									return not E.db.addOnSkins.DBMSkinHalf
+								end,
 							},
 							dbmFont = {
 								order = 3,
@@ -389,14 +447,20 @@ local function getOptions()
 								dialogControl = "LSM30_Font",
 								name = L["Font"],
 								values = AceGUIWidgetLSMlists.font,
-								hidden = function() return DBM.ReleaseRevision > 7000 end
+								hidden = function()
+									return DBM.ReleaseRevision > 7000
+								end,
 							},
 							dbmFontSize = {
 								order = 4,
 								type = "range",
-								min = 6, max = 22, step = 1,
+								min = 6,
+								max = 22,
+								step = 1,
 								name = L["Font Size"],
-								hidden = function() return DBM.ReleaseRevision > 7000 end
+								hidden = function()
+									return DBM.ReleaseRevision > 7000
+								end,
 							},
 							dbmFontOutline = {
 								order = 5,
@@ -406,125 +470,160 @@ local function getOptions()
 									["NONE"] = L["None"],
 									["OUTLINE"] = "OUTLINE",
 									["MONOCHROMEOUTLINE"] = "MONOCROMEOUTLINE",
-									["THICKOUTLINE"] = "THICKOUTLINE"
+									["THICKOUTLINE"] = "THICKOUTLINE",
 								},
-								hidden = function() return DBM.ReleaseRevision > 7000 end
+								hidden = function()
+									return DBM.ReleaseRevision > 7000
+								end,
 							},
 							dbmIconSize = {
 								order = 6,
 								type = "range",
-								min = 0.1, max = 2, step = 0.1,
+								min = 0.1,
+								max = 2,
+								step = 0.1,
 								name = L["Icon Size"],
 							},
 							dbmIconXOffset = {
 								order = 7,
 								type = "range",
-								min = -10, max = 10, step = 1,
+								min = -10,
+								max = 10,
+								step = 1,
 								name = L["Icon X-Offset"],
-								set = function(info, value) E.db.addOnSkins[info[#info]] = value E:StaticPopup_Show("PRIVATE_RL") end -- dbm skin should probably be recoded to avoid a UI reload for this option to apply.
+								set = function(info, value)
+									E.db.addOnSkins[info[#info]] = value
+									E:StaticPopup_Show("PRIVATE_RL")
+								end, -- dbm skin should probably be recoded to avoid a UI reload for this option to apply.
 							},
 							dbmTemplate = {
 								order = 8,
 								type = "select",
 								name = L["Template"],
-								values = backdropValues
+								values = backdropValues,
 							},
 							DBMSkinHalf = {
 								order = 9,
 								type = "toggle",
-								name = L["DBM Half-bar Skin"]
-							}
-						}
+								name = L["DBM Half-bar Skin"],
+							},
+						},
 					},
 					waGroup = {
 						order = 6,
 						type = "group",
 						name = "WeakAuras",
-						get = function(info) return E.db.addOnSkins[info[#info]] end,
+						get = function(info)
+							return E.db.addOnSkins[info[#info]]
+						end,
 						set = function(info, value)
 							E.db.addOnSkins[info[#info]] = value
 							E:StaticPopup_Show("PRIVATE_RL")
 						end,
-						disabled = function() return not AS:IsAddonLODorEnabled("WeakAuras") end,
+						disabled = function()
+							return not AS:IsAddonLODorEnabled("WeakAuras")
+						end,
 						hidden = WeakAuras and WeakAuras.IsCorrectVersion ~= nil or false,
 						args = {
 							weakAuraAuraBar = {
 								order = 1,
 								type = "toggle",
-								name = L["AuraBar Backdrop"]
+								name = L["AuraBar Backdrop"],
 							},
 							weakAuraIconCooldown = {
 								order = 2,
 								type = "toggle",
-								name = L["Icon Cooldown"]
-							}
-						}
+								name = L["Icon Cooldown"],
+							},
+						},
 					},
 					chatBarGroup = {
 						order = 7,
 						type = "group",
 						name = "ChatBar",
-						get = function(info) return E.db.addOnSkins[info[#info]] end,
+						get = function(info)
+							return E.db.addOnSkins[info[#info]]
+						end,
 						set = function(info, value)
 							E.db.addOnSkins[info[#info]] = value
 							ChatBar_UpdateButtonOrientation()
 							ChatBar_UpdateButtons()
 						end,
-						disabled = function() return not AS:IsAddonLODorEnabled("ChatBar") end,
+						disabled = function()
+							return not AS:IsAddonLODorEnabled("ChatBar")
+						end,
 						args = {
 							chatBarSize = {
 								order = 1,
 								type = "range",
-								min = 0, max = 60, step = 1,
-								name = "Button Size"
+								min = 0,
+								max = 60,
+								step = 1,
+								name = "Button Size",
 							},
 							chatBarSpacing = {
 								order = 2,
 								type = "range",
-								min = 0, max = 60, step = 1,
-								name = "Button Spacing"
+								min = 0,
+								max = 60,
+								step = 1,
+								name = "Button Spacing",
 							},
 							chatBarTextPoint = {
 								order = 3,
 								type = "select",
 								name = L["Text Position"],
-								values = positionValues
+								values = positionValues,
 							},
 							chatBarTextXOffset = {
 								order = 4,
 								type = "range",
-								min = -300, max = 300, step = 1,
+								min = -300,
+								max = 300,
+								step = 1,
 								name = L["Text xOffset"],
-								desc = L["Offset position for text."]
+								desc = L["Offset position for text."],
 							},
 							chatBarTextYOffset = {
 								order = 5,
 								type = "range",
-								min = -300, max = 300, step = 1,
+								min = -300,
+								max = 300,
+								step = 1,
 								name = L["Text yOffset"],
-								desc = L["Offset position for text."]
-							}
-						}
+								desc = L["Offset position for text."],
+							},
+						},
 					},
 					bwGroup = {
 						order = 8,
 						type = "group",
 						name = "BigWigs",
-						get = function(info) return E.db.addOnSkins[info[#info]] end,
-						set = function(info, value) E.db.addOnSkins[info[#info]] = value end,
-						disabled = function() return not AS:IsAddonLODorEnabled("BigWigs") end,
+						get = function(info)
+							return E.db.addOnSkins[info[#info]]
+						end,
+						set = function(info, value)
+							E.db.addOnSkins[info[#info]] = value
+						end,
+						disabled = function()
+							return not AS:IsAddonLODorEnabled("BigWigs")
+						end,
 						args = {
 							bigwigsBarHeight = {
 								order = 1,
 								type = "range",
-								min = 10, max = 40, step = 1,
-								name = "Bar Height"
+								min = 10,
+								max = 40,
+								step = 1,
+								name = "Bar Height",
 							},
 							bigwigsFontSize = {
 								order = 2,
 								type = "range",
-								min = 6, max = 22, step = 1,
-								name = L["Font Size"]
+								min = 6,
+								max = 22,
+								step = 1,
+								name = L["Font Size"],
 							},
 							bigwigsFontOutline = {
 								order = 3,
@@ -534,18 +633,20 @@ local function getOptions()
 									["NONE"] = L["None"],
 									["OUTLINE"] = "OUTLINE",
 									["MONOCHROMEOUTLINE"] = "MONOCROMEOUTLINE",
-									["THICKOUTLINE"] = "THICKOUTLINE"
-								}
-							}
-						}
-					}
-				}
+									["THICKOUTLINE"] = "THICKOUTLINE",
+								},
+							},
+						},
+					},
+				},
 			},
 			embed = {
 				order = 3,
 				type = "group",
 				name = "Embed Settings",
-				get = function(info) return E.db.addOnSkins.embed[info[#info]] end,
+				get = function(info)
+					return E.db.addOnSkins.embed[info[#info]]
+				end,
 				set = function(info, value)
 					E.db.addOnSkins.embed[info[#info]] = value
 					E:GetModule("EmbedSystem"):EmbedUpdate()
@@ -563,7 +664,7 @@ local function getOptions()
 						values = {
 							["DISABLE"] = L["Disable"],
 							["SINGLE"] = L["Single"],
-							["DOUBLE"] = L["Double"]
+							["DOUBLE"] = L["Double"],
 						},
 					},
 					leftWindow = {
@@ -574,9 +675,11 @@ local function getOptions()
 							["Recount"] = "Recount",
 							["Omen"] = "Omen",
 							["Skada"] = "Skada",
-							["Details"] = "Details"
+							["Details"] = "Details",
 						},
-						disabled = function() return E.db.addOnSkins.embed.embedType == "DISABLE" end
+						disabled = function()
+							return E.db.addOnSkins.embed.embedType == "DISABLE"
+						end,
 					},
 					rightWindow = {
 						order = 4,
@@ -586,36 +689,42 @@ local function getOptions()
 							["Recount"] = "Recount",
 							["Omen"] = "Omen",
 							["Skada"] = "Skada",
-							["Details"] = "Details"
+							["Details"] = "Details",
 						},
-						disabled = function() return E.db.addOnSkins.embed.embedType ~= "DOUBLE" end
+						disabled = function()
+							return E.db.addOnSkins.embed.embedType ~= "DOUBLE"
+						end,
 					},
 					leftWindowWidth = {
 						order = 5,
 						type = "range",
-						min = 100, max = 300, step = 1,
-						name = L["Left Window Width"]
+						min = 100,
+						max = 300,
+						step = 1,
+						name = L["Left Window Width"],
 					},
 					hideChat = {
 						order = 6,
 						type = "select",
 						name = "Hide Chat Frame",
 						values = E:GetModule("EmbedSystem"):GetChatWindowInfo(),
-						disabled = function() return E.db.addOnSkins.embed.embedType == "DISABLE" end
+						disabled = function()
+							return E.db.addOnSkins.embed.embedType == "DISABLE"
+						end,
 					},
 					rightChatPanel = {
 						order = 7,
 						type = "toggle",
-						name = "Embed into Right Chat Panel"
+						name = "Embed into Right Chat Panel",
 					},
 					belowTopTab = {
 						order = 8,
 						type = "toggle",
-						name = "Embed Below Top Tab"
-					}
-				}
-			}
-		}
+						name = "Embed Below Top Tab",
+					},
+				},
+			},
+		},
 	}
 
 	local target = options.args.skins.args

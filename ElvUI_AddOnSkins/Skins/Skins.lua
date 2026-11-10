@@ -24,7 +24,9 @@ function AS:AcceptFrame(text, onClick)
 		acceptFrame.Close = CreateFrame("Button", nil, acceptFrame, "OptionsButtonTemplate")
 		acceptFrame.Close:Size(75, 21)
 		acceptFrame.Close:Point("LEFT", acceptFrame, "BOTTOM", 5, 26)
-		acceptFrame.Close:SetScript("OnClick", function(self) self:GetParent():Hide() end)
+		acceptFrame.Close:SetScript("OnClick", function(self)
+			self:GetParent():Hide()
+		end)
 		acceptFrame.Close:SetFormattedText(NO)
 		S:HandleButton(acceptFrame.Close)
 
@@ -32,7 +34,9 @@ function AS:AcceptFrame(text, onClick)
 	end
 
 	self.acceptFrame.Text:SetText(text)
-	self.acceptFrame:Width(self.acceptFrame.Text:GetStringWidth() + 50 > 200 and self.acceptFrame.Text:GetStringWidth() + 50 or 200)
+	self.acceptFrame:Width(
+		self.acceptFrame.Text:GetStringWidth() + 50 > 200 and self.acceptFrame.Text:GetStringWidth() + 50 or 200
+	)
 	self.acceptFrame:Height(self.acceptFrame.Text:GetStringHeight() + 60)
 	self.acceptFrame.Accept:SetScript("OnClick", onClick)
 	self.acceptFrame:Show()

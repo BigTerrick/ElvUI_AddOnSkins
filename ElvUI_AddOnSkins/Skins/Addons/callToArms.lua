@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("CallToArms") then return end
+if not AS:IsAddonLODorEnabled("CallToArms") then
+	return
+end
 
 local _G = _G
 local ipairs = ipairs
@@ -11,7 +13,9 @@ local select = select
 -- CallToArms r303
 
 S:AddCallbackForAddon("CallToArms", "CallToArms", function()
-	if not E.private.addOnSkins.CallToArms then return end
+	if not E.private.addOnSkins.CallToArms then
+		return
+	end
 
 	local frames = {
 		CTA_SearchFrame_Filters_PlayerInternalFrame,
@@ -61,7 +65,7 @@ S:AddCallbackForAddon("CallToArms", "CallToArms", function()
 		CTA_AcidClassCheckButton7,
 		CTA_AcidClassCheckButton8,
 		CTA_AcidClassCheckButton9,
-		CTA_AcidClassCheckButton10
+		CTA_AcidClassCheckButton10,
 	}
 	local editBoxes = {
 		CTA_SearchFrameDescriptionEditBox,
@@ -123,7 +127,7 @@ S:AddCallbackForAddon("CallToArms", "CallToArms", function()
 	for _, tab in ipairs(tabNames) do
 		S:HandleTab(tab)
 
-		local text = _G[tab:GetName().."Text"]
+		local text = _G[tab:GetName() .. "Text"]
 		text:ClearAllPoints()
 		text:Point("CENTER", 0, 1)
 	end
@@ -174,14 +178,14 @@ S:AddCallbackForAddon("CallToArms", "CallToArms", function()
 	CTA_AcidEditDialog:SetTemplate("Default")
 
 	for i = 0, 10 do
-		_G["CTA_Acid"..i.."barBorder"]:SetTemplate("Transparent")
-		S:HandleButton(_G["CTA_Acid"..i.."DeleteButton"])
+		_G["CTA_Acid" .. i .. "barBorder"]:SetTemplate("Transparent")
+		S:HandleButton(_G["CTA_Acid" .. i .. "DeleteButton"])
 
-		local button = _G["CTA_Acid"..i.."MoreButton"]
+		local button = _G["CTA_Acid" .. i .. "MoreButton"]
 		button:Point("TOPLEFT", 43, 0)
 		S:HandleNextPrevButton(button, "up")
 
-		button = _G["CTA_Acid"..i.."LessButton"]
+		button = _G["CTA_Acid" .. i .. "LessButton"]
 		button:Point("TOPLEFT", 43, -30)
 		S:HandleNextPrevButton(button, "down")
 	end

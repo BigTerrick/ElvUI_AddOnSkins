@@ -14,27 +14,29 @@ local hooksecurefunc = hooksecurefunc
 local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 
 function EMB:GetChatWindowInfo()
-	local chatTabInfo = {["NONE"] = "NONE"}
+	local chatTabInfo = { ["NONE"] = "NONE" }
 	for i = 1, NUM_CHAT_WINDOWS do
-		chatTabInfo["ChatFrame"..i] = _G["ChatFrame"..i.."Tab"]:GetText()
+		chatTabInfo["ChatFrame" .. i] = _G["ChatFrame" .. i .. "Tab"]:GetText()
 	end
 	return chatTabInfo
 end
 
 function EMB:ToggleChatFrame(hide)
 	local chatFrame = E.db.addOnSkins.embed.hideChat
-	if chatFrame == "NONE" then return end
+	if chatFrame == "NONE" then
+		return
+	end
 
 	if hide then
 		_G[chatFrame].originalParent = _G[chatFrame]:GetParent()
 		_G[chatFrame]:SetParent(E.HiddenFrame)
 
-		_G[chatFrame.."Tab"].originalParent = _G[chatFrame.."Tab"]:GetParent()
-		_G[chatFrame.."Tab"]:SetParent(E.HiddenFrame)
+		_G[chatFrame .. "Tab"].originalParent = _G[chatFrame .. "Tab"]:GetParent()
+		_G[chatFrame .. "Tab"]:SetParent(E.HiddenFrame)
 	else
 		if _G[chatFrame].originalParent then
 			_G[chatFrame]:SetParent(_G[chatFrame].originalParent)
-			_G[chatFrame.."Tab"]:SetParent(_G[chatFrame.."Tab"].originalParent)
+			_G[chatFrame .. "Tab"]:SetParent(_G[chatFrame .. "Tab"].originalParent)
 		end
 	end
 end
@@ -73,7 +75,13 @@ function EMB:CheckEmbed(addon)
 	local db = E.db.addOnSkins.embed
 	local left, right, embed = lower(db.leftWindow), lower(db.rightWindow), lower(addon)
 
-	if AS:IsAddonEnabled(addon) and ((db.embedType == "SINGLE" and match(left, embed)) or db.embedType == "DOUBLE" and (match(left, embed) or match(right, embed))) then
+	if
+		AS:IsAddonEnabled(addon)
+		and (
+			(db.embedType == "SINGLE" and match(left, embed))
+			or db.embedType == "DOUBLE" and (match(left, embed) or match(right, embed))
+		)
+	then
 		return true
 	else
 		return false
@@ -81,7 +89,9 @@ function EMB:CheckEmbed(addon)
 end
 
 function EMB:EmbedUpdate()
-	if E.db.addOnSkins.embed.embedType == "DISABLE" then return end
+	if E.db.addOnSkins.embed.embedType == "DISABLE" then
+		return
+	end
 
 	if not self.embedCreated then
 		self:EmbedCreate()
@@ -89,10 +99,18 @@ function EMB:EmbedUpdate()
 
 	self:WindowResize()
 
-	if self:CheckEmbed("Omen") then self:EmbedOmen() end
-	if self:CheckEmbed("Recount") then self:EmbedRecount() end
-	if self:CheckEmbed("Skada") then self:EmbedSkada() end
-	if self:CheckEmbed("Details") then self:EmbedDetails() end
+	if self:CheckEmbed("Omen") then
+		self:EmbedOmen()
+	end
+	if self:CheckEmbed("Recount") then
+		self:EmbedRecount()
+	end
+	if self:CheckEmbed("Skada") then
+		self:EmbedSkada()
+	end
+	if self:CheckEmbed("Details") then
+		self:EmbedDetails()
+	end
 end
 
 function EMB:SetHooks()
@@ -101,7 +119,9 @@ function EMB:SetHooks()
 			EMB:EmbedUpdate()
 		end
 	end)
-	hooksecurefunc(E:GetModule("Layout"), "ToggleChatPanels", function() EMB:EmbedUpdate() end)
+	hooksecurefunc(E:GetModule("Layout"), "ToggleChatPanels", function()
+		EMB:EmbedUpdate()
+	end)
 
 	-- hooksecurefunc(LeftChatPanel, function()
 	if E.db.LeftChatPanelFaded then
@@ -172,28 +192,48 @@ function EMB:SetHooks()
 end
 
 function EMB:WindowResize()
-	if not self.embedCreated then return end
+	if not self.embedCreated then
+		return
+	end
 
 	local db = E.db.addOnSkins.embed
 	local SPACING = E.Border + E.Spacing
 	local chatPanel = db.rightChatPanel and RightChatPanel or LeftChatPanel
 	local chatTab = db.rightChatPanel and RightChatTab or LeftChatTab
 	local chatData = db.rightChatPanel and RightChatDataPanel or LeftChatToggleButton
-	local topRight = chatData == RightChatDataPanel and (E.db.datatexts.rightChatPanel and "TOPLEFT" or "BOTTOMLEFT") or chatData == LeftChatToggleButton and (E.db.datatexts.leftChatPanel and "TOPLEFT" or "BOTTOMLEFT")
-	local yOffset = (chatData == RightChatDataPanel and E.db.datatexts.rightChatPanel and SPACING) or (chatData == LeftChatToggleButton and E.db.datatexts.leftChatPanel and SPACING) or 0
-	local xOffset = (E.db.chat.panelBackdrop == "RIGHT" and db.rightChatPanel and 0) or (E.db.chat.panelBackdrop == "LEFT" and not db.rightChatPanel and 0) or (E.db.chat.panelBackdrop == "SHOWBOTH" and 0) or E.Border*3 - E.Spacing
+	local topRight = chatData == RightChatDataPanel and (E.db.datatexts.rightChatPanel and "TOPLEFT" or "BOTTOMLEFT")
+		or chatData == LeftChatToggleButton and (E.db.datatexts.leftChatPanel and "TOPLEFT" or "BOTTOMLEFT")
+	local yOffset = (chatData == RightChatDataPanel and E.db.datatexts.rightChatPanel and SPACING)
+		or (chatData == LeftChatToggleButton and E.db.datatexts.leftChatPanel and SPACING)
+		or 0
+	local xOffset = (E.db.chat.panelBackdrop == "RIGHT" and db.rightChatPanel and 0)
+		or (E.db.chat.panelBackdrop == "LEFT" and not db.rightChatPanel and 0)
+		or (E.db.chat.panelBackdrop == "SHOWBOTH" and 0)
+		or E.Border * 3 - E.Spacing
 	local isDouble = db.embedType == "DOUBLE"
 
 	self.mainFrame:SetParent(chatPanel)
 	self.mainFrame:ClearAllPoints()
 
 	self.mainFrame:Point("BOTTOMLEFT", chatData, topRight, 0, yOffset)
-	self.mainFrame:Point("TOPRIGHT", chatTab, db.belowTopTab and "BOTTOMRIGHT" or "TOPRIGHT", xOffset, db.belowTopTab and -SPACING or 0)
+	self.mainFrame:Point(
+		"TOPRIGHT",
+		chatTab,
+		db.belowTopTab and "BOTTOMRIGHT" or "TOPRIGHT",
+		xOffset,
+		db.belowTopTab and -SPACING or 0
+	)
 
 	if isDouble then
 		self.leftFrame:ClearAllPoints()
 		self.leftFrame:Point("TOPLEFT", self.mainFrame)
-		self.leftFrame:Point("BOTTOMRIGHT", self.mainFrame, "BOTTOMRIGHT", -(self.mainFrame:GetWidth() - db.leftWindowWidth  + SPACING), 0)
+		self.leftFrame:Point(
+			"BOTTOMRIGHT",
+			self.mainFrame,
+			"BOTTOMRIGHT",
+			-(self.mainFrame:GetWidth() - db.leftWindowWidth + SPACING),
+			0
+		)
 
 		self.rightFrame:ClearAllPoints()
 		self.rightFrame:Point("TOPLEFT", self.leftFrame, "TOPRIGHT", SPACING, 0)
@@ -207,8 +247,8 @@ function EMB:WindowResize()
 	self:UpdateSwitchButton()
 
 	if IsAddOnLoaded("ElvUI_Config") then
-		E.Options.args.addOnSkins.args.embed.args.leftWindowWidth.min = floor(chatPanel:GetWidth() * .25)
-		E.Options.args.addOnSkins.args.embed.args.leftWindowWidth.max = floor(chatPanel:GetWidth() * .75)
+		E.Options.args.addOnSkins.args.embed.args.leftWindowWidth.min = floor(chatPanel:GetWidth() * 0.25)
+		E.Options.args.addOnSkins.args.embed.args.leftWindowWidth.max = floor(chatPanel:GetWidth() * 0.75)
 	end
 end
 
@@ -222,11 +262,11 @@ function EMB:UpdateSwitchButton()
 
 	if db.belowTopTab and chatPanel:IsShown() then
 		self.switchButton:Show()
-		self.switchButton.text:SetText(isDouble and db.leftWindow.." / "..db.rightWindow or db.leftWindow)
+		self.switchButton.text:SetText(isDouble and db.leftWindow .. " / " .. db.rightWindow or db.leftWindow)
 		self.switchButton:ClearAllPoints()
 
-		if E.Chat.RightChatWindow and _G["ChatFrame"..E.Chat.RightChatWindow:GetID().."Tab"]:IsVisible() then
-			self.switchButton:Point("LEFT", _G["ChatFrame"..E.Chat.RightChatWindow:GetID().."Tab"], "RIGHT", 0, 6)
+		if E.Chat.RightChatWindow and _G["ChatFrame" .. E.Chat.RightChatWindow:GetID() .. "Tab"]:IsVisible() then
+			self.switchButton:Point("LEFT", _G["ChatFrame" .. E.Chat.RightChatWindow:GetID() .. "Tab"], "RIGHT", 0, 6)
 		else
 			self.switchButton:Point(db.rightChatPanel and "LEFT" or "RIGHT", chatTab, 0, 6)
 		end
@@ -236,7 +276,9 @@ function EMB:UpdateSwitchButton()
 end
 
 function EMB:EmbedCreate()
-	if self.embedCreated then return end
+	if self.embedCreated then
+		return
+	end
 
 	self.mainFrame = CreateFrame("Frame", "ElvUI_AddOnSkins_Embed_MainWindow", UIParent)
 	self.leftFrame = CreateFrame("Frame", "ElvUI_AddOnSkins_Embed_LeftWindow", self.mainFrame)
@@ -247,7 +289,11 @@ function EMB:EmbedCreate()
 	self.switchButton:RegisterForClicks("AnyUp")
 
 	self.switchButton.text = self.switchButton:CreateFontString(nil, "OVERLAY")
-	self.switchButton.text:FontTemplate(E.LSM:Fetch("font", E.db.chat.tabFont), E.db.chat.tabFontSize, E.db.chat.tabFontOutline)
+	self.switchButton.text:FontTemplate(
+		E.LSM:Fetch("font", E.db.chat.tabFont),
+		E.db.chat.tabFontSize,
+		E.db.chat.tabFontOutline
+	)
 	self.switchButton.text:SetTextColor(unpack(E["media"].rgbvaluecolor))
 	self.switchButton.text:SetPoint("LEFT", 16, -6)
 
@@ -262,11 +308,19 @@ function EMB:EmbedCreate()
 		EMB:UpdateSwitchButton()
 	end)
 
-	self.switchButton:SetScript("OnMouseDown", function(self) self.text:Point("LEFT", 18, -8) end)
-	self.switchButton:SetScript("OnMouseUp", function(self) self.text:Point("LEFT", 16, -6) end)
+	self.switchButton:SetScript("OnMouseDown", function(self)
+		self.text:Point("LEFT", 18, -8)
+	end)
+	self.switchButton:SetScript("OnMouseUp", function(self)
+		self.text:Point("LEFT", 16, -6)
+	end)
 
-	self.mainFrame:SetScript("OnShow", function() EMB:EmbedShow() end)
-	self.mainFrame:SetScript("OnHide", function() EMB:EmbedHide() end)
+	self.mainFrame:SetScript("OnShow", function()
+		EMB:EmbedShow()
+	end)
+	self.mainFrame:SetScript("OnHide", function()
+		EMB:EmbedHide()
+	end)
 
 	self.embedCreated = true
 
@@ -286,7 +340,13 @@ if AS:IsAddonLODorEnabled("Recount") then
 		Recount_MainWindow:SetParent(parent)
 		Recount_MainWindow:ClearAllPoints()
 		Recount_MainWindow:SetPoint("TOPLEFT", parent, "TOPLEFT", E.PixelMode and -1 or 0, E.PixelMode and 8 or 7)
-		Recount_MainWindow:SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", E.PixelMode and 1 or 0, E.PixelMode and -1 or 0)
+		Recount_MainWindow:SetPoint(
+			"BOTTOMRIGHT",
+			parent,
+			"BOTTOMRIGHT",
+			E.PixelMode and 1 or 0,
+			E.PixelMode and -1 or 0
+		)
 
 		Recount.db.profile.Locked = true
 		Recount.db.profile.Scaling = 1
@@ -314,7 +374,7 @@ if AS:IsAddonLODorEnabled("Omen") then
 		db.profile.Bar.Spacing = 1
 		db.profile.Background.EdgeSize = 1
 		db.profile.Background.BarInset = 1
---		db.profile.TitleBar.Height = 22
+		--		db.profile.TitleBar.Height = 22
 		db.profile.TitleBar.UseSameBG = true
 		db.profile.ShowWith.UseShowWith = false
 		db.profile.Locked = true
@@ -344,7 +404,9 @@ if AS:IsAddonLODorEnabled("Skada") then
 	EMB.skadaWindows = {}
 
 	local function EmbedWindow(window, width, height, point, relativeFrame, relativePoint, ofsx, ofsy)
-		if not window then return end
+		if not window then
+			return
+		end
 		local barmod = Skada.displays["bar"]
 
 		window.db.barwidth = width
@@ -375,11 +437,19 @@ if AS:IsAddonLODorEnabled("Skada") then
 				window.bargroup.backdrop:SetFrameLevel(window.bargroup:GetFrameLevel() - 1)
 			end
 		else
-			window.db.background.height = height - (window.db.enabletitle and window.db.barheight or -(E.Border + E.Spacing)) - (E.Border + E.Spacing)
+			window.db.background.height = height
+				- (window.db.enabletitle and window.db.barheight or -(E.Border + E.Spacing))
+				- (E.Border + E.Spacing)
 			window.db.enablebackground = true
 
 			window.bargroup:ClearAllPoints()
-			window.bargroup:SetPoint(point, relativeFrame, relativePoint, ofsx, window.db.reversegrowth and ofsy or -ofsy)
+			window.bargroup:SetPoint(
+				point,
+				relativeFrame,
+				relativePoint,
+				ofsx,
+				window.db.reversegrowth and ofsy or -ofsy
+			)
 
 			window.bargroup.bgframe:SetFrameStrata("LOW")
 			window.bargroup.bgframe:SetFrameLevel(window.bargroup:GetFrameLevel() - 1)
@@ -404,8 +474,12 @@ if AS:IsAddonLODorEnabled("Skada") then
 		if db.embedType == "SINGLE" then
 			numberToEmbed = 1
 		elseif db.embedType == "DOUBLE" then
-			if db.rightWindow == "Skada" then numberToEmbed = numberToEmbed + 1 end
-			if db.leftWindow == "Skada" then numberToEmbed = numberToEmbed + 1 end
+			if db.rightWindow == "Skada" then
+				numberToEmbed = numberToEmbed + 1
+			end
+			if db.leftWindow == "Skada" then
+				numberToEmbed = numberToEmbed + 1
+			end
 		end
 
 		local point
@@ -416,10 +490,28 @@ if AS:IsAddonLODorEnabled("Skada") then
 			end
 
 			point = self.skadaWindows[1].db.reversegrowth and "BOTTOMLEFT" or "TOPLEFT"
-			EmbedWindow(self.skadaWindows[1], parent:GetWidth() -(E.Border*2), parent:GetHeight(), point, parent, point, E.Border, E.Border)
+			EmbedWindow(
+				self.skadaWindows[1],
+				parent:GetWidth() - (E.Border * 2),
+				parent:GetHeight(),
+				point,
+				parent,
+				point,
+				E.Border,
+				E.Border
+			)
 		elseif self.skadaWindows[1] and numberToEmbed == 2 then
 			point = self.skadaWindows[1].db.reversegrowth and "BOTTOMLEFT" or "TOPLEFT"
-			EmbedWindow(self.skadaWindows[1], self.leftFrame:GetWidth() -(E.Border*2), self.leftFrame:GetHeight(), point, self.leftFrame, point, E.Border, E.Border)
+			EmbedWindow(
+				self.skadaWindows[1],
+				self.leftFrame:GetWidth() - (E.Border * 2),
+				self.leftFrame:GetHeight(),
+				point,
+				self.leftFrame,
+				point,
+				E.Border,
+				E.Border
+			)
 
 			if not self.skadaWindows[2] then
 				-- E:Print(L["Please create a second Skada window."])
@@ -427,7 +519,16 @@ if AS:IsAddonLODorEnabled("Skada") then
 			end
 
 			point = self.skadaWindows[2].db.reversegrowth and "BOTTOMRIGHT" or "TOPRIGHT"
-			EmbedWindow(self.skadaWindows[2], self.rightFrame:GetWidth() -(E.Border*2), self.rightFrame:GetHeight(), point, self.rightFrame, point, -E.Border, E.Border)
+			EmbedWindow(
+				self.skadaWindows[2],
+				self.rightFrame:GetWidth() - (E.Border * 2),
+				self.rightFrame:GetHeight(),
+				point,
+				self.rightFrame,
+				point,
+				-E.Border,
+				E.Border
+			)
 		end
 	end
 end
@@ -465,7 +566,9 @@ if AS:IsAddonLODorEnabled("Details") then
 	end
 
 	local function EmbedWindow(window, width, height, point, relativeFrame, relativePoint, ofsx, ofsy)
-		if not window then return end
+		if not window then
+			return
+		end
 
 		if not window:IsEnabled() then
 			window:EnableInstance()
@@ -527,8 +630,12 @@ if AS:IsAddonLODorEnabled("Details") then
 		end
 
 		if db.embedType == "DOUBLE" then
-			if db.rightWindow == "Details" then numberToEmbed = numberToEmbed + 1 end
-			if db.leftWindow == "Details" then numberToEmbed = numberToEmbed + 1 end
+			if db.rightWindow == "Details" then
+				numberToEmbed = numberToEmbed + 1
+			end
+			if db.leftWindow == "Details" then
+				numberToEmbed = numberToEmbed + 1
+			end
 		end
 
 		if Details:GetMaxInstancesAmount() < numberToEmbed then
@@ -550,20 +657,49 @@ if AS:IsAddonLODorEnabled("Details") then
 			if db.embedType == "DOUBLE" then
 				parent = db.rightWindow == "Details" and self.rightFrame or self.leftFrame
 			end
-			EmbedWindow(self.DetailsInstances[1], parent:GetWidth() - (E.Border*2), parent:GetHeight(), "TOPLEFT", parent, "TOPLEFT", 2, 0)
+			EmbedWindow(
+				self.DetailsInstances[1],
+				parent:GetWidth() - (E.Border * 2),
+				parent:GetHeight(),
+				"TOPLEFT",
+				parent,
+				"TOPLEFT",
+				2,
+				0
+			)
 
 			if self.DetailsInstances[2] then
 				self.DetailsInstances[2]._ElvUIEmbed = nil
 			end
 		elseif numberToEmbed == 2 then
-			EmbedWindow(self.DetailsInstances[1], self.leftFrame:GetWidth() - (E.Border*2), self.leftFrame:GetHeight(), "TOPLEFT", self.leftFrame, "TOPLEFT", E.Border, E.Border)
-			EmbedWindow(self.DetailsInstances[2], self.rightFrame:GetWidth() - (E.Border*2), self.rightFrame:GetHeight(), "TOPRIGHT", self.rightFrame, "TOPRIGHT", -E.Border, E.Border)
+			EmbedWindow(
+				self.DetailsInstances[1],
+				self.leftFrame:GetWidth() - (E.Border * 2),
+				self.leftFrame:GetHeight(),
+				"TOPLEFT",
+				self.leftFrame,
+				"TOPLEFT",
+				E.Border,
+				E.Border
+			)
+			EmbedWindow(
+				self.DetailsInstances[2],
+				self.rightFrame:GetWidth() - (E.Border * 2),
+				self.rightFrame:GetHeight(),
+				"TOPRIGHT",
+				self.rightFrame,
+				"TOPRIGHT",
+				-E.Border,
+				E.Border
+			)
 		end
 	end
 end
 
 function EMB:Initialize()
-	if E.db.addOnSkins.embed.embedType == "DISABLE" then return end
+	if E.db.addOnSkins.embed.embedType == "DISABLE" then
+		return
+	end
 
 	self:EmbedCreate()
 end

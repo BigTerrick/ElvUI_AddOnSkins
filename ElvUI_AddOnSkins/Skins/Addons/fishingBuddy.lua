@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("FishingBuddy") then return end
+if not AS:IsAddonLODorEnabled("FishingBuddy") then
+	return
+end
 
 -- FishingBuddy 0.9.8 p1
 -- https://www.curseforge.com/wow/addons/fishingbuddy/files/442409
 
 S:AddCallbackForAddon("FishingBuddy", "FishingBuddy", function()
-	if not E.private.addOnSkins.FishingBuddy then return end
+	if not E.private.addOnSkins.FishingBuddy then
+		return
+	end
 
 	FishingBuddyFrame:CreateBackdrop("Transparent")
 	FishingBuddyFrame.backdrop:Point("TOPLEFT", 11, -12)
@@ -39,7 +43,7 @@ S:AddCallbackForAddon("FishingBuddy", "FishingBuddy", function()
 	local skinnedTabs = 0
 	local function skinTabs()
 		local id = skinnedTabs + 1
-		local tab = _G["FishingBuddyFrameTab"..id]
+		local tab = _G["FishingBuddyFrameTab" .. id]
 		while tab do
 			S:HandleTab(tab)
 
@@ -54,7 +58,7 @@ S:AddCallbackForAddon("FishingBuddy", "FishingBuddy", function()
 
 			skinnedTabs = id
 			id = id + 1
-			tab = _G["FishingBuddyFrameTab"..id]
+			tab = _G["FishingBuddyFrameTab" .. id]
 		end
 	end
 
@@ -73,7 +77,7 @@ S:AddCallbackForAddon("FishingBuddy", "FishingBuddy", function()
 	local function SkinCheckBoxes()
 		local checkBox
 		for i = 1, 12 do
-			checkBox = _G["FishingBuddyOption"..i]
+			checkBox = _G["FishingBuddyOption" .. i]
 			if checkBox and not checkBox.isSkinned then
 				S:HandleCheckBox(checkBox)
 				checkBox.isSkinned = true
@@ -89,7 +93,7 @@ S:AddCallbackForAddon("FishingBuddy", "FishingBuddy", function()
 	local optionTabs = {
 		FishingBuddyOptionTab1,
 		FishingBuddyOptionTab2,
-		FishingBuddyOptionTab3
+		FishingBuddyOptionTab3,
 	}
 
 	FishingBuddyOptionTab1:Point("TOPLEFT", FishingOptionsFrame, "TOPRIGHT", -33, -65)
@@ -115,7 +119,7 @@ S:AddCallbackForAddon("FishingBuddy", "FishingBuddy", function()
 		if i == 0 then
 			S:HandleCollapseExpandButton(FishingLocationsCollapseAllButton)
 		else
-			local button = _G["FishingLocations"..i]
+			local button = _G["FishingLocations" .. i]
 			if button then
 				S:HandleCollapseExpandButton(button)
 			end

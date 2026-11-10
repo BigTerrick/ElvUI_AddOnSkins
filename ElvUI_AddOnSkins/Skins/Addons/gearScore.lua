@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("GearScore") then return end
+if not AS:IsAddonLODorEnabled("GearScore") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -13,7 +15,9 @@ local GetItemQualityColor = GetItemQualityColor
 -- GearScore 3.1.17
 
 S:AddCallbackForAddon("GearScore", "GearScore", function()
-	if not E.private.addOnSkins.GearScore then return end
+	if not E.private.addOnSkins.GearScore then
+		return
+	end
 
 	GS_DisplayFrame:SetTemplate("Transparent")
 
@@ -58,7 +62,8 @@ S:AddCallbackForAddon("GearScore", "GearScore", function()
 					frame = _G["GS_Frame" .. i]
 					frame:SetTemplate("Default")
 
-					local _, _, rarity, _, _, _, _, _, _, texture = GetItemInfo("item:" .. GS_Data[E.myrealm].Players[Name].Equip[i])
+					local _, _, rarity, _, _, _, _, _, _, texture =
+						GetItemInfo("item:" .. GS_Data[E.myrealm].Players[Name].Equip[i])
 
 					if texture then
 						frame.texture:SetTexture(texture)
@@ -81,7 +86,7 @@ S:AddCallbackForAddon("GearScore", "GearScore", function()
 		end
 	end)
 
---	S:HandleEditBox(GS_NotesEditBox)
+	--	S:HandleEditBox(GS_NotesEditBox)
 
 	for i = 1, 14 do
 		frame = _G["GS_XpBar" .. i]
@@ -147,7 +152,7 @@ S:AddCallbackForAddon("GearScore", "GearScore", function()
 	GS_SearchXBox:ClearAllPoints()
 	GS_SearchXBox:Point("RIGHT", GS_Search2Button, "LEFT", -6, 0)
 
-	for _, frame in ipairs({_G["GS_DatabaseFrame"]:GetChildren()}) do
+	for _, frame in ipairs({ _G["GS_DatabaseFrame"]:GetChildren() }) do
 		if frame:GetName() == "GS_Search2Button" then
 			S:HandleButton(frame)
 		end

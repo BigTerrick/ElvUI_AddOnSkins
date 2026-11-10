@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("SuperDuperMacro") then return end
+if not AS:IsAddonLODorEnabled("SuperDuperMacro") then
+	return
+end
 
 local _G = _G
 local ipairs = ipairs
@@ -12,7 +14,9 @@ local unpack = unpack
 -- https://github.com/hypehuman/super-duper-macro/tree/d25b5fe50add9f03185bc09327144d450ffc85e4
 
 S:AddCallbackForAddon("SuperDuperMacro", "SuperDuperMacro", function()
-	if not E.private.addOnSkins.SuperDuperMacro then return end
+	if not E.private.addOnSkins.SuperDuperMacro then
+		return
+	end
 
 	local frames = {
 		"sdm_mainFrame",
@@ -141,7 +145,9 @@ S:AddCallbackForAddon("SuperDuperMacro", "SuperDuperMacro", function()
 	end
 
 	hooksecurefunc("sdm_UpdateList", function()
-		if not sdm_mainFrame:IsShown() then return end
+		if not sdm_mainFrame:IsShown() then
+			return
+		end
 
 		for _, button in ipairs(sdm_listItems) do
 			if not button.isSkinned then

@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("PowerAuras") then return end
+if not AS:IsAddonLODorEnabled("PowerAuras") then
+	return
+end
 
 local _G = _G
 
@@ -10,7 +12,9 @@ local _G = _G
 -- https://www.curseforge.com/wow/addons/powerauras-classic/files/452580
 
 S:AddCallbackForAddon("PowerAuras", "PowerAuras", function()
-	if not E.private.addOnSkins.PowerAuras then return end
+	if not E.private.addOnSkins.PowerAuras then
+		return
+	end
 
 	local frames = {
 		-- Options
@@ -279,7 +283,7 @@ S:AddCallbackForAddon("PowerAuras", "PowerAuras", function()
 
 	local icon
 	for i = 1, 24 do
-		icon = _G["PowaIcone"..i]
+		icon = _G["PowaIcone" .. i]
 		icon:SetTemplate()
 		icon:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
 		icon:GetNormalTexture():SetInside(icon)
@@ -296,7 +300,7 @@ S:AddCallbackForAddon("PowerAuras", "PowerAuras", function()
 
 	local tab
 	for i = 1, 5 do
-		tab = _G["PowaEditorTab"..i]
+		tab = _G["PowaEditorTab" .. i]
 		S:HandleTab(tab)
 		tab:Height(29)
 	end

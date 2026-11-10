@@ -2,12 +2,16 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("BuyEmAll") then return end
+if not AS:IsAddonLODorEnabled("BuyEmAll") then
+	return
+end
 
 -- BuyEmAll 2.9.2
 
 S:AddCallbackForAddon("BuyEmAll", "BuyEmAll", function()
-	if not E.private.addOnSkins.BuyEmAll then return end
+	if not E.private.addOnSkins.BuyEmAll then
+		return
+	end
 
 	BuyEmAllFrame:StripTextures()
 	BuyEmAllFrame:SetTemplate("Transparent")

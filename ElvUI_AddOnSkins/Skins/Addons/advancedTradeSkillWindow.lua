@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("AdvancedTradeSkillWindow") then return end
+if not AS:IsAddonLODorEnabled("AdvancedTradeSkillWindow") then
+	return
+end
 
 local _G = _G
 local ipairs = ipairs
@@ -15,7 +17,9 @@ local hooksecurefunc = hooksecurefunc
 -- https://www.curseforge.com/wow/addons/advanced-trade-skill-window/files/400569
 
 S:AddCallbackForAddon("AdvancedTradeSkillWindow", "AdvancedTradeSkillWindow", function()
-	if not E.private.addOnSkins.AdvancedTradeSkillWindow then return end
+	if not E.private.addOnSkins.AdvancedTradeSkillWindow then
+		return
+	end
 
 	local scrollBars = {
 		-- Main Frame
@@ -180,7 +184,7 @@ S:AddCallbackForAddon("AdvancedTradeSkillWindow", "AdvancedTradeSkillWindow", fu
 			onClick(ATSWCollapseAllButton)
 			ATSWCollapseAllButton:HookScript("OnClick", onClick)
 		else
-			local button = _G["ATSWSkill"..i]
+			local button = _G["ATSWSkill" .. i]
 			if button then
 				S:HandleCollapseExpandButton(button)
 			end
@@ -226,7 +230,7 @@ S:AddCallbackForAddon("AdvancedTradeSkillWindow", "AdvancedTradeSkillWindow", fu
 	end)
 
 	for i = 1, 4 do
-		local button = _G["ATSWQueueItem"..i.."DeleteButton"]
+		local button = _G["ATSWQueueItem" .. i .. "DeleteButton"]
 		S:HandleButton(button)
 		button:Size(20, 21)
 	end

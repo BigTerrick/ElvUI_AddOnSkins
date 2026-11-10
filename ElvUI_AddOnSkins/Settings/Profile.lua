@@ -47,5 +47,5 @@ P.addOnSkins = {
 		leftWindowWidth = 203,
 		belowTopTab = false,
 		hideChat = "NONE",
-	}
+	},
 }

@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("BindPad") then return end
+if not AS:IsAddonLODorEnabled("BindPad") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -11,7 +13,9 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/bind-pad/files/410752
 
 S:AddCallbackForAddon("BindPad", "BindPad", function()
-	if not E.private.addOnSkins.BindPad then return end
+	if not E.private.addOnSkins.BindPad then
+		return
+	end
 
 	BindPadFrame:StripTextures()
 	BindPadFrame:CreateBackdrop("Transparent")
@@ -171,7 +175,13 @@ S:AddCallbackForAddon("BindPad", "BindPad", function()
 	S:HandleButton(BindPadMacroTextFrameExitButton)
 	S:HandleButton(BindPadMacroDeleteButton)
 
-	BindPadMacroTextFrameEnterMacroText:Point("TOPLEFT", BindPadMacroTextFrameSelectedMacroBackground, "BOTTOMLEFT", 8, 3)
+	BindPadMacroTextFrameEnterMacroText:Point(
+		"TOPLEFT",
+		BindPadMacroTextFrameSelectedMacroBackground,
+		"BOTTOMLEFT",
+		8,
+		3
+	)
 
 	BindPadMacroTextFrameTextBackground:Size(304, 252)
 	BindPadMacroTextFrameTextBackground:Point("TOPLEFT", 19, -147)
@@ -179,12 +189,30 @@ S:AddCallbackForAddon("BindPad", "BindPad", function()
 	BindPadMacroTextFrameText:Width(298)
 
 	BindPadMacroTextFrameScrollFrame:Size(298, 241)
-	BindPadMacroTextFrameScrollFrame:Point("TOPLEFT", BindPadMacroTextFrameSelectedMacroBackground, "BOTTOMLEFT", 6, -16)
+	BindPadMacroTextFrameScrollFrame:Point(
+		"TOPLEFT",
+		BindPadMacroTextFrameSelectedMacroBackground,
+		"BOTTOMLEFT",
+		6,
+		-16
+	)
 
 	BindPadMacroTextFrameScrollFrameScrollBar:Point("TOPLEFT", BindPadMacroTextFrameScrollFrame, "TOPRIGHT", 6, -14)
-	BindPadMacroTextFrameScrollFrameScrollBar:Point("BOTTOMLEFT", BindPadMacroTextFrameScrollFrame, "BOTTOMRIGHT", 6, 13)
+	BindPadMacroTextFrameScrollFrameScrollBar:Point(
+		"BOTTOMLEFT",
+		BindPadMacroTextFrameScrollFrame,
+		"BOTTOMRIGHT",
+		6,
+		13
+	)
 
-	BindPadMacroTextFrameSelectedMacroName:Point("TOPLEFT", BindPadMacroTextFrameSelectedMacroBackground, "TOPRIGHT", -4, -12)
+	BindPadMacroTextFrameSelectedMacroName:Point(
+		"TOPLEFT",
+		BindPadMacroTextFrameSelectedMacroBackground,
+		"TOPRIGHT",
+		-4,
+		-12
+	)
 	BindPadMacroTextFrameEditButton:Point("TOPLEFT", BindPadMacroTextFrameSelectedMacroBackground, "TOPLEFT", 53, -28)
 
 	BindPadMacroDeleteButton:Point("BOTTOMLEFT", 19, 84)

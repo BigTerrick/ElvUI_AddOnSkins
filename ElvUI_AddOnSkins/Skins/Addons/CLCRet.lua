@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("CLCRet") then return end
+if not AS:IsAddonLODorEnabled("CLCRet") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -11,7 +13,9 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/clcret/files/439502
 
 S:AddCallbackForAddon("CLCRet", "CLCRet", function()
-	if not E.private.addOnSkins.CLCRet then return end
+	if not E.private.addOnSkins.CLCRet then
+		return
+	end
 
 	local function styleButton(button, icon, height, width)
 		button:SetScale(1)
@@ -60,7 +64,7 @@ S:AddCallbackForAddon("CLCRet", "CLCRet", function()
 		local bar
 
 		for i = 1, MAX_SOVBARS do
-			bar = _G["clcretSovBar"..i]
+			bar = _G["clcretSovBar" .. i]
 
 			styleButton(bar, bar.icon, db.height, db.useButtons and db.height or (db.width - db.height))
 
@@ -84,5 +88,4 @@ S:AddCallbackForAddon("CLCRet", "CLCRet", function()
 
 		S:Unhook(self, "InitSwingBar")
 	end)
-
 end)

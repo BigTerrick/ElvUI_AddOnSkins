@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("MageNuggets") then return end
+if not AS:IsAddonLODorEnabled("MageNuggets") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -11,7 +13,9 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/mage-nuggets/files/438172
 
 S:AddCallbackForAddon("MageNuggets", "MageNuggets", function()
-	if not E.private.addOnSkins.MageNuggets then return end
+	if not E.private.addOnSkins.MageNuggets then
+		return
+	end
 
 	MageNugSP_Frame:SetTemplate("Transparent", nil, true)
 	MageNugSP_FrameText:FontTemplate(nil, 9)
@@ -86,7 +90,7 @@ S:AddCallbackForAddon("MageNuggets", "MageNuggets", function()
 		"MageNugImpactProcFrame",
 		"MageNugBFProcFrame",
 		"MageNugMBProcFrame",
-		"MageNugFoFProcFrame"
+		"MageNugFoFProcFrame",
 	}
 
 	for _, frameName in ipairs(procFrames) do
@@ -161,7 +165,7 @@ S:AddCallbackForAddon("MageNuggets", "MageNuggets", function()
 		"TeleTB",
 		"TeleSMC",
 		"TeleStonard",
-		"Hearth"
+		"Hearth",
 	}
 
 	for _, button in ipairs(hordeButtons) do
@@ -196,7 +200,7 @@ S:AddCallbackForAddon("MageNuggets", "MageNuggets", function()
 		"TeleDarn",
 		"TeleExo",
 		"TeleTheramore",
-		"Hearth"
+		"Hearth",
 	}
 
 	for _, button in pairs(alliButtons) do

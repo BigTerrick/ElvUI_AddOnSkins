@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Stalker") then return end
+if not AS:IsAddonLODorEnabled("Stalker") then
+	return
+end
 
 -- Stalker 1.2
 -- https://wow.curseforge.com/projects/Stalker/files/442604
 
 S:AddCallbackForAddon("Stalker", "Stalker", function()
-	if not E.private.addOnSkins.Stalker then return end
+	if not E.private.addOnSkins.Stalker then
+		return
+	end
 
 	Stalker_AlertWindow:StripTextures()
 	Stalker_AlertWindow:SetTemplate("Transparent")
@@ -22,7 +26,7 @@ S:AddCallbackForAddon("Stalker", "Stalker", function()
 	Stalker_MainWindow:SetTemplate("Transparent")
 
 	for i = 1, 5 do
-		local bar = _G["Stalker_MainWindow_Bar"..i]
+		local bar = _G["Stalker_MainWindow_Bar" .. i]
 
 		bar:StyleButton()
 		bar.StatusBar:SetStatusBarTexture(E["media"].normTex)

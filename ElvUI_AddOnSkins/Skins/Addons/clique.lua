@@ -2,26 +2,44 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Clique") then return end
+if not AS:IsAddonLODorEnabled("Clique") then
+	return
+end
 
 local _G = _G
+local type = type
 local unpack = unpack
 
 local FauxScrollFrame_GetOffset = FauxScrollFrame_GetOffset
 
--- Clique r139
--- https://www.curseforge.com/wow/addons/clique/files/466948
+-- Clique r139: https://www.curseforge.com/wow/addons/clique/files/466948
+-- Clique r143-release: https://www.curseforge.com/wow/addons/clique/files/466944
 
 S:AddCallbackForAddon("Clique", "Clique", function()
-	if not E.private.addOnSkins.Clique then return end
+	if not E.private.addOnSkins.Clique then
+		return
+	end
 
-	E:Delay(0.5, function()
+	-- Newer Clique rewrites (e.g. the v1.6 backport) use a different options UI
+	if not Clique or type(Clique.CreateOptionsFrame) ~= "function" or type(Clique.ListScrollUpdate) ~= "function" then
+		return
+	end
+
+	-- Clique creates the tab in OptionsOnLoad (via Dongle's Enable), which can run
+	-- either side of this callback depending on which addon's login handler fires first
+	local function SkinPulloutTab()
 		CliquePulloutTab:StyleButton(nil, true)
 		CliquePulloutTab:SetTemplate("Default", true)
 		CliquePulloutTab:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
 		CliquePulloutTab:GetNormalTexture():SetInside()
 		CliquePulloutTab:GetRegions():Hide()
-	end)
+	end
+
+	if CliquePulloutTab then
+		SkinPulloutTab()
+	else
+		hooksecurefunc(Clique, "OptionsOnLoad", SkinPulloutTab)
+	end
 
 	local function SkinFrame(frame)
 		frame:StripTextures()
@@ -70,7 +88,7 @@ S:AddCallbackForAddon("Clique", "Clique", function()
 		CliqueButtonCustom:Point("BOTTOMLEFT", 8, 8)
 
 		for i = 1, 10 do
-			local entry = _G["CliqueList"..i]
+			local entry = _G["CliqueList" .. i]
 			entry:Size(388, 32)
 			entry:SetTemplate("Default")
 			entry.icon:Point("LEFT", 4, 0)
@@ -93,7 +111,8 @@ S:AddCallbackForAddon("Clique", "Clique", function()
 
 		-- OptionsFrame
 		SkinFrame(CliqueOptionsFrame)
-		CliqueOptionsFrame:Height(125)
+		-- r143 adds the AnyDown checkbox, pushing the other options down 20px
+		CliqueOptionsFrame:Height(CliqueOptionsAnyDown and 145 or 125)
 		CliqueOptionsFrame:Point("TOPLEFT", CliqueFrame, "TOPRIGHT", -1, 0)
 
 		S:HandleCloseButton(CliqueOptionsButtonClose)
@@ -140,7 +159,7 @@ S:AddCallbackForAddon("Clique", "Clique", function()
 		CliqueButtonDeleteProfile:Point("BOTTOMLEFT", 30, 8)
 
 		for i = 1, 12 do
-			local entry = _G["CliqueTextList"..i]
+			local entry = _G["CliqueTextList" .. i]
 			S:HandleCheckBox(entry)
 			entry.backdrop:Point("TOPLEFT", 6, -4)
 			entry.backdrop:Point("BOTTOMRIGHT", -4, 3)
@@ -156,7 +175,7 @@ S:AddCallbackForAddon("Clique", "Clique", function()
 		CliqueCustomButtonIcon.icon:SetInside()
 
 		for i = 1, 5 do
-			local entry = _G["CliqueCustomArg"..i]
+			local entry = _G["CliqueCustomArg" .. i]
 			S:HandleEditBox(entry)
 			entry.backdrop:Point("TOPLEFT", -5, -5)
 			entry.backdrop:Point("BOTTOMRIGHT", -5, 5)
@@ -190,8 +209,8 @@ S:AddCallbackForAddon("Clique", "Clique", function()
 		CliqueIconScrollFrameScrollBar:Point("BOTTOMLEFT", CliqueIconScrollFrame, "BOTTOMRIGHT", -4, 18)
 
 		for i = 1, 20 do
-			local button = _G["CliqueIcon"..i]
-			local buttonIcon = _G["CliqueIcon"..i.."Icon"]
+			local button = _G["CliqueIcon" .. i]
+			local buttonIcon = _G["CliqueIcon" .. i .. "Icon"]
 
 			button:StripTextures()
 			button:StyleButton(nil, true)
@@ -204,7 +223,9 @@ S:AddCallbackForAddon("Clique", "Clique", function()
 	end)
 
 	hooksecurefunc(Clique, "ListScrollUpdate", function(self)
-		if not CliqueListScroll then return end
+		if not CliqueListScroll then
+			return
+		end
 
 		local offset = FauxScrollFrame_GetOffset(CliqueListScroll)
 		local width = CliqueListScroll:IsShown() and 388 or 384

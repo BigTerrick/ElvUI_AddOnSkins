@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("_NPCScan.Overlay") then return end
+if not AS:IsAddonLODorEnabled("_NPCScan.Overlay") then
+	return
+end
 
 -- NPCScan Overlay 3.3.5.1
 -- https://www.curseforge.com/wow/addons/npcscan-overlay/files/434851
 
 S:AddCallbackForAddon("_NPCScan.Overlay", "_NPCScan.Overlay", function()
-	if not E.private.addOnSkins._NPCScanOverlay then return end
+	if not E.private.addOnSkins._NPCScanOverlay then
+		return
+	end
 
 	S:HandleCheckBox(_NPCScanOverlayWorldMapToggle)
 	_NPCScanOverlayWorldMapToggle:Size(24)

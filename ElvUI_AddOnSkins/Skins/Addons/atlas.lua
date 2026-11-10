@@ -2,12 +2,16 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Atlas") then return end
+if not AS:IsAddonLODorEnabled("Atlas") then
+	return
+end
 
 -- Atlas 1.18.1
 
 S:AddCallbackForAddon("Atlas", "Atlas", function()
-	if not E.private.addOnSkins.Atlas then return end
+	if not E.private.addOnSkins.Atlas then
+		return
+	end
 
 	AtlasFrame:StripTextures()
 	AtlasFrame:SetTemplate("Transparent")
@@ -20,8 +24,8 @@ S:AddCallbackForAddon("Atlas", "Atlas", function()
 
 	AtlasLockNorm:SetInside(AtlasFrameLockButton, 10, 10)
 	AtlasLockPush:SetInside(AtlasFrameLockButton, 10, 10)
-	AtlasLockNorm:SetTexCoord(.36, .65, .32, .73)
-	AtlasLockPush:SetTexCoord(.36, .60, .38, .76)
+	AtlasLockNorm:SetTexCoord(0.36, 0.65, 0.32, 0.73)
+	AtlasLockPush:SetTexCoord(0.36, 0.60, 0.38, 0.76)
 
 	AtlasMap:SetDrawLayer("ARTWORK")
 	AtlasMap:CreateBackdrop()

@@ -11,15 +11,15 @@ local hooksecurefunc = hooksecurefunc
 
 AS.skinnedLibs = {}
 
-local dropdownArrowColor = {1, 0.8, 0}
+local dropdownArrowColor = { 1, 0.8, 0 }
 
 local function SkinDewdrop(lib, libName)
 	local dewdropEditBoxFrame
 	local dewdropSliderFrame
 
 	local function DewdropOpen(prefix)
-		local level = prefix.."Level"
-		local button = prefix.."Button"
+		local level = prefix .. "Level"
+		local button = prefix .. "Button"
 
 		local i = 1
 		local frame = _G[level .. i]
@@ -47,7 +47,7 @@ local function SkinDewdrop(lib, libName)
 				frame:HookScript("OnEnter", function(self)
 					if not self.disabled and self.hasArrow then
 						if not dewdropEditBoxFrame and self.hasEditBox then
-							dewdropEditBoxFrame = AS:FindFrameBySizeChild({"EditBox"}, 200, 40)
+							dewdropEditBoxFrame = AS:FindFrameBySizeChild({ "EditBox" }, 200, 40)
 
 							if dewdropEditBoxFrame then
 								dewdropEditBoxFrame:SetTemplate("Transparent")
@@ -56,7 +56,7 @@ local function SkinDewdrop(lib, libName)
 							end
 						end
 						if not dewdropSliderFrame and self.hasSlider then
-							dewdropSliderFrame = AS:FindFrameBySizeChild({"Slider", "EditBox"}, 100, 170)
+							dewdropSliderFrame = AS:FindFrameBySizeChild({ "Slider", "EditBox" }, 100, 170)
 
 							if dewdropSliderFrame then
 								dewdropSliderFrame:SetTemplate("Transparent")
@@ -128,7 +128,9 @@ end
 
 local function SkinLibRockConfig(lib)
 	local function SkinMainFrame(self)
-		if self.base.isSkinned then return end
+		if self.base.isSkinned then
+			return
+		end
 
 		self.base:SetTemplate("Transparent")
 		self.base.header:StripTextures()
@@ -142,12 +144,12 @@ local function SkinLibRockConfig(lib)
 		self.base.addonChooser.text:SetTemplate("Transparent")
 		S:HandleNextPrevButton(self.base.addonChooser.button)
 
-		local pullout = _G[self.base.mainPane:GetName().."_ChoicePullout"]
+		local pullout = _G[self.base.mainPane:GetName() .. "_ChoicePullout"]
 		if pullout then
 			pullout:SetTemplate("Transparent")
 		else
 			S:SecureHookScript(self.base.addonChooser.button, "OnClick", function(self)
-				_G[lib.base.mainPane:GetName().."_ChoicePullout"]:SetTemplate("Transparent")
+				_G[lib.base.mainPane:GetName() .. "_ChoicePullout"]:SetTemplate("Transparent")
 				S:Unhook(self, "OnClick")
 			end)
 		end
@@ -191,13 +193,15 @@ local function SkinConfigator(lib)
 	end
 
 	local function skinEditBox(obj)
-		if not obj then return end
+		if not obj then
+			return
+		end
 
 		local objName = obj:GetName()
 		if objName then
-			_G[objName.."Left"]:Kill()
-			_G[objName.."Middle"]:Kill()
-			_G[objName.."Right"]:Kill()
+			_G[objName .. "Left"]:Kill()
+			_G[objName .. "Middle"]:Kill()
+			_G[objName .. "Right"]:Kill()
 		end
 
 		obj:Height(17)
@@ -209,11 +213,13 @@ local function SkinConfigator(lib)
 	end
 
 	local function skinObject(obj)
-		if not obj then return end
+		if not obj then
+			return
+		end
 
 		local objType = obj:GetObjectType()
 
-	--	if objType == "FontString" then
+		--	if objType == "FontString" then
 		if objType == "CheckButton" then
 			S:HandleCheckBox(obj, true)
 		elseif objType == "Slider" then
@@ -234,18 +240,16 @@ local function SkinConfigator(lib)
 				local _, _, _, x = obj:GetPoint(2)
 				obj:Point("LEFT", x + 15, 0)
 
-				_G[obj:GetName().."Text"]:Point("RIGHT", -26, 0)
+				_G[obj:GetName() .. "Text"]:Point("RIGHT", -26, 0)
 
 				S:HandleNextPrevButton(obj.button, "down", dropdownArrowColor)
 				obj.button:Point("TOPRIGHT", -2, -2)
-			elseif obj.stype == "MoneyFrame"
-			or obj.stype == "PinnedMoney"
-			or obj.stype == "MoneyFramePinned" then
+			elseif obj.stype == "MoneyFrame" or obj.stype == "PinnedMoney" or obj.stype == "MoneyFramePinned" then
 				local objName = obj:GetName()
 				if objName then
-					skinEditBox(_G[objName.."Gold"])
-					skinEditBox(_G[objName.."Silver"])
-					skinEditBox(_G[objName.."Copper"])
+					skinEditBox(_G[objName .. "Gold"])
+					skinEditBox(_G[objName .. "Silver"])
+					skinEditBox(_G[objName .. "Copper"])
 				else
 					for i = 1, obj:GetNumChildren() do
 						local child = select(i, obj:GetChildren())
@@ -289,7 +293,9 @@ local function SkinConfigator(lib)
 
 	local function skinScroll(self, id)
 		local tab = self.tabs[id]
-		if tab.scroll.isSkinned then return end
+		if tab.scroll.isSkinned then
+			return
+		end
 
 		if tab.scroll.vScroll then
 			S:HandleScrollBar(tab.scroll.vScroll)
@@ -368,7 +374,7 @@ local function SkinConfigator(lib)
 		end
 	end
 
-	do	-- tooltip
+	do -- tooltip
 		lib.tooltip:SetTemplate("Transparent")
 		lib.tooltip._SetBackdropColor = lib.tooltip.SetBackdropColor
 		lib.tooltip.SetBackdropColor = function(self)
@@ -378,7 +384,7 @@ local function SkinConfigator(lib)
 		end
 	end
 
-	do	-- help
+	do -- help
 		lib.help:SetTemplate("Transparent")
 
 		lib.help.scroll:SetTemplate("Transparent")
@@ -449,10 +455,14 @@ end
 
 local function SkinAzDialog(libName)
 	local lib = _G[libName]
-	if not lib then return end
+	if not lib then
+		return
+	end
 
 	local function skinDialog(frame)
-		if frame.isSkinned then return end
+		if frame.isSkinned then
+			return
+		end
 
 		frame:SetTemplate("Transparent")
 
@@ -478,7 +488,9 @@ end
 
 local function SkinAzDropDown(libName)
 	local lib = _G[libName]
-	if not lib then return end
+	if not lib then
+		return
+	end
 
 	S:RawHook(lib, "CreateDropDown", function(parent, ...)
 		local f = S.hooks[lib].CreateDropDown(parent, ...)
@@ -494,10 +506,10 @@ local function SkinAzDropDown(libName)
 	end)
 
 	S:SecureHook(lib, "ToggleMenu", function(parent, width, isAutoSelect, initFunc, selectValueFunc)
-		local scrollFrame = _G["AzDropDownScroll"..lib.vers]
+		local scrollFrame = _G["AzDropDownScroll" .. lib.vers]
 		if scrollFrame then
 			scrollFrame:GetParent():SetTemplate("Default")
-			S:HandleScrollBar(_G["AzDropDownScroll"..lib.vers.."ScrollBar"])
+			S:HandleScrollBar(_G["AzDropDownScroll" .. lib.vers .. "ScrollBar"])
 
 			S:Unhook(lib, "ToggleMenu")
 		end
@@ -508,7 +520,9 @@ end
 
 local function SkinAzOptionsFactory(libName)
 	local lib = _G[libName]
-	if not lib then return end
+	if not lib then
+		return
+	end
 
 	AS:SkinLibrary("AzDropDown")
 
@@ -692,7 +706,9 @@ local function SkinScrollingTable(lib)
 end
 
 local function SkinDropDownMenu(libName)
-	if not _G.Lib_UIDropDownMenu_Initialize then return end
+	if not _G.Lib_UIDropDownMenu_Initialize then
+		return
+	end
 
 	local checkBoxSkin = E.private.skins.dropdownCheckBoxSkin
 	local menuLevel = 0
@@ -711,24 +727,24 @@ local function SkinDropDownMenu(libName)
 
 		if updateButtons or menuLevel < LIB_UIDROPDOWNMENU_MAXLEVELS then
 			for i = 1, LIB_UIDROPDOWNMENU_MAXLEVELS do
-				local frame = _G["Lib_DropDownList"..i]
+				local frame = _G["Lib_DropDownList" .. i]
 
 				if not frame.isSkinned then
-					_G["Lib_DropDownList"..i.."Backdrop"]:SetTemplate("Transparent")
-					_G["Lib_DropDownList"..i.."MenuBackdrop"]:SetTemplate("Transparent")
+					_G["Lib_DropDownList" .. i .. "Backdrop"]:SetTemplate("Transparent")
+					_G["Lib_DropDownList" .. i .. "MenuBackdrop"]:SetTemplate("Transparent")
 
 					frame.isSkinned = true
 				end
 
 				if updateButtons then
 					for j = 1, LIB_UIDROPDOWNMENU_MAXBUTTONS do
-						local button = _G["Lib_DropDownList"..i.."Button"..j]
+						local button = _G["Lib_DropDownList" .. i .. "Button" .. j]
 
 						if not button.isSkinned then
-							S:HandleButtonHighlight(_G["Lib_DropDownList"..i.."Button"..j.."Highlight"])
+							S:HandleButtonHighlight(_G["Lib_DropDownList" .. i .. "Button" .. j .. "Highlight"])
 
 							if checkBoxSkin then
-								local check = _G["Lib_DropDownList"..i.."Button"..j.."Check"]
+								local check = _G["Lib_DropDownList" .. i .. "Button" .. j .. "Check"]
 								check:Size(12)
 								check:Point("LEFT", 1, 0)
 								check:CreateBackdrop()
@@ -739,7 +755,7 @@ local function SkinDropDownMenu(libName)
 								hooksecurefunc(button, "Show", dropDownButtonShow)
 							end
 
-							S:HandleColorSwatch(_G["Lib_DropDownList"..i.."Button"..j.."ColorSwatch"], 14)
+							S:HandleColorSwatch(_G["Lib_DropDownList" .. i .. "Button" .. j .. "ColorSwatch"], 14)
 
 							button.isSkinned = true
 						end
@@ -760,7 +776,7 @@ end
 
 local LQT = LibStub("LibQTip-1.0", true)
 if LQT then
-	S:SecureHook(LQT, 'Acquire', function()
+	S:SecureHook(LQT, "Acquire", function()
 		for _, tooltip in LQT:IterateTooltips() do
 			if not tooltip.isSkinned then
 				tooltip:StripTextures(true)
@@ -773,7 +789,7 @@ end
 
 local LQTRS = LibStub("LibQTip-1.0RS", true)
 if LQTRS then
-	S:SecureHook(LQTRS, 'Acquire', function()
+	S:SecureHook(LQTRS, "Acquire", function()
 		for _, tooltip in LQTRS:IterateTooltips() do
 			if not tooltip.isSkinned then
 				tooltip:StripTextures(true)
@@ -947,7 +963,9 @@ local function SkinWaterfall(lib)
 end
 
 local function SkinLDropDownMenu(lib)
-	if not _G.L_UIDropDownMenu_Initialize then return end
+	if not _G.L_UIDropDownMenu_Initialize then
+		return
+	end
 
 	local checkBoxSkin = E.private.skins.dropdownCheckBoxSkin
 	local menuLevel = 0
@@ -1021,80 +1039,82 @@ end
 AS.libSkins = {
 	["AceAddon-2.0"] = {
 		stub = true,
-		func = SkinAceAddon20
+		func = SkinAceAddon20,
 	},
 	["ArkDewdrop-3.0"] = {
 		stub = true,
-		func = SkinDewdrop
+		func = SkinDewdrop,
 	},
 	["AzDialog"] = {
 		stub = false,
-		func = SkinAzDialog
+		func = SkinAzDialog,
 	},
 	["AzDropDown"] = {
 		stub = false,
-		func = SkinAzDropDown
+		func = SkinAzDropDown,
 	},
 	["AzOptionsFactory"] = {
 		stub = false,
-		func = SkinAzOptionsFactory
+		func = SkinAzOptionsFactory,
 	},
 	["Configator"] = {
 		stub = true,
-		func = SkinConfigator
+		func = SkinConfigator,
 	},
 	["Dewdrop-2.0"] = {
 		stub = true,
-		func = SkinDewdrop
+		func = SkinDewdrop,
 	},
 	["DropDownMenu"] = {
 		stub = false,
-		func = SkinDropDownMenu
+		func = SkinDropDownMenu,
 	},
 	["LibCandyBar-3.0"] = {
 		stub = true,
-		func = SkinLibCandyBar
+		func = SkinLibCandyBar,
 	},
 	["LibDialog-1.0"] = {
 		stub = true,
-		func = SkinLibDialog
+		func = SkinLibDialog,
 	},
 	["LibExtraTip-1"] = {
 		stub = true,
-		func = SkinLibExtraTip
+		func = SkinLibExtraTip,
 	},
 	["LibRockConfig-1.0"] = {
 		stub = true,
-		func = SkinLibRockConfig
+		func = SkinLibRockConfig,
 	},
 	["LibQTip-1.0"] = {
 		stub = true,
-		func = SkinLibQTip
+		func = SkinLibQTip,
 	},
 	["ScrollingTable"] = {
 		stub = true,
-		func = SkinScrollingTable
+		func = SkinScrollingTable,
 	},
 	["Tablet-2.0"] = {
 		stub = true,
-		func = SkinTablet2
+		func = SkinTablet2,
 	},
 	["Waterfall-1.0"] = {
 		stub = true,
-		func = SkinWaterfall
+		func = SkinWaterfall,
 	},
 	["ZFrame-1.0"] = {
 		stub = true,
-		func = SkinZFrame
+		func = SkinZFrame,
 	},
 	["LibUIDropDownMenu"] = {
 		stub = true,
-		func = SkinLDropDownMenu
+		func = SkinLDropDownMenu,
 	},
 }
 
 function AS:SkinLibrary(libName)
-	if not libName or not self.libSkins[libName] then return end
+	if not libName or not self.libSkins[libName] then
+		return
+	end
 
 	if self.libSkins[libName].stub then
 		local lib, minor = LibStub(libName, true)

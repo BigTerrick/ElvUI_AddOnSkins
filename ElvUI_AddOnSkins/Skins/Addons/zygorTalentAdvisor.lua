@@ -2,12 +2,16 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("ZygorTalentAdvisor") then return end
+if not AS:IsAddonLODorEnabled("ZygorTalentAdvisor") then
+	return
+end
 
 -- Zygor Talent Advisor 2.0
 
 S:AddCallbackForAddon("ZygorTalentAdvisor", "ZygorTalentAdvisor", function()
-	if not E.private.addOnSkins.ZygorTalentAdvisor then return end
+	if not E.private.addOnSkins.ZygorTalentAdvisor then
+		return
+	end
 
 	ZygorTalentAdvisorPopoutButton:Point("TOPRIGHT", -40, -39)
 	ZygorTalentAdvisorPopoutButton:Size(26, 32)

@@ -2,11 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("WeakAuras") then return end
+if not AS:IsAddonLODorEnabled("WeakAuras") then
+	return
+end
 
 S:AddCallbackForAddon("WeakAuras", "WeakAuras", function()
-	if WeakAuras.IsCorrectVersion then return end
-	if not E.private.addOnSkins.WeakAuras then return end
+	if WeakAuras.IsCorrectVersion then
+		return
+	end
+	if not E.private.addOnSkins.WeakAuras then
+		return
+	end
 
 	local function Skin_WeakAuras(frame, ftype)
 		if not frame.backdrop then
@@ -55,9 +61,7 @@ S:AddCallbackForAddon("WeakAuras", "WeakAuras", function()
 	end
 
 	for weakAura in pairs(WeakAuras.regions) do
-		if WeakAuras.regions[weakAura].regionType == "icon"
-		or WeakAuras.regions[weakAura].regionType == "aurabar"
-		then
+		if WeakAuras.regions[weakAura].regionType == "icon" or WeakAuras.regions[weakAura].regionType == "aurabar" then
 			Skin_WeakAuras(WeakAuras.regions[weakAura].region, WeakAuras.regions[weakAura].regionType)
 		end
 	end

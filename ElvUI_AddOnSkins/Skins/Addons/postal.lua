@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Postal") then return end
+if not AS:IsAddonLODorEnabled("Postal") then
+	return
+end
 
 local _G = _G
 local select = select
@@ -16,10 +18,14 @@ local INBOXITEMS_TO_DISPLAY = INBOXITEMS_TO_DISPLAY
 -- https://www.wowace.com/projects/postal/files/454610
 
 S:AddCallbackForAddon("Postal", "Postal", function()
-	if not E.private.addOnSkins.Postal then return end
+	if not E.private.addOnSkins.Postal then
+		return
+	end
 
 	local Postal = LibStub("AceAddon-3.0"):GetAddon("Postal", true)
-	if not Postal then return end
+	if not Postal then
+		return
+	end
 
 	S:HandleNextPrevButton(Postal_ModuleMenuButton, "down", nil, true)
 	Postal_ModuleMenuButton:Point("TOPRIGHT", MailFrame, -60, -12)
@@ -55,8 +61,8 @@ S:AddCallbackForAddon("Postal", "Postal", function()
 			PostalSelectReturnButton:Point("LEFT", InboxFrame, "TOP", 8, -57)
 
 			for i = 1, INBOXITEMS_TO_DISPLAY do
-				local mail = _G["MailItem"..i]
-				local inboxCB = _G["PostalInboxCB"..i]
+				local mail = _G["MailItem" .. i]
+				local inboxCB = _G["PostalInboxCB" .. i]
 
 				S:HandleCheckBox(inboxCB)
 				inboxCB:Point("RIGHT", mail, "LEFT", 6, -5)
@@ -69,7 +75,7 @@ S:AddCallbackForAddon("Postal", "Postal", function()
 			MailItem1:Point("TOPLEFT", 38, -80)
 
 			for i = 1, INBOXITEMS_TO_DISPLAY do
-				_G["MailItem"..i.."ExpireTime"]:Point("TOPRIGHT", -4, -4)
+				_G["MailItem" .. i .. "ExpireTime"]:Point("TOPRIGHT", -4, -4)
 			end
 		end
 
@@ -94,7 +100,7 @@ S:AddCallbackForAddon("Postal", "Postal", function()
 	if Postal_DoNotWant then
 		local function skinModule()
 			for i = 1, 7 do
-				local returnIcon = _G["MailItem"..i.."ExpireTime"].returnicon
+				local returnIcon = _G["MailItem" .. i .. "ExpireTime"].returnicon
 				returnIcon:StripTextures(true)
 				S:HandleCloseButton(returnIcon)
 				returnIcon:Size(26)

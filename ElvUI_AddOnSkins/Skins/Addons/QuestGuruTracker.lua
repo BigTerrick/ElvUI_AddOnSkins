@@ -2,12 +2,16 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("QuestGuru_Tracker") then return end
+if not AS:IsAddonLODorEnabled("QuestGuru_Tracker") then
+	return
+end
 
 -- QuestGuru_Tracker 1.4.4
 
 S:AddCallbackForAddon("QuestGuru_Tracker", "QuestGuru_Tracker", function()
-	if not E.private.addOnSkins.QuestGuru_Tracker then return end
+	if not E.private.addOnSkins.QuestGuru_Tracker then
+		return
+	end
 
 	E:GetModule("Tooltip"):SetStyle(QGT_QuestWatchFrameTooltip)
 	QGT_QuestWatchFrameTooltip.SetBackdropColor = E.noop
@@ -71,8 +75,8 @@ S:AddCallbackForAddon("QuestGuru_Tracker", "QuestGuru_Tracker", function()
 	skinOptions(QGT_OptionsFrameTracker)
 
 	for i = 1, 40 do
-		local frame = _G["QGT_AchievementWatchLine"..i]
-		local icon = _G["QGT_AchievementWatchLine"..i.."Icon"]
+		local frame = _G["QGT_AchievementWatchLine" .. i]
+		local icon = _G["QGT_AchievementWatchLine" .. i .. "Icon"]
 
 		icon:Size(14)
 		icon:SetTexCoord(unpack(E.TexCoords))
@@ -123,7 +127,11 @@ S:AddCallbackForAddon("QuestGuru_Tracker", "QuestGuru_Tracker", function()
 		QGT_AchievementWatchFrame.backdrop:SetBackdropColor(backdropR, backdropG, backdropB, alpha)
 		QGT_AchievementWatchFrame.backdrop:SetBackdropBorderColor(borderR, borderG, borderB, alpha)
 
-		QGT_OptionsFrameTrackerAlphaText:SetFormattedText("%s (%d%%)", QG_OPT_TRACKER_ALPHA, math.abs(math.ceil(alpha * 100 - 0.5)))
+		QGT_OptionsFrameTrackerAlphaText:SetFormattedText(
+			"%s (%d%%)",
+			QG_OPT_TRACKER_ALPHA,
+			math.abs(math.ceil(alpha * 100 - 0.5))
+		)
 	end)
 
 	local skinnedButtons = 0
@@ -133,16 +141,17 @@ S:AddCallbackForAddon("QuestGuru_Tracker", "QuestGuru_Tracker", function()
 		if questItemIcons or QGT_WATCHFRAME_NUM_ITEMS > skinnedButtons then
 			local leftSide = (QGT_Settings.QuestWatch.Left * QGT_Settings.Scale) < 32
 			local sliderVisible = QGT_QuestWatchFrameSlider:GetAlpha() > 0
-			local sliderRightVisible = sliderVisible and ((QGT_Settings.QuestWatch.Left + 256) * QGT_Settings.Scale) > (UIParent:GetWidth() - 16)
+			local sliderRightVisible = sliderVisible
+				and ((QGT_Settings.QuestWatch.Left + 256) * QGT_Settings.Scale) > (UIParent:GetWidth() - 16)
 
 			for i = questItemIcons and 1 or skinnedButtons + 1, QGT_WATCHFRAME_NUM_ITEMS do
-				local button = _G["WatchFrameItem"..i]
+				local button = _G["WatchFrameItem" .. i]
 
 				if button then
 					if not button.isSkinned then
-						local icon = _G["WatchFrameItem"..i.."IconTexture"]
-						local normal = _G["WatchFrameItem"..i.."NormalTexture"]
-						local cooldown = _G["WatchFrameItem"..i.."Cooldown"]
+						local icon = _G["WatchFrameItem" .. i .. "IconTexture"]
+						local normal = _G["WatchFrameItem" .. i .. "NormalTexture"]
+						local cooldown = _G["WatchFrameItem" .. i .. "Cooldown"]
 
 						button:CreateBackdrop()
 						button.backdrop:SetAllPoints()
@@ -331,8 +340,8 @@ S:AddCallbackForAddon("QuestGuru_Tracker", "QuestGuru_Tracker", function()
 
 		local frame1, frame2
 		for i = 1, 40 do
-			frame1 = _G["QGT_QuestWatchLine"..i]
-			frame2 = _G["QGT_AchievementWatchLine"..i]
+			frame1 = _G["QGT_QuestWatchLine" .. i]
+			frame2 = _G["QGT_AchievementWatchLine" .. i]
 
 			if frame1 then
 				frame1:SetScript("OnClick", questOnClick)
@@ -363,7 +372,7 @@ S:AddCallbackForAddon("QuestGuru_Tracker", "QuestGuru_Tracker", function()
 
 				QGT_QuestWatchQuestName:Point("RIGHT", QGT_QuestWatchNumQuests, "LEFT", -12, 0)
 
-			--	width = width + QGT_QuestWatchQuestName:GetWidth() + QGT_QuestWatchNumQuests:GetWidth()
+				--	width = width + QGT_QuestWatchQuestName:GetWidth() + QGT_QuestWatchNumQuests:GetWidth()
 				width = width + QGT_QuestWatchQuestName:GetWidth() + 32
 
 				QGT_QuestWatchFrame.backdrop:ClearAllPoints()
@@ -398,7 +407,7 @@ S:AddCallbackForAddon("QuestGuru_Tracker", "QuestGuru_Tracker", function()
 
 				QGT_AchievementWatchName:Point("RIGHT", QGT_AchievementWatchNum, "LEFT", -12, 0)
 
-			--	width = width + QGT_AchievementWatchName:GetWidth() + QGT_AchievementWatchNum:GetWidth()
+				--	width = width + QGT_AchievementWatchName:GetWidth() + QGT_AchievementWatchNum:GetWidth()
 				width = width + QGT_AchievementWatchName:GetWidth() + 8
 
 				QGT_AchievementWatchFrame.backdrop:ClearAllPoints()

@@ -2,16 +2,22 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("EveryQuest") then return end
+if not AS:IsAddonLODorEnabled("EveryQuest") then
+	return
+end
 
 -- EveryQuest r162
 -- https://www.wowace.com/projects/everyquest/files/459624
 
 S:AddCallbackForAddon("EveryQuest", "EveryQuest", function()
-	if not E.private.addOnSkins.EveryQuest then return end
+	if not E.private.addOnSkins.EveryQuest then
+		return
+	end
 
 	local addon = LibStub("AceAddon-3.0"):GetAddon("EveryQuest", true)
-	if not addon then return end
+	if not addon then
+		return
+	end
 
 	EveryQuestFrame:StripTextures()
 	EveryQuestFrame:SetTemplate("Transparent")
@@ -35,7 +41,7 @@ S:AddCallbackForAddon("EveryQuest", "EveryQuest", function()
 	EveryQuestTitle1:Point("TOPLEFT", 10, -52)
 
 	for i = 1, 27 do
-		S:HandleButtonHighlight(_G["EveryQuestTitle"..i], 1, 0.8, 0.1)
+		S:HandleButtonHighlight(_G["EveryQuestTitle" .. i], 1, 0.8, 0.1)
 	end
 
 	S:HandleCloseButton(EveryQuestFrameCloseButton, EveryQuestFrame)

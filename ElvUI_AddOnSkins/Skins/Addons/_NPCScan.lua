@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("_NPCScan") then return end
+if not AS:IsAddonLODorEnabled("_NPCScan") then
+	return
+end
 
 -- NPCScan 3.3.5.5
 -- https://www.curseforge.com/wow/addons/npcscan/files/441050
 
 S:AddCallbackForAddon("_NPCScan", "_NPCScan", function()
-	if not E.private.addOnSkins._NPCScan then return end
+	if not E.private.addOnSkins._NPCScan then
+		return
+	end
 
 	_NPCScanButton:SetScale(1)
 	_NPCScanButton.SetScale = E.noop

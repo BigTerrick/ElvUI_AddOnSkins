@@ -2,7 +2,9 @@ local E, L, V, P, G, _ = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("TrinketMenu") then return end
+if not AS:IsAddonLODorEnabled("TrinketMenu") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -11,9 +13,11 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/trinket-menu/files/305868
 
 S:AddCallbackForAddon("TrinketMenu", "TrinketMenu", function()
-	if not E.private.addOnSkins.TrinketMenu then return end
+	if not E.private.addOnSkins.TrinketMenu then
+		return
+	end
 
---	TrinketMenu_TimersFrame:SetScript("OnUpdate", nil)
+	--	TrinketMenu_TimersFrame:SetScript("OnUpdate", nil)
 	TrinketMenu.WriteWornCooldowns = E.noop
 	TrinketMenu.WriteMenuCooldowns = E.noop
 	TrinketMenu.WriteCooldown = E.noop
@@ -22,7 +26,9 @@ S:AddCallbackForAddon("TrinketMenu", "TrinketMenu", function()
 	TrinketMenu_MenuFrame:SetTemplate("Transparent", nil, true)
 
 	hooksecurefunc(TrinketMenu, "ReflectLock", function()
-		if TrinketMenuOptions.Locked == "ON" then return end
+		if TrinketMenuOptions.Locked == "ON" then
+			return
+		end
 
 		local r, g, b = unpack(E.media.bordercolor)
 		TrinketMenu_MainFrame:SetBackdropBorderColor(r, g, b, 1)
@@ -51,6 +57,6 @@ S:AddCallbackForAddon("TrinketMenu", "TrinketMenu", function()
 	end
 
 	for i = 1, 30 do
-		skinButton(_G["TrinketMenu_Menu"..i])
+		skinButton(_G["TrinketMenu_Menu" .. i])
 	end
 end)

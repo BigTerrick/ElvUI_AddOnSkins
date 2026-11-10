@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("TellMeWhen") then return end
+if not AS:IsAddonLODorEnabled("TellMeWhen") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -11,20 +13,22 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/tellmewhen/files/448968
 
 S:AddCallbackForAddon("TellMeWhen", "TellMeWhen", function()
-	if not E.private.addOnSkins.TellMeWhen then return end
+	if not E.private.addOnSkins.TellMeWhen then
+		return
+	end
 
 	TELLMEWHEN_ICONSPACING = E.Border
 
 	if TELLMEWHEN_VERSION == "1.2.4" then
 		hooksecurefunc("TellMeWhen_Group_Update", function(groupID)
 			local group = TellMeWhen_Settings.Groups[groupID]
-			if not group.Enabled then return end
+			if not group.Enabled then
+				return
+			end
 
 			local currentSpec = TellmeWhen_GetActiveTalentGroup()
 
-			if (currentSpec == 1 and not group.PrimarySpec)
-			or (currentSpec == 2 and not group.SecondarySpec)
-			then
+			if (currentSpec == 1 and not group.PrimarySpec) or (currentSpec == 2 and not group.SecondarySpec) then
 				return
 			end
 
@@ -59,7 +63,9 @@ S:AddCallbackForAddon("TellMeWhen", "TellMeWhen", function()
 	else
 		hooksecurefunc("TellMeWhen_Group_Update", function(groupID)
 			local group = _G["TellMeWhen_Group" .. groupID]
-			if not group.Enabled then return end
+			if not group.Enabled then
+				return
+			end
 
 			for row = 1, group.Rows do
 				for column = 1, group.Columns do

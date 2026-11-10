@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Overachiever_Tabs") then return end
+if not AS:IsAddonLODorEnabled("Overachiever_Tabs") then
+	return
+end
 
 local _G = _G
 local getmetatable = getmetatable
@@ -12,19 +14,21 @@ local ipairs = ipairs
 -- https://www.curseforge.com/wow/addons/overachiever/files/443622
 
 S:AddCallbackForAddon("Overachiever_Tabs", "Overachiever", function()
-	if not E.private.addOnSkins.Overachiever then return end
+	if not E.private.addOnSkins.Overachiever then
+		return
+	end
 
 	for i = 3, 5 do
-		local tab = _G["AchievementFrameTab"..i]
+		local tab = _G["AchievementFrameTab" .. i]
 		S:HandleTab(tab)
-		tab:Point("LEFT", _G["AchievementFrameTab"..(i-1)], "RIGHT", -15, 0)
+		tab:Point("LEFT", _G["AchievementFrameTab" .. (i - 1)], "RIGHT", -15, 0)
 		tab.text:Point("CENTER", 0, 2)
 		tab.text.SetPoint = E.noop
 	end
 
 	local leftFrame = _G["Overachiever_LeftFrame"]
-	for _, childFrame in ipairs({leftFrame:GetChildren()}) do
-		for _, obj in ipairs({childFrame:GetChildren()}) do
+	for _, childFrame in ipairs({ leftFrame:GetChildren() }) do
+		for _, obj in ipairs({ childFrame:GetChildren() }) do
 			local objType = obj:GetObjectType()
 			if objType == "Button" then
 				S:HandleButton(obj)
@@ -41,7 +45,7 @@ S:AddCallbackForAddon("Overachiever_Tabs", "Overachiever", function()
 	local containers = {
 		"Overachiever_SearchFrame",
 		"Overachiever_SuggestionsFrame",
-		"Overachiever_WatchFrame"
+		"Overachiever_WatchFrame",
 	}
 
 	for _, frameName in ipairs(containers) do

@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Carbonite") then return end
+if not AS:IsAddonLODorEnabled("Carbonite") then
+	return
+end
 
 local pairs = pairs
 local lshift = bit.lshift
@@ -10,10 +12,14 @@ local lshift = bit.lshift
 -- Carbonite 3.34
 
 S:AddCallbackForAddon("Carbonite", "Carbonite", function()
-	if not E.private.addOnSkins.Carbonite then return end
+	if not E.private.addOnSkins.Carbonite then
+		return
+	end
 
 	local function ColorConvert(r, g, b, a)
-		if not a then a = 1 end
+		if not a then
+			a = 1
+		end
 
 		local clr = r * 255
 		clr = lshift(clr, 8) + g * 255
@@ -31,15 +37,19 @@ S:AddCallbackForAddon("Carbonite", "Carbonite", function()
 		backdrop = {
 			bgFile = E.media.blankTex,
 			edgeFile = E.media.blankTex,
-			tile = false, tileSize = 0, edgeSize = E.mult,
-			insets = {left = 0, right = 0, top = 0, bottom = 0}
+			tile = false,
+			tileSize = 0,
+			edgeSize = E.mult,
+			insets = { left = 0, right = 0, top = 0, bottom = 0 },
 		}
 	else
 		backdrop = {
 			bgFile = E.media.blankTex,
 			edgeFile = E.media.blankTex,
-			tile = false, tileSize = 0, edgeSize = E.mult,
-			insets = {left = -E.mult, right = -E.mult, top = -E.mult, bottom = -E.mult}
+			tile = false,
+			tileSize = 0,
+			edgeSize = E.mult,
+			insets = { left = -E.mult, right = -E.mult, top = -E.mult, bottom = -E.mult },
 		}
 	end
 
@@ -56,7 +66,7 @@ S:AddCallbackForAddon("Carbonite", "Carbonite", function()
 
 	for i, v in ipairs(Nx.OpD) do
 		if v.N == "Skin" then
-			table.insert(Nx.OpD[i], {N = "ElvUI", F = "NXCmdSkin", Dat = "ElvUI"})
+			table.insert(Nx.OpD[i], { N = "ElvUI", F = "NXCmdSkin", Dat = "ElvUI" })
 			break
 		end
 	end

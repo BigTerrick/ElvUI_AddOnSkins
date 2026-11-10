@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Examiner") then return end
+if not AS:IsAddonLODorEnabled("Examiner") then
+	return
+end
 
 local select = select
 local unpack = unpack
@@ -11,7 +13,9 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/examiner/files/445178
 
 S:AddCallbackForAddon("Examiner", "Examiner", function()
-	if not E.private.addOnSkins.Examiner then return end
+	if not E.private.addOnSkins.Examiner then
+		return
+	end
 
 	UIPanelWindows["Examiner"].width = 348
 
@@ -46,7 +50,7 @@ S:AddCallbackForAddon("Examiner", "Examiner", function()
 			Examiner.bgTopLeft,
 			Examiner.bgTopRight,
 			Examiner.bgBottomLeft,
-			Examiner.bgBottomRight
+			Examiner.bgBottomRight,
 		}
 
 		for _, texture in ipairs(bgTextures) do
@@ -62,7 +66,7 @@ S:AddCallbackForAddon("Examiner", "Examiner", function()
 		Examiner.bgBottomRight:Size(67, 112)
 	end
 
-	local dropdownArrowColor = {1, 0.8, 0}
+	local dropdownArrowColor = { 1, 0.8, 0 }
 	local function skinAzDropdown(frame)
 		frame:SetTemplate()
 
@@ -158,19 +162,19 @@ S:AddCallbackForAddon("Examiner", "Examiner", function()
 				child.texture:SetInside()
 				child.texture:SetDrawLayer("ARTWORK")
 
-				if i == 3 then		-- Arcane
+				if i == 3 then -- Arcane
 					-- texWidth, texHeight, cropWidth, cropHeight, offsetX, offsetY = 32, 256, 18, 18, 8, 64
 					child.texture:SetTexCoord(0.25, 0.8125, 0.25, 0.3203125)
-				elseif i == 1 then	-- Fire
+				elseif i == 1 then -- Fire
 					-- texWidth, texHeight, cropWidth, cropHeight, offsetX, offsetY = 32, 256, 18, 18, 8, 6
 					child.texture:SetTexCoord(0.25, 0.8125, 0.0234375, 0.09375)
-				elseif i == 2 then	-- Nature
+				elseif i == 2 then -- Nature
 					-- texWidth, texHeight, cropWidth, cropHeight, offsetX, offsetY = 32, 256, 18, 18, 8, 35
 					child.texture:SetTexCoord(0.25, 0.8125, 0.13671875, 0.20703125)
-				elseif i == 4 then	-- Frost
+				elseif i == 4 then -- Frost
 					-- texWidth, texHeight, cropWidth, cropHeight, offsetX, offsetY = 32, 256, 18, 18, 8, 94
 					child.texture:SetTexCoord(0.25, 0.8125, 0.3671875, 0.4375)
-				elseif i == 5 then	-- Shadow
+				elseif i == 5 then -- Shadow
 					-- texWidth, texHeight, cropWidth, cropHeight, offsetX, offsetY = 32, 256, 18, 18, 8, 122
 					child.texture:SetTexCoord(0.25, 0.8125, 0.4765625, 0.546875)
 				end
@@ -192,7 +196,7 @@ S:AddCallbackForAddon("Examiner", "Examiner", function()
 			ExaminerFeatsScrollScrollBar:Point("BOTTOMLEFT", ExaminerFeatsScroll, "BOTTOMRIGHT", 6, 19)
 		elseif mod.token == "Talents" then
 			for i = 1, MAX_TALENT_TABS do
-				local tab = _G["ExaminerTab"..i]
+				local tab = _G["ExaminerTab" .. i]
 				tab:StripTextures()
 				tab:CreateBackdrop("Default", true)
 
@@ -202,8 +206,10 @@ S:AddCallbackForAddon("Examiner", "Examiner", function()
 				S:SetBackdropHitRect(tab)
 			end
 
-			for i, button in ipairs({ExaminerScrollChildFrame:GetChildren()}) do
-				if i > 40 then break end
+			for i, button in ipairs({ ExaminerScrollChildFrame:GetChildren() }) do
+				if i > 40 then
+					break
+				end
 
 				button:StripTextures()
 				button:SetTemplate("Default")

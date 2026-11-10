@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("FloTotemBar") then return end
+if not AS:IsAddonLODorEnabled("FloTotemBar") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -11,9 +13,13 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/flo-totem-bar/files/399321
 
 S:AddCallbackForAddon("FloTotemBar", "FloTotemBar", function()
-	if not E.private.addOnSkins.FloTotemBar then return end
+	if not E.private.addOnSkins.FloTotemBar then
+		return
+	end
 
-	if E.myclass ~= "HUNTER" and E.myclass ~= "SHAMAN" then return end
+	if E.myclass ~= "HUNTER" and E.myclass ~= "SHAMAN" then
+		return
+	end
 
 	local AB = E:GetModule("ActionBars")
 
@@ -41,18 +47,18 @@ S:AddCallbackForAddon("FloTotemBar", "FloTotemBar", function()
 		local frameName = frame:GetName()
 		if frameName == "FloBarTRAP" then
 			for i = 1, 3 do
-				local countdown = _G[frameName.."Countdown"..i]
+				local countdown = _G[frameName .. "Countdown" .. i]
 				countdown:SetStatusBarTexture(E.media.normTex)
 				E:RegisterStatusBar(countdown)
 			end
 		elseif frameName ~= "FloBarCALL" then
-			local statusbar = _G[frameName.."Countdown"]
+			local statusbar = _G[frameName .. "Countdown"]
 			statusbar:SetStatusBarTexture(E.media.normTex)
 			E:RegisterStatusBar(statusbar)
 		end
 
 		for i = 1, 10 do
-			local button = _G[frameName.."Button"..i]
+			local button = _G[frameName .. "Button" .. i]
 			AB:StyleButton(button)
 			button:PointXY(2, 0)
 

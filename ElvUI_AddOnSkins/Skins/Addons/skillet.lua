@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Skillet") then return end
+if not AS:IsAddonLODorEnabled("Skillet") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -13,7 +15,9 @@ local GetTradeSkillListLink = GetTradeSkillListLink
 -- https://www.wowace.com/projects/skillet/files/438510
 
 S:AddCallbackForAddon("Skillet", "Skillet", function()
-	if not E.private.addOnSkins.Skillet then return end
+	if not E.private.addOnSkins.Skillet then
+		return
+	end
 
 	S:HandleCloseButton(SkilletFrameCloseButton, SkilletFrame)
 
@@ -29,7 +33,7 @@ S:AddCallbackForAddon("Skillet", "Skillet", function()
 
 	SkilletRankFrameBorder:Hide()
 	SkilletRankFrame:Point("TOPRIGHT", -9, -32)
-	S:HandleStatusBar(SkilletRankFrame, {0.2, 0.2, 1})
+	S:HandleStatusBar(SkilletRankFrame, { 0.2, 0.2, 1 })
 
 	S:HandleButton(SkilletRescanButton)
 	S:HandleButton(SkilletShowOptionsButton)
@@ -91,28 +95,32 @@ S:AddCallbackForAddon("Skillet", "Skillet", function()
 
 	local scrollButtons = 0
 	hooksecurefunc(Skillet, "internal_UpdateTradeSkillWindow", function(self)
-		if not self.currentTrade or self.currentTrade == "UNKNOWN" then return end
+		if not self.currentTrade or self.currentTrade == "UNKNOWN" then
+			return
+		end
 
 		local i = scrollButtons + 1
-		local button = _G["SkilletScrollButton"..i]
+		local button = _G["SkilletScrollButton" .. i]
 		while button do
 			S:HandleCollapseExpandButton(button)
 			i = i + 1
-			button = _G["SkilletScrollButton"..i]
+			button = _G["SkilletScrollButton" .. i]
 		end
 		scrollButtons = i - 1
 	end)
 
 	local deleteButtons = 0
 	hooksecurefunc(Skillet, "UpdateQueueWindow", function(self)
-		if not self.stitch:GetQueueInfo() then return end
+		if not self.stitch:GetQueueInfo() then
+			return
+		end
 
 		local i = deleteButtons + 1
-		local button = _G["SkilletQueueButton"..i.."DeleteButton"]
+		local button = _G["SkilletQueueButton" .. i .. "DeleteButton"]
 		while button do
 			S:HandleButton(button)
 			i = i + 1
-			button = _G["SkilletQueueButton"..i.."DeleteButton"]
+			button = _G["SkilletQueueButton" .. i .. "DeleteButton"]
 		end
 		deleteButtons = i - 1
 	end)
@@ -131,19 +139,19 @@ S:AddCallbackForAddon("Skillet", "Skillet", function()
 	S:HandleCloseButton(SkilletNotesCloseButton, SkilletRecipeNotesFrame)
 
 	for i = 1, 7 do
-		local icon = _G["SkilletNotesButton"..i.."Icon"]
+		local icon = _G["SkilletNotesButton" .. i .. "Icon"]
 		icon:SetTemplate("Default")
 		icon:SetNormalTexture("")
 		icon:GetNormalTexture():SetInside()
 
-		local note = _G["SkilletNotesButton"..i.."Notes"]
+		local note = _G["SkilletNotesButton" .. i .. "Notes"]
 		note:Point("TOPLEFT", 1, -25)
 		note:Height(22)
 	end
 
 	hooksecurefunc(Skillet, "UpdateNotesWindow", function()
 		for i = 1, 7 do
-			local icon = _G["SkilletNotesButton"..i.."Icon"]:GetNormalTexture()
+			local icon = _G["SkilletNotesButton" .. i .. "Icon"]:GetNormalTexture()
 			if icon then
 				icon:SetTexCoord(unpack(E.TexCoords))
 			end
@@ -151,7 +159,7 @@ S:AddCallbackForAddon("Skillet", "Skillet", function()
 	end)
 
 	S:SecureHook(Skillet, "RecipeNote_OnClick", function(self, button)
-		for _, child in ipairs({button:GetChildren()}) do
+		for _, child in ipairs({ button:GetChildren() }) do
 			if child:GetObjectType() == "EditBox" then
 				child:SetTemplate("Default")
 				break

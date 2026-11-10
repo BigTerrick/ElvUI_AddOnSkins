@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("PlateBuffs") then return end
+if not AS:IsAddonLODorEnabled("PlateBuffs") then
+	return
+end
 
 local unpack = unpack
 
@@ -12,10 +14,14 @@ local hooksecurefunc = hooksecurefunc
 -- https://www.wowace.com/projects/platebuffs/files/447971
 
 S:AddCallbackForAddon("PlateBuffs", "PlateBuffs", function()
-	if not E.private.addOnSkins.PlateBuffs then return end
+	if not E.private.addOnSkins.PlateBuffs then
+		return
+	end
 
 	local core = LibStub("AceAddon-3.0"):GetAddon("PlateBuffs", true)
-	if not core then return end
+	if not core then
+		return
+	end
 
 	local NP = E:GetModule("NamePlates")
 
@@ -56,7 +62,7 @@ S:AddCallbackForAddon("PlateBuffs", "PlateBuffs", function()
 			if buffFrames[plate][total] then
 				StyleAuraIcon(buffFrames[plate][total])
 				buffFrames[plate][total]:ClearAllPoints()
-				buffFrames[plate][total]:SetPoint("BOTTOMLEFT", prevFrame, "BOTTOMRIGHT", E.Border + E.Spacing*3, 0)
+				buffFrames[plate][total]:SetPoint("BOTTOMLEFT", prevFrame, "BOTTOMRIGHT", E.Border + E.Spacing * 3, 0)
 			end
 
 			prevFrame = self.buffFrames[plate][total]
@@ -71,9 +77,20 @@ S:AddCallbackForAddon("PlateBuffs", "PlateBuffs", function()
 						StyleAuraIcon(buffFrames[plate][total])
 						buffFrames[plate][total]:ClearAllPoints()
 						if i == 1 then
-							buffFrames[plate][total]:SetPoint("BOTTOMLEFT", buffBars[plate][r], E.Border + E.Spacing*3, 0)
+							buffFrames[plate][total]:SetPoint(
+								"BOTTOMLEFT",
+								buffBars[plate][r],
+								E.Border + E.Spacing * 3,
+								0
+							)
 						else
-							buffFrames[plate][total]:SetPoint("BOTTOMLEFT", prevFrame, "BOTTOMRIGHT", E.Border + E.Spacing*3, 0)
+							buffFrames[plate][total]:SetPoint(
+								"BOTTOMLEFT",
+								prevFrame,
+								"BOTTOMRIGHT",
+								E.Border + E.Spacing * 3,
+								0
+							)
 						end
 					end
 

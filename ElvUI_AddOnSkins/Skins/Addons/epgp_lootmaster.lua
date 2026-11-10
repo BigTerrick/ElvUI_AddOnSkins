@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("EPGP_LootMaster") then return end
+if not AS:IsAddonLODorEnabled("EPGP_LootMaster") then
+	return
+end
 
 local ipairs = ipairs
 local select = select
@@ -15,10 +17,14 @@ local hooksecurefunc = hooksecurefunc
 -- https://www.curseforge.com/wow/addons/epgp_lootmaster/files/409167
 
 S:AddCallbackForAddon("EPGP_LootMaster", "EPGP_LootMaster", function()
-	if not E.private.addOnSkins.EPGP_LootMaster then return end
+	if not E.private.addOnSkins.EPGP_LootMaster then
+		return
+	end
 
 	local EPGPLM = LibStub("AceAddon-3.0"):GetAddon("EPGPLootMaster", true)
-	if not EPGPLM then return end
+	if not EPGPLM then
+		return
+	end
 
 	S:SecureHook(EPGPLM, "InitUI", function(self)
 		self.frame:SetTemplate("Transparent")
@@ -32,7 +38,7 @@ S:AddCallbackForAddon("EPGP_LootMaster", "EPGP_LootMaster", function()
 		self.versioncheckframe.titleFrame:SetTemplate("Default")
 
 		self.versioncheckframe.sstScroll.frame:SetTemplate("Default")
-		S:HandleScrollBar(_G[self.versioncheckframe.sstScroll.frame:GetName().."ScrollFrameScrollBar"])
+		S:HandleScrollBar(_G[self.versioncheckframe.sstScroll.frame:GetName() .. "ScrollFrameScrollBar"])
 
 		for i = 1, self.versioncheckframe:GetNumChildren() do
 			local child = select(i, self.versioncheckframe:GetChildren())
@@ -103,10 +109,14 @@ S:AddCallbackForAddon("EPGP_LootMaster", "EPGP_LootMaster", function()
 end)
 
 S:AddCallbackForAddon("EPGP_LootMaster_ML", "EPGP_LootMaster_ML", function()
-	if not E.private.addOnSkins.EPGP_LootMaster then return end
+	if not E.private.addOnSkins.EPGP_LootMaster then
+		return
+	end
 
 	local LMML = LibStub("AceAddon-3.0"):GetAddon("LootMasterML", true)
-	if not LMML then return end
+	if not LMML then
+		return
+	end
 
 	S:SecureHook(LMML, "GetFrame", function(self)
 		self.frame:SetTemplate("Transparent")
@@ -132,7 +142,7 @@ S:AddCallbackForAddon("EPGP_LootMaster_ML", "EPGP_LootMaster_ML", function()
 		S:HandleButton(self.frame.btnDiscard)
 
 		self.frame.sstScroll.frame:SetTemplate("Default")
-		S:HandleScrollBar(_G[self.frame.sstScroll.frame:GetName().."ScrollFrameScrollBar"])
+		S:HandleScrollBar(_G[self.frame.sstScroll.frame:GetName() .. "ScrollFrameScrollBar"])
 
 		S:Unhook(LMML, "GetFrame")
 	end)
@@ -167,7 +177,7 @@ S:AddCallbackForAddon("EPGP_LootMaster_ML", "EPGP_LootMaster_ML", function()
 		end
 
 		self.raidinfoframe.sstScroll.frame:SetTemplate("Default")
-		S:HandleScrollBar(_G[self.raidinfoframe.sstScroll.frame:GetName().."ScrollFrameScrollBar"])
+		S:HandleScrollBar(_G[self.raidinfoframe.sstScroll.frame:GetName() .. "ScrollFrameScrollBar"])
 
 		self.raidinfoframe.tbWhisperFrame:SetBackdrop(nil)
 		S:HandleEditBox(self.raidinfoframe.tbWhisperBox)

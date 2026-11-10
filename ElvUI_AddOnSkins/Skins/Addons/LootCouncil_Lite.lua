@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("LootCouncil_Lite") then return end
+if not AS:IsAddonLODorEnabled("LootCouncil_Lite") then
+	return
+end
 
 -- Loot Council Lite 1.011
 -- https://www.curseforge.com/wow/addons/lootcouncil-lite/files/457971
 
 S:AddCallbackForAddon("LootCouncil_Lite", "LootCouncil_Lite", function()
-	if not E.private.addOnSkins.LootCouncil_Lite then return end
+	if not E.private.addOnSkins.LootCouncil_Lite then
+		return
+	end
 
 	-- Main Frame
 	MainFrame:SetTemplate("Transparent")
@@ -24,8 +28,12 @@ S:AddCallbackForAddon("LootCouncil_Lite", "LootCouncil_Lite", function()
 		DualItemTexture2,
 	}
 
-	local showBackdrop = function(self) self.backdrop:Show() end
-	local hideBackdrop = function(self) self.backdrop:Hide() end
+	local showBackdrop = function(self)
+		self.backdrop:Show()
+	end
+	local hideBackdrop = function(self)
+		self.backdrop:Hide()
+	end
 	for _, icon in ipairs(icons) do
 		icon:SetTexCoord(unpack(E.TexCoords))
 		icon:CreateBackdrop()
@@ -48,7 +56,7 @@ S:AddCallbackForAddon("LootCouncil_Lite", "LootCouncil_Lite", function()
 	S:HandleButton(ClearSelectionButton)
 	S:HandleButton(CloseButton)
 
---	S:HandleDropDownBox(GroupLootDropDownLCL)
+	--	S:HandleDropDownBox(GroupLootDropDownLCL)
 
 	-- Options
 	LCOptionsFrame:SetTemplate("Transparent")

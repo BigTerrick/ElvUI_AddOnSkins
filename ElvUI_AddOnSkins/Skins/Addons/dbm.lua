@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("DBM-Core") then return end
+if not AS:IsAddonLODorEnabled("DBM-Core") then
+	return
+end
 
 local _G = _G
 local unpack = unpack
@@ -15,7 +17,9 @@ local hooksecurefunc = hooksecurefunc
 -- https://www.curseforge.com/wow/addons/deadly-boss-mods/files/447605
 
 S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
-	if not E.private.addOnSkins.DBM then return end
+	if not E.private.addOnSkins.DBM then
+		return
+	end
 
 	local backportVersion = DBM.ReleaseRevision > 7000
 	local backportVersion2 = DBM.ReleaseRevision >= 20220412000000 -- 9.2.14
@@ -27,9 +31,9 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 
 		if id == 1 then
 			if db.DBMSkinHalf then
-				frame:Point("BOTTOMRIGHT", parent, "BOTTOMLEFT", - db.dbmIconXOffset, 0)
+				frame:Point("BOTTOMRIGHT", parent, "BOTTOMLEFT", -db.dbmIconXOffset, 0)
 			else
-				frame:Point("RIGHT", parent, "LEFT", - db.dbmIconXOffset, 0)
+				frame:Point("RIGHT", parent, "LEFT", -db.dbmIconXOffset, 0)
 			end
 		elseif db.DBMSkinHalf then
 			frame:Point("BOTTOMLEFT", parent, "BOTTOMRIGHT", db.dbmIconXOffset, 0)
@@ -60,7 +64,10 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 
 		local scale = self.enlarged and self.owner.options.HugeScale or self.owner.options.Scale
 		local barWidth = (self.enlarged and self.owner.options.HugeWidth or self.owner.options.Width) * scale
-		local barHeight = (backportVersion2 and (self.enlarged and self.owner.options.HugeHeight or self.owner.options.Height) or db.dbmBarHeight) * scale
+		local barHeight = (
+			backportVersion2 and (self.enlarged and self.owner.options.HugeHeight or self.owner.options.Height)
+			or db.dbmBarHeight
+		) * scale
 		local fontSize = db.dbmFontSize * scale
 
 		background:Hide()
@@ -148,19 +155,21 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 			if not bar.injected then
 				hooksecurefunc(bar, "Update", function()
 					local sparkEnabled = DBT.Options.Spark
-					if not (db.DBMSkinHalf and sparkEnabled) then return end
-					local spark = _G[bar.frame:GetName().."BarSpark"]
+					if not (db.DBMSkinHalf and sparkEnabled) then
+						return
+					end
+					local spark = _G[bar.frame:GetName() .. "BarSpark"]
 					spark:SetSize(12, ((bar.enlarged and DBT.Options.HugeHeight or DBT.Options.Height) * 3) - 2)
 					local a, b, c, d = spark:GetPoint()
 					spark:SetPoint(a, b, c, d, 0)
 				end)
 				hooksecurefunc(bar, "ApplyStyle", function()
 					local frame = bar.frame
-					local tbar = _G[frame:GetName().."Bar"]
-					local icon1 = _G[frame:GetName().."BarIcon1"]
-					local icon2 = _G[frame:GetName().."BarIcon2"]
-					local name = _G[frame:GetName().."BarName"]
-					local timer = _G[frame:GetName().."BarTimer"]
+					local tbar = _G[frame:GetName() .. "Bar"]
+					local icon1 = _G[frame:GetName() .. "BarIcon1"]
+					local icon2 = _G[frame:GetName() .. "BarIcon2"]
+					local name = _G[frame:GetName() .. "BarName"]
+					local timer = _G[frame:GetName() .. "BarTimer"]
 					local iconSize = (bar.enlarged and DBT.Options.HugeHeight or DBT.Options.Height) * db.dbmIconSize
 					if db.DBMSkinHalf then
 						iconSize = iconSize * 2
@@ -206,8 +215,16 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 						timer:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
 					end
 
-					if DBT.Options.IconLeft then icon1.overlay:Show() else icon1.overlay:Hide() end
-					if DBT.Options.IconRight then icon2.overlay:Show() else icon2.overlay:Hide() end
+					if DBT.Options.IconLeft then
+						icon1.overlay:Show()
+					else
+						icon1.overlay:Hide()
+					end
+					if DBT.Options.IconRight then
+						icon2.overlay:Show()
+					else
+						icon2.overlay:Hide()
+					end
 
 					bar.injected = true
 				end)
@@ -221,32 +238,61 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 		self.SetPoint = nil
 	end
 	local function preUpdate(self, elapsed)
-		if (self.timer - elapsed > 0) and self.moving == "move" and self.moveElapsed <= 0.5 and self.owner.options.ExpandUpwards then
+		if
+			(self.timer - elapsed > 0)
+			and self.moving == "move"
+			and self.moveElapsed <= 0.5
+			and self.owner.options.ExpandUpwards
+		then
 			self.frame.SetPoint = correctPoint
 		end
 	end
 
 	local function setPosition(self)
-		if self.moving == "enlarge" then return end
+		if self.moving == "enlarge" then
+			return
+		end
 
 		local enlarged = self.enlarged
-		local expandUpwards = backportVersion and (enlarged and self.owner.options.ExpandUpwardsLarge or self.owner.options.ExpandUpwards) or self.owner.options.ExpandUpwards
-		local anchor = (self.prev and self.prev.frame) or (self.enlarged and self.owner.secAnchor) or self.owner.mainAnchor
+		local expandUpwards = backportVersion
+				and (enlarged and self.owner.options.ExpandUpwardsLarge or self.owner.options.ExpandUpwards)
+			or self.owner.options.ExpandUpwards
+		local anchor = (self.prev and self.prev.frame)
+			or (self.enlarged and self.owner.secAnchor)
+			or self.owner.mainAnchor
 
 		self.frame:ClearAllPoints()
 		if expandUpwards then
-			self.frame:SetPoint("BOTTOM", anchor, "TOP", self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"], self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"])
+			self.frame:SetPoint(
+				"BOTTOM",
+				anchor,
+				"TOP",
+				self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"],
+				self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"]
+			)
 		else
-			self.frame:SetPoint("TOP", anchor, "BOTTOM", self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"], -self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"])
+			self.frame:SetPoint(
+				"TOP",
+				anchor,
+				"BOTTOM",
+				self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"],
+				-self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"]
+			)
 		end
 	end
 
 	local function moveToNextPosition(self, oldX, oldY)
-		if self.moving == "enlarge" then return end
+		if self.moving == "enlarge" then
+			return
+		end
 
 		local enlarged = self.enlarged
-		local expandUpwards = backportVersion and (enlarged and self.owner.options.ExpandUpwardsLarge or self.owner.options.ExpandUpwards) or self.owner.options.ExpandUpwards
-		local newAnchor = (self.prev and self.prev.frame) or (self.enlarged and self.owner.secAnchor) or self.owner.mainAnchor
+		local expandUpwards = backportVersion
+				and (enlarged and self.owner.options.ExpandUpwardsLarge or self.owner.options.ExpandUpwards)
+			or self.owner.options.ExpandUpwards
+		local newAnchor = (self.prev and self.prev.frame)
+			or (self.enlarged and self.owner.secAnchor)
+			or self.owner.mainAnchor
 
 		oldX = oldX or (self.frame:GetRight() - self.frame:GetWidth() / 2)
 		if expandUpwards then
@@ -259,11 +305,23 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 		if expandUpwards then
 			self.movePoint = "BOTTOM"
 			self.moveRelPoint = "TOP"
-			self.frame:SetPoint("BOTTOM", newAnchor, "TOP", self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"], self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"])
+			self.frame:SetPoint(
+				"BOTTOM",
+				newAnchor,
+				"TOP",
+				self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"],
+				self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"]
+			)
 		else
 			self.movePoint = "TOP"
 			self.moveRelPoint = "BOTTOM"
-			self.frame:SetPoint("TOP", newAnchor, "BOTTOM", self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"], -self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"])
+			self.frame:SetPoint(
+				"TOP",
+				newAnchor,
+				"BOTTOM",
+				self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"],
+				-self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"]
+			)
 		end
 
 		local newX = self.frame:GetRight() - self.frame:GetWidth() / 2
@@ -287,17 +345,31 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 		local oldY = self.frame:GetTop()
 
 		local enlarged = self.enlarged
-		local expandUpwards = backportVersion and (enlarged and self.owner.options.ExpandUpwardsLarge or self.owner.options.ExpandUpwards) or self.owner.options.ExpandUpwards
+		local expandUpwards = backportVersion
+				and (enlarged and self.owner.options.ExpandUpwardsLarge or self.owner.options.ExpandUpwards)
+			or self.owner.options.ExpandUpwards
 
 		self.frame:ClearAllPoints()
 		if expandUpwards then
 			self.movePoint = "BOTTOM"
 			self.moveRelPoint = "TOP"
-			self.frame:SetPoint("BOTTOM", newAnchor, "TOP", self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"], self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"])
+			self.frame:SetPoint(
+				"BOTTOM",
+				newAnchor,
+				"TOP",
+				self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"],
+				self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"]
+			)
 		else
 			self.movePoint = "TOP"
 			self.moveRelPoint = "BOTTOM"
-			self.frame:SetPoint("TOP", newAnchor, "BOTTOM", self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"], -self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"])
+			self.frame:SetPoint(
+				"TOP",
+				newAnchor,
+				"BOTTOM",
+				self.owner.options[enlarged and "HugeBarXOffset" or "BarXOffset"],
+				-self.owner.options[enlarged and "HugeBarYOffset" or "BarYOffset"]
+			)
 		end
 
 		local newX = self.frame:GetRight() - self.frame:GetWidth() / 2
@@ -389,7 +461,9 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 
 		while bar do
 			point1, anchor, point2 = bar:GetPoint()
-			if not point1 then return end
+			if not point1 then
+				return
+			end
 
 			barName = bar:GetName()
 			background = _G[barName .. "BarBorder"]
@@ -432,7 +506,9 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 	hooksecurefunc(DBM.BossHealth, "UpdateSettings", SkinBoss)
 
 	S:SecureHook(DBM.RangeCheck, "Show", function(self)
-		if not DBMRangeCheck then return end
+		if not DBMRangeCheck then
+			return
+		end
 
 		DBMRangeCheck:SetTemplate("Transparent")
 		E:GetModule("Tooltip"):HookScript(DBMRangeCheck, "OnShow", "SetStyle")
@@ -480,7 +556,9 @@ S:AddCallbackForAddon("DBM-Core", "DBM-Core", function()
 end)
 
 S:AddCallbackForAddon("DBM-GUI", "DBM-GUI", function()
-	if not E.private.addOnSkins.DBM then return end
+	if not E.private.addOnSkins.DBM then
+		return
+	end
 	local backportVersion2 = DBM.ReleaseRevision >= 20220412000000 -- 9.2.14
 
 	DBM_GUI_OptionsFrame:SetTemplate("Transparent")
@@ -499,7 +577,13 @@ S:AddCallbackForAddon("DBM-GUI", "DBM-GUI", function()
 		S:HandleTab(DBM_GUI_OptionsFrameTab2)
 	end
 
-	DBM_GUI_OptionsFrameTab1:Point("BOTTOMLEFT", backportVersion2 and DBM_GUI_OptionsFrameList or DBM_GUI_OptionsFrameBossMods, "TOPLEFT", 6, -4)
+	DBM_GUI_OptionsFrameTab1:Point(
+		"BOTTOMLEFT",
+		backportVersion2 and DBM_GUI_OptionsFrameList or DBM_GUI_OptionsFrameBossMods,
+		"TOPLEFT",
+		6,
+		-4
+	)
 	DBM_GUI_OptionsFrameTab1Text:SetPoint("CENTER", 0, 0)
 	DBM_GUI_OptionsFrameTab2Text:SetPoint("CENTER", 0, 0)
 
@@ -543,7 +627,6 @@ S:AddCallbackForAddon("DBM-GUI", "DBM-GUI", function()
 			S:HandleScrollBar(DBM_GUI_OptionsFrameListListScrollBar)
 			DBM_GUI_OptionsFrameListListScrollBar:Point("TOPRIGHT", 1, -18)
 			DBM_GUI_OptionsFrameListListScrollBar:Point("BOTTOMLEFT", 7, 18)
-
 		else
 			DBM_GUI_OptionsFrameBossMods:StripTextures()
 			DBM_GUI_OptionsFrameBossMods:SetTemplate("Transparent")
@@ -574,7 +657,7 @@ S:AddCallbackForAddon("DBM-GUI", "DBM-GUI", function()
 
 		S:Unhook(self, "OnShow")
 	end)
---[[
+	--[[
 	hooksecurefunc(DBM_GUI_OptionsFrame, "DisplayButton", function(self, button, element)
 		button.toggle:Point("LEFT", 8 * element.depth - 5, 2);
 	end)
@@ -588,7 +671,7 @@ S:AddCallbackForAddon("DBM-GUI", "DBM-GUI", function()
 			this.areas[#this.areas].frame:SetTemplate("Transparent", nil, true)
 			this.areas[#this.areas].frame:SetBackdropColor(0, 0, 0, 0)
 		end)
---[[
+		--[[
 		S:RawHook(PanelPrototype, "CreateCheckButton", function(this, name, autoplace, ...)
 			local button = S.hooks[PanelPrototype].CreateCheckButton(this, name, autoplace, ...)
 
@@ -625,7 +708,7 @@ S:AddCallbackForAddon("DBM-GUI", "DBM-GUI", function()
 
 		return panel
 	end)
---[[
+	--[[
 	DBM_GUI_DropDown:SetTemplate("Transparent")
 
 	local dropdownArrowColor = {1, 0.8, 0}

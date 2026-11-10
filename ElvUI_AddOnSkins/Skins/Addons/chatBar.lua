@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("ChatBar") then return end
+if not AS:IsAddonLODorEnabled("ChatBar") then
+	return
+end
 
 local _G = _G
 local abs = math.abs
@@ -10,7 +12,9 @@ local abs = math.abs
 -- ChatBar 3.1
 
 S:AddCallbackForAddon("ChatBar", "ChatBar", function()
-	if not E.private.addOnSkins.ChatBar then return end
+	if not E.private.addOnSkins.ChatBar then
+		return
+	end
 
 	local db = E.db.addOnSkins
 
@@ -56,7 +60,11 @@ S:AddCallbackForAddon("ChatBar", "ChatBar", function()
 				ChatBarFrame.isSliding = nil
 				self.velocity = 0
 
-				if ChatBar_VerticalDisplay_Sliding or ChatBar_AlternateDisplay_Sliding or ChatBar_LargeButtons_Sliding then
+				if
+					ChatBar_VerticalDisplay_Sliding
+					or ChatBar_AlternateDisplay_Sliding
+					or ChatBar_LargeButtons_Sliding
+				then
 					if ChatBar_VerticalDisplay_Sliding then
 						ChatBar_VerticalDisplay_Sliding = nil
 						ChatBar_Toggle_VerticalButtonOrientation()
@@ -104,7 +112,13 @@ S:AddCallbackForAddon("ChatBar", "ChatBar", function()
 		local button = ChatBarFrameButton1
 		button:ClearAllPoints()
 		button.Text:ClearAllPoints()
-		button.Text:SetPoint(db.chatBarTextPoint, button, db.chatBarTextPoint, db.chatBarTextXOffset, db.chatBarTextYOffset)
+		button.Text:SetPoint(
+			db.chatBarTextPoint,
+			button,
+			db.chatBarTextPoint,
+			db.chatBarTextXOffset,
+			db.chatBarTextYOffset
+		)
 
 		if ChatBar_VerticalDisplay then
 			if ChatBar_AlternateOrientation then
@@ -121,22 +135,28 @@ S:AddCallbackForAddon("ChatBar", "ChatBar", function()
 		end
 
 		for i = 2, CHAT_BAR_MAX_BUTTONS do
-			button = _G["ChatBarFrameButton"..i]
+			button = _G["ChatBarFrameButton" .. i]
 			button:ClearAllPoints()
 			button.Text:ClearAllPoints()
-			button.Text:SetPoint(db.chatBarTextPoint, button, db.chatBarTextPoint, db.chatBarTextXOffset, db.chatBarTextYOffset)
+			button.Text:SetPoint(
+				db.chatBarTextPoint,
+				button,
+				db.chatBarTextPoint,
+				db.chatBarTextXOffset,
+				db.chatBarTextYOffset
+			)
 
 			if ChatBar_VerticalDisplay then
 				if ChatBar_AlternateOrientation then
-					button:SetPoint("TOP", "ChatBarFrameButton"..(i-1), "BOTTOM", 0, -db.chatBarSpacing)
+					button:SetPoint("TOP", "ChatBarFrameButton" .. (i - 1), "BOTTOM", 0, -db.chatBarSpacing)
 				else
-					button:SetPoint("BOTTOM", "ChatBarFrameButton"..(i-1), "TOP", 0, db.chatBarSpacing)
+					button:SetPoint("BOTTOM", "ChatBarFrameButton" .. (i - 1), "TOP", 0, db.chatBarSpacing)
 				end
 			else
 				if ChatBar_AlternateOrientation then
-					button:SetPoint("RIGHT", "ChatBarFrameButton"..(i-1), "LEFT", -db.chatBarSpacing, 0)
+					button:SetPoint("RIGHT", "ChatBarFrameButton" .. (i - 1), "LEFT", -db.chatBarSpacing, 0)
 				else
-					button:SetPoint("LEFT", "ChatBarFrameButton"..(i-1), "RIGHT", db.chatBarSpacing, 0)
+					button:SetPoint("LEFT", "ChatBarFrameButton" .. (i - 1), "RIGHT", db.chatBarSpacing, 0)
 				end
 			end
 		end

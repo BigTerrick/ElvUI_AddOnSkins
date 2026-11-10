@@ -2,13 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("Quartz") then return end
+if not AS:IsAddonLODorEnabled("Quartz") then
+	return
+end
 
 -- Quartz 3.0.3.1
 -- https://www.wowace.com/projects/quartz/files/441489
 
 S:AddCallbackForAddon("Quartz", "Quartz", function()
-	if not E.private.addOnSkins.Quartz then return end
+	if not E.private.addOnSkins.Quartz then
+		return
+	end
 
 	local Quartz3 = LibStub("AceAddon-3.0"):GetAddon("Quartz3", true)
 	local CastBar = Quartz3.CastBarTemplate.template

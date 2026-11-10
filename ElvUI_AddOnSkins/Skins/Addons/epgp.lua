@@ -2,16 +2,22 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("epgp") then return end
+if not AS:IsAddonLODorEnabled("epgp") then
+	return
+end
 
 -- EPGP 5.5.19
 -- https://www.curseforge.com/wow/addons/epgp-dkp-reloaded/files/442647
 
 S:AddCallbackForAddon("epgp", "epgp", function()
-	if not E.private.addOnSkins.EPGP then return end
+	if not E.private.addOnSkins.EPGP then
+		return
+	end
 
 	local EPGPUI = EPGP and EPGP:GetModule("ui", true)
-	if not EPGPUI then return end
+	if not EPGPUI then
+		return
+	end
 
 	local function SkinEPGP()
 		-- Main Frame
@@ -180,10 +186,10 @@ S:AddCallbackForAddon("epgp", "epgp", function()
 		line1:Point("BOTTOMRIGHT", -1, 1)
 		line2:Size(8)
 		line2:Point("BOTTOMRIGHT", -1, 1)
-		local x = 0.1 * 14/17
-		line1:SetTexCoord(1/32 - x, 0.5, 1/32, 0.5 + x, 1/32, 0.5 - x, 1/32 + x, 0.5)
-		x = 0.1 * 11/17
-		line2:SetTexCoord(1/32 - x, 0.5, 1/32, 0.5 + x, 1/32, 0.5 - x, 1/32 + x, 0.5)
+		local x = 0.1 * 14 / 17
+		line1:SetTexCoord(1 / 32 - x, 0.5, 1 / 32, 0.5 + x, 1 / 32, 0.5 - x, 1 / 32 + x, 0.5)
+		x = 0.1 * 11 / 17
+		line2:SetTexCoord(1 / 32 - x, 0.5, 1 / 32, 0.5 + x, 1 / 32, 0.5 - x, 1 / 32 + x, 0.5)
 
 		sizer:HookScript("OnMouseUp", function(self)
 			self:GetParent():ClearAllPoints()

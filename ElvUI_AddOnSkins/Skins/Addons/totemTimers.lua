@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("TotemTimers") then return end
+if not AS:IsAddonLODorEnabled("TotemTimers") then
+	return
+end
 
 local _G = _G
 local pairs, ipairs = pairs, ipairs
@@ -12,34 +14,38 @@ local unpack = unpack
 -- https://www.curseforge.com/wow/addons/totemtimers/files/454307
 
 S:AddCallbackForAddon("TotemTimers", "TotemTimers", function()
-	if not E.private.addOnSkins.TotemTimers then return end
-	if E.myclass ~= "SHAMAN" then return end
+	if not E.private.addOnSkins.TotemTimers then
+		return
+	end
+	if E.myclass ~= "SHAMAN" then
+		return
+	end
 
 	local SLOT_EMPTY_TCOORDS = {
 		[EARTH_TOTEM_SLOT] = {
-			left	= 66 / 128,
-			right	= 96 / 128,
-			top		= 3 / 256,
-			bottom	= 33 / 256
+			left = 66 / 128,
+			right = 96 / 128,
+			top = 3 / 256,
+			bottom = 33 / 256,
 		},
 		[FIRE_TOTEM_SLOT] = {
-			left	= 67 / 128,
-			right	= 97 / 128,
-			top		= 100 / 256,
-			bottom	= 130 / 256
+			left = 67 / 128,
+			right = 97 / 128,
+			top = 100 / 256,
+			bottom = 130 / 256,
 		},
 		[WATER_TOTEM_SLOT] = {
-			left	= 39 / 128,
-			right	= 69 / 128,
-			top		= 209 / 256,
-			bottom	= 239 / 256
+			left = 39 / 128,
+			right = 69 / 128,
+			top = 209 / 256,
+			bottom = 239 / 256,
 		},
 		[AIR_TOTEM_SLOT] = {
-			left	= 66 / 128,
-			right	= 96 / 128,
-			top		= 36 / 256,
-			bottom	= 66 / 256
-		}
+			left = 66 / 128,
+			right = 96 / 128,
+			top = 36 / 256,
+			bottom = 66 / 256,
+		},
 	}
 
 	S:SecureHook("TotemTimers_SetupGlobals", function()
@@ -89,8 +95,8 @@ S:AddCallbackForAddon("TotemTimers", "TotemTimers", function()
 
 	hooksecurefunc(TotemTimers, "SetDoubleTexture", function(button, isdouble, flash)
 		if isdouble then
-			button.icons[1]:SetTexCoord(.08, 0.5, .08, .92)
-			button.icons[2]:SetTexCoord(0.5, .92, .08, .92)
+			button.icons[1]:SetTexCoord(0.08, 0.5, 0.08, 0.92)
+			button.icons[2]:SetTexCoord(0.5, 0.92, 0.08, 0.92)
 		end
 	end)
 

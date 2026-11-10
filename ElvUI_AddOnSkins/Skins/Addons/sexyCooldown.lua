@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("SexyCooldown") then return end
+if not AS:IsAddonLODorEnabled("SexyCooldown") then
+	return
+end
 
 local unpack = unpack
 
@@ -10,7 +12,9 @@ local unpack = unpack
 -- https://www.wowace.com/projects/sexycooldown/files/424497
 
 S:AddCallbackForAddon("SexyCooldown", "SexyCooldown", function()
-	if not E.private.addOnSkins.SexyCooldown then return end
+	if not E.private.addOnSkins.SexyCooldown then
+		return
+	end
 
 	local function SkinSexyCooldownIcon(_, icon)
 		icon:SetTemplate("Default")
@@ -26,7 +30,9 @@ S:AddCallbackForAddon("SexyCooldown", "SexyCooldown", function()
 	end
 
 	local function HookBar(bar)
-		if bar.hooked then return end
+		if bar.hooked then
+			return
+		end
 
 		hooksecurefunc(bar, "UpdateSingleIconLook", SkinSexyCooldownIcon)
 		hooksecurefunc(bar, "UpdateBarBackdrop", SkinSexyCooldownBackdrop)

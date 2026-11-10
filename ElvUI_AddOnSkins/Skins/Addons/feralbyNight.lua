@@ -2,7 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule("Skins")
 local AS = E:GetModule("AddOnSkins")
 
-if not AS:IsAddonLODorEnabled("FeralbyNight") then return end
+if not AS:IsAddonLODorEnabled("FeralbyNight") then
+	return
+end
 
 local _G = _G
 local ipairs = ipairs
@@ -14,8 +16,12 @@ local hooksecurefunc = hooksecurefunc
 -- https://www.curseforge.com/wow/addons/fbn/files/441598
 
 S:AddCallbackForAddon("FeralbyNight", "FeralbyNight", function()
-	if not E.private.addOnSkins.FeralbyNight then return end
-	if E.myclass ~= "DRUID" or E.mylevel < 80 then return end
+	if not E.private.addOnSkins.FeralbyNight then
+		return
+	end
+	if E.myclass ~= "DRUID" or E.mylevel < 80 then
+		return
+	end
 
 	local function setAlpha(self, alpha)
 		self.backdrop:SetAlpha(alpha)
@@ -28,13 +34,15 @@ S:AddCallbackForAddon("FeralbyNight", "FeralbyNight", function()
 		end
 	end
 	local function setScale(self, scale)
-		if self.__scaleBlock then return end
+		if self.__scaleBlock then
+			return
+		end
 
 		self.__scaleBlock = true
 		self:SetScale(1)
 		self.__scaleBlock = nil
 
-		for _, child in ipairs({self:GetChildren()}) do
+		for _, child in ipairs({ self:GetChildren() }) do
 			if child:IsObjectType("Frame") then
 				if not child.__baseWidth then
 					child.__baseWidth, child.__baseHeight = child:GetSize()
@@ -106,23 +114,23 @@ S:AddCallbackForAddon("FeralbyNight", "FeralbyNight", function()
 		"FeralbyNightHudFrame_bosspowerbar",
 		"FeralbyNightHudFrame_bosshealthbar",
 		"FeralbyNightHudFrame_manabar",
-		"FeralbyNightHudFrame_threatbar"
+		"FeralbyNightHudFrame_threatbar",
 	}
 
 	local frame, statusbar
 	for _, frameName in ipairs(ufs) do
 		frame = _G[frameName]
-		statusbar = _G[frameName.."_frame"]
+		statusbar = _G[frameName .. "_frame"]
 
 		frame:SetBackdrop(nil)
 		frame:CreateBackdrop("Transparent")
 
 		frame:SetFrameStrata("BACKGROUND")
-	--	statusbar:SetFrameStrata("LOW")
-	--	statusbar.text
+		--	statusbar:SetFrameStrata("LOW")
+		--	statusbar.text
 		statusbar:Size(frame:GetSize())
-	--	statusbar:SetStatusBarTexture(E.media.normTex)
-	--	E:RegisterStatusBar(statusbar)
+		--	statusbar:SetStatusBarTexture(E.media.normTex)
+		--	E:RegisterStatusBar(statusbar)
 
 		hooksecurefunc(frame, "SetScale", setScale)
 		frame:SetScale(frame:GetScale())
